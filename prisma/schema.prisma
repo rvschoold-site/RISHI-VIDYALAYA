@@ -6,62 +6,6 @@ datasource db {
   provider = "postgresql"
 }
 
-model Student {
-  id            String       @id @default(uuid())
-  registrationNo String      @unique
-  firstName     String
-  lastName      String
-  dateOfBirth   DateTime
-  grade         String
-  section       String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-
-  attendance    Attendance[]
-  marks         Marks[]
-  fees          Fee[]
-}
-
-model Faculty {
-  id            String    @id @default(uuid())
-  employeeId    String    @unique
-  firstName     String
-  lastName      String
-  department    String
-  designation   String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-}
-
-model Attendance {
-  id          String    @id @default(uuid())
-  studentId   String
-  date        DateTime
-  status      String    // PRESENT, ABSENT, LATE, HALF_DAY
-  remarks     String?
-  student     Student   @relation(fields: [studentId], references: [id])
-}
-
-model Marks {
-  id          String    @id @default(uuid())
-  studentId   String
-  term        String
-  subject     String
-  score       Float
-  maxScore    Float
-  student     Student   @relation(fields: [studentId], references: [id])
-}
-
-model Fee {
-  id          String    @id @default(uuid())
-  studentId   String
-  amount      Float
-  dueDate     DateTime
-  status      String    // PENDING, PAID, OVERDUE
-  paymentDate DateTime?
-  student     Student   @relation(fields: [studentId], references: [id])
-}
-
 model AdmissionLead {
   id          String    @id @default(uuid())
   parentName  String

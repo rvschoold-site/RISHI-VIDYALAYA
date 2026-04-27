@@ -17,11 +17,7 @@ interface AdmissionLead {
 }
 
 export default async function AdminDashboard() {
-  const [leadsCount, studentCount, facultyCount] = await Promise.all([
-    prisma.admissionLead.count(),
-    prisma.student.count(),
-    prisma.faculty.count(),
-  ]);
+  const leadsCount = await prisma.admissionLead.count();
 
   const recentLeads: AdmissionLead[] = await prisma.admissionLead.findMany({
     take: 5,
@@ -34,14 +30,6 @@ export default async function AdminDashboard() {
         <div className={styles.statCard}>
           <div className={styles.statLabel}>Total Inquiries</div>
           <div className={styles.statValue}>{leadsCount}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Total Students</div>
-          <div className={styles.statValue}>{studentCount}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Faculty Members</div>
-          <div className={styles.statValue}>{facultyCount}</div>
         </div>
       </div>
 

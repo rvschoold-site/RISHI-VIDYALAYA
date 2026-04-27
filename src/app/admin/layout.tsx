@@ -41,8 +41,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navLinks = [
     { name: 'Dashboard', href: '/admin', icon: '📊' },
     { name: 'Admissions Inbox', href: '/admin/admissions', icon: '📬' },
-    { name: 'Students', href: '/admin/students', icon: '🎓' },
-    { name: 'Faculty', href: '/admin/faculty', icon: '👩‍🏫' },
     { name: 'Site Settings', href: '/admin/settings', icon: '⚙️' },
   ];
 
