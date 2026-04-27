@@ -1,0 +1,158 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  background-color: var(--primary);
+  background-image: url('/PROJECT%20BASED%20LEARNING.JPG.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll; /* Changed from fixed for better mobile performance */
+  color: white;
+  overflow: hidden;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.4) 100%);
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.heroTextContent {
+  max-width: 800px;
+  text-align: left;
+}
+
+.heroTag {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+}
+
+.heroTextContent h1 {
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.heroTextContent p {
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  margin-bottom: var(--spacing-xl);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 300;
+  max-width: 650px;
+}
+
+.ctaGroup {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-3xl);
+  flex-wrap: wrap;
+}
+
+.trustBadges {
+  display: flex;
+  gap: var(--spacing-xl);
+  flex-wrap: wrap;
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.badge {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.badge:hover {
+  transform: translateY(-3px) scale(1.05);
+  color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+  .heroOverlay {
+    background: linear-gradient(0deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+  }
+  
+  .heroTextContent {
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .heroTextContent p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctaGroup {
+    justify-content: center;
+  }
+
+  .trustBadges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 80vh;
+    padding: 6rem 1.5rem 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
+    padding: 5rem 1rem 3rem;
+  }
+
+  .ctaGroup .btn {
+    width: 100%;
+  }
+
+  .trustBadges {
+    gap: 1rem;
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+  }
+}

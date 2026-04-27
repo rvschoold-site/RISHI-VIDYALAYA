@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+}
+
+.contactInfo h2, .contactForm h2 {
+  color: var(--primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.contactInfo p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.formGroup input, .formGroup textarea {
+  padding: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.formGroup input:focus, .formGroup textarea:focus {
+  border-color: var(--primary);
+}
+
+.inputError {
+  border-color: #f04444 !important;
+  background-color: rgba(240, 68, 68, 0.05);
+}
+
+.errorMessage {
+  color: #f04444;
+  font-size: 0.8rem;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .contactWrapper {
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .contactWrapper {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+  
+  .contactInfo {
+    order: 2; /* Form usually more important to be first on mobile? Or keep info first? */
+  }
+  
+  .contactForm {
+    order: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactWrapper {
+    gap: var(--spacing-xl);
+  }
+}

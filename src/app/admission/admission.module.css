@@ -1,0 +1,43 @@
+.main {
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+  padding: 6rem 1rem 10rem 1rem;
+  text-align: center;
+  color: white;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroContent h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroContent p {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.formSection {
+  margin-top: -6rem;
+  padding-bottom: 6rem;
+}
+
+@media (max-width: 768px) {
+  .heroContent h1 {
+    font-size: 2.25rem;
+  }
+  
+  .heroContent p {
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,208 @@
+:root {
+  --primary: #0F172A;
+  --primary-light: #1E293B;
+  --accent: #DC2626;  /* Premium Red */
+  --accent-hover: #B91C1C;
+  --bg: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text: #020617;
+  --text-muted: #475569;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-dm-sans), sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Base button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #991b1b 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Shared utility classes */
+.page-hero {
+  background-color: var(--primary);
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.page-hero h1 {
+  font-size: clamp(2rem, 8vw, 3.5rem); /* Responsive font size */
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.page-hero p {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section {
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.section-header h2 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  color: var(--primary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.card {
+  background: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.03);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+  
+  .section-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-hero {
+    padding: 4rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+  
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.btn-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+.icon-float {
+  animation: float 3s ease-in-out infinite;
+}

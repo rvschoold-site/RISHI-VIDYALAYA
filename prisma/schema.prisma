@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id            String       @id @default(uuid())
+  registrationNo String      @unique
+  firstName     String
+  lastName      String
+  dateOfBirth   DateTime
+  grade         String
+  section       String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  attendance    Attendance[]
+  marks         Marks[]
+  fees          Fee[]
+}
+
+model Faculty {
+  id            String    @id @default(uuid())
+  employeeId    String    @unique
+  firstName     String
+  lastName      String
+  department    String
+  designation   String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Attendance {
+  id          String    @id @default(uuid())
+  studentId   String
+  date        DateTime
+  status      String    // PRESENT, ABSENT, LATE, HALF_DAY
+  remarks     String?
+  student     Student   @relation(fields: [studentId], references: [id])
+}
+
+model Marks {
+  id          String    @id @default(uuid())
+  studentId   String
+  term        String
+  subject     String
+  score       Float
+  maxScore    Float
+  student     Student   @relation(fields: [studentId], references: [id])
+}
+
+model Fee {
+  id          String    @id @default(uuid())
+  studentId   String
+  amount      Float
+  dueDate     DateTime
+  status      String    // PENDING, PAID, OVERDUE
+  paymentDate DateTime?
+  student     Student   @relation(fields: [studentId], references: [id])
+}
+
+model AdmissionLead {
+  id          String    @id @default(uuid())
+  parentName  String
+  studentName String
+  email       String
+  phone       String
+  grade       String
+  status      String    // NEW, CONTACTED, INTERVIEW_SCHEDULED, ENROLLED, REJECTED
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Admin {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          String    @default("ADMIN") // SUPER_ADMIN, ADMIN
+  resetToken    String?
+  resetTokenExp DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model SiteSettings {
+  id            String    @id @default(uuid())
+  key           String    @unique
+  value         String
+  description   String?
+  updatedAt     DateTime  @updatedAt
+}

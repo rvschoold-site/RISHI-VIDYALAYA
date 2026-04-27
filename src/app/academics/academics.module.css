@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.foundationSection {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 24px;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  margin-top: var(--spacing-2xl);
+}
+
+.foundationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.foundationCard {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-xl);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+}
+
+.foundationCard h3 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.foundationCard p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.foundationImage {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 768px) {
+  .foundationSection {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    border-radius: 0;
+  }
+  
+  .foundationImage {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .foundationImage {
+    height: 250px;
+  }
+}
