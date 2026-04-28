@@ -12,262 +12,300 @@ export default function Home() {
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <div className={styles.heroTextContent}>
-            <h1 className="animate-fade-in">A School Where Learning Meets Excellence</h1>
-            <p className="animate-fade-in" style={{ animationDelay: '0.2s', opacity: 0 }}>
-              Classes from LKG, UKG to Grade 7.
+            <span className="badge-premium animate-fade-in" style={{ marginBottom: '1rem', display: 'inline-block' }}>First Time in the Region</span>
+            <h1 className="animate-fade-in">Rishi Vidyalaya</h1>
+            <h2 className="animate-fade-in" style={{ fontSize: '1.5rem', fontWeight: '500', color: 'rgba(255,255,255,0.9)', marginBottom: '1.5rem' }}>
+              Best School in Dharmavaram | IIT-NEET Foundation School | Top CBSE School
+            </h2>
+            <p className="animate-fade-in" style={{ animationDelay: '0.2s', opacity: 0, fontSize: '1.1rem', maxWidth: '700px' }}>
+              AC Campus | 2 Acres Playground | Green Hostel | IIT–NEET Foundation | AI & Robotics
             </p>
-            <div className={styles.ctaGroup} style={{ animationDelay: '0.4s', opacity: 0, animation: 'fadeIn 0.6s ease-out forwards' }}>
+            <div className={styles.ctaGroup} style={{ animationDelay: '0.4s', opacity: 0, animation: 'fadeIn 0.6s ease-out forwards', marginTop: '2rem' }}>
               <Link href="/admission" className="btn btn-primary btn-pulse" style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
-                Admission Open Now
+                Admission Open 2026-27
               </Link>
-              <div className="btn btn-outline" style={{ backgroundColor: 'transparent', color: 'white', borderColor: 'white', pointerEvents: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>
-                Academic Year 2026-27
-              </div>
-            </div>
-            
-            <div className={styles.trustBadges}>
-              <div className={styles.badge}>
-                <span style={{ color: 'var(--accent)' }}>✔</span> CBSE Curriculum
-              </div>
-              <div className={styles.badge}>
-                <span style={{ color: 'var(--accent)' }}>✔</span> IIT & NEET Foundation
-              </div>
-              <div className={styles.badge}>
-                <span style={{ color: 'var(--accent)' }}>✔</span> Residential Facilities
-              </div>
+              <Link href="/contact" className="btn btn-outline" style={{ backgroundColor: 'transparent', color: 'white', borderColor: 'white', padding: '1rem 2rem', fontSize: '1.1rem' }}>
+                Enquire Now
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Intro Section */}
-      <section className="section" style={{ textAlign: 'center', paddingBottom: 0 }}>
-        <Reveal>
-          <h2 style={{ fontSize: '2rem', color: 'var(--primary)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.4' }}>
-            At Rishi Vidyalaya, we combine academic excellence with holistic development to prepare students for a successful future.
-          </h2>
-        </Reveal>
+      {/* Quick Highlights Bar */}
+      <section style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '1.5rem 0' }}>
+        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ color: 'var(--accent)', fontSize: '1.5rem' }}>✔</span> <span>AC Smart Classrooms</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ color: 'var(--accent)', fontSize: '1.5rem' }}>✔</span> <span>2 Acres Playground</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ color: 'var(--accent)', fontSize: '1.5rem' }}>✔</span> <span>Green Hostel Facility</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ color: 'var(--accent)', fontSize: '1.5rem' }}>✔</span> <span>AI & Robotics Lab</span>
+          </div>
+        </div>
       </section>
 
-      {/* Why Choose Us Section */}
+      {/* Academic Excellence Section */}
       <section className="section">
-        <Reveal>
-          <div className="section-header">
-            <h2>Why Choose RISHI VIDYALAYA?</h2>
+        <div className="container">
+          <Reveal>
+            <div className="section-header">
+              <span className="text-accent" style={{ fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px' }}>Academic Excellence</span>
+              <h2>Strong Foundation for a Bright Future</h2>
+              <p>Best School in Dharmavaram for Concept-Based Learning</p>
+            </div>
+          </Reveal>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+            <Reveal delay={0.1}>
+              <div className="card-premium">
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <div className="icon-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                  </div>
+                  <div>
+                    <h3>Back to Basics Approach</h3>
+                    <p>Strong fundamentals for careers like IIT, NEET, IAS, IPS, and government jobs. Focus on concept clarity and deep understanding.</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="card-premium">
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <div className="icon-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <div>
+                    <h3>IIT–NEET Foundation</h3>
+                    <p>Early preparation with a structured academic roadmap. Developing analytical thinking and problem-solving skills from middle school.</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="card-premium">
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <div className="icon-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </div>
+                  <div>
+                    <h3>Individual Attention</h3>
+                    <p>Step-by-step learning system tailored for every student. Regular performance tracking and transparent communication with parents.</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
-        <div className="grid3">
-          <Reveal delay={0.1}>
-            <div className="card">
-              <svg className="icon-float" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              <h3>AI & Robotics Lab</h3>
-              <p>Hands-on experience in future technologies</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className="card">
-              <svg className="icon-float" style={{ animationDelay: '0.5s', marginBottom: '1rem' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-              <h3>NEET & IIT Foundation</h3>
-              <p>Strong academic foundation from an early age</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <div className="card">
-              <svg className="icon-float" style={{ animationDelay: '1s', marginBottom: '1rem' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              <h3>Residential & Semi-Residential</h3>
-              <p>Secure and structured learning environment</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <div className="card">
-              <svg className="icon-float" style={{ animationDelay: '0.2s', marginBottom: '1rem' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              <h3>Activity-Based Learning</h3>
-              <p>Engaging and interactive teaching methods</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.5}>
-            <div className="card">
-              <svg className="icon-float" style={{ animationDelay: '0.7s', marginBottom: '1rem' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              <h3>Expert Teachers</h3>
-              <p>Educators from diverse backgrounds ensuring quality teaching</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.6}>
-            <div className="card">
-              <svg className="icon-float" style={{ animationDelay: '1.2s', marginBottom: '1rem' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-              <h3>CBSE Curriculum</h3>
-              <p>A well-structured syllabus for all-round development</p>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="section" style={{ backgroundColor: 'var(--bg-card)', borderRadius: '24px' }}>
-        <div className="section-header">
-          <h2>Our Vision & Mission</h2>
+      {/* Innovation & Future Learning */}
+      <section className="section" style={{ backgroundColor: 'var(--bg-card)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+            <Reveal>
+              <div>
+                <span className="text-accent" style={{ fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px' }}>Innovation</span>
+                <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Future-Ready Learning</h2>
+                <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>
+                  We are leading the way as the best school with AI & Robotics in Dharmavaram, providing students with tools to excel in the digital age.
+                </p>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    <div style={{ color: 'var(--accent)', marginTop: '4px' }}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div>
+                    <div>
+                      <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>AI & Robotics Lab</h4>
+                      <p>Hands-on learning with real-time projects, coding, and automation.</p>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    <div style={{ color: 'var(--accent)', marginTop: '4px' }}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg></div>
+                    <div>
+                      <h4 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>Space Lab</h4>
+                      <p>Unique focus on space science and astronomy through models and experiments.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div style={{ position: 'relative', height: '500px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.3)' }}>
+                <Image src="/PURPOSE-1.JPG.jpeg" alt="Innovation at Rishi Vidyalaya" fill style={{ objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.8))', color: 'white' }}>
+                  <h3 style={{ marginBottom: '0.5rem' }}>Digi Fest</h3>
+                  <p>A platform for creativity, innovation, and digital presentation skills.</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-xl)', alignItems: 'center' }}>
-          <div>
-            <div style={{ marginBottom: 'var(--spacing-xl)' }}>
-              <h3 style={{ color: 'var(--accent)', marginBottom: 'var(--spacing-sm)', fontSize: '1.5rem' }}>Vision:</h3>
-              <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>
-                To nurture young minds into confident, compassionate, and globally responsible individuals through holistic education.
-              </p>
+      </section>
+
+      {/* Campus & Infrastructure */}
+      <section className="section">
+        <div className="container">
+          <Reveal>
+            <div className="section-header">
+              <span className="text-accent" style={{ fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px' }}>Infrastructure</span>
+              <h2>World-Class Campus in Dharmavaram</h2>
+              <p>Top Residential School with Modern Facilities</p>
             </div>
+          </Reveal>
+
+          <div className="grid3" style={{ marginTop: '3rem' }}>
+            <Reveal delay={0.1}>
+              <div className="card-hover-scale">
+                <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                  <Image src="/PERFRCTION-1.JPG.jpeg" alt="2 Acres Playground" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <h3>2 Acres Playground</h3>
+                <p>Cricket, football, volleyball, and athletics. Promoting fitness, teamwork, and discipline.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="card-hover-scale">
+                <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                  <Image src="/PASSION.JPG.jpeg" alt="AC Smart Classrooms" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <h3>AC Smart Classrooms</h3>
+                <p>Digital learning environment that improves concentration and productivity.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="card-hover-scale">
+                <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                  <Image src="/PERFECTION.JPG.jpeg" alt="Green Campus" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <h3>Green Campus</h3>
+                <p>Eco-friendly, peaceful, and safe environment for healthy learning.</p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Holistic Development */}
+      <section className="section" style={{ backgroundColor: 'var(--primary)', color: 'white' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
             <div>
-              <h3 style={{ color: 'var(--accent)', marginBottom: 'var(--spacing-sm)', fontSize: '1.5rem' }}>Mission:</h3>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-                <li style={{ display: 'flex', gap: '1rem' }}><span style={{color:'var(--accent)'}}>•</span><p>Providing a balanced learning environment that fosters creativity, critical thinking, and leadership.</p></li>
-                <li style={{ display: 'flex', gap: '1rem' }}><span style={{color:'var(--accent)'}}>•</span><p>Instilling ethical values, discipline, and a passion for lifelong learning.</p></li>
-                <li style={{ display: 'flex', gap: '1rem' }}><span style={{color:'var(--accent)'}}>•</span><p>Empowering students to reach their full potential and contribute to society.</p></li>
+              <h2 style={{ color: 'white', fontSize: '2.5rem', marginBottom: '1.5rem' }}>Holistic Development</h2>
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
+                Preparing students for life, not just for exams. Our programs build discipline, leadership, and responsibility.
+              </p>
+              <div style={{ marginTop: '2rem' }}>
+                <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                  <h4 style={{ color: 'var(--accent)' }}>Co-Curricular Activities</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Sports, arts, music, and cultural programs for personality development.</p>
+                </div>
+                <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                  <h4 style={{ color: 'var(--accent)' }}>Junior Red Cross</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Building leadership through first aid and emergency awareness training.</p>
+                </div>
+                <div style={{ padding: '1rem' }}>
+                  <h4 style={{ color: 'var(--accent)' }}>Top Performing School</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Celebrating student success and encouraging diverse talents.</p>
+                </div>
+              </div>
+            </div>
+            <div style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden' }}>
+              <Image src="/PROJECT%20BASED%20LEARNING-1.JPG.jpeg" alt="Student Activities" fill style={{ objectFit: 'cover' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Residential & Facilities */}
+      <section className="section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Best Residential & Day School</h2>
+            <p>Premium Facilities for Comfort and Growth</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+            <div style={{ padding: '2rem', backgroundColor: 'var(--bg-card)', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <h3 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Green Hostel Facility</h3>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Separate green hostel campus</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Safe, secure, and well-maintained</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Nutritious food & caring supervision</li>
+              </ul>
+            </div>
+            <div style={{ padding: '2rem', backgroundColor: 'var(--bg-card)', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <h3 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Reliable Transportation</h3>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Covers Dharmavaram & nearby areas</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Safe and convenient daily commute</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Trained staff for student safety</li>
+              </ul>
+            </div>
+            <div style={{ padding: '2rem', backgroundColor: 'var(--bg-card)', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <h3 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Trusted Recognitions</h3>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> First ISO-certified school in region</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> National-level awards in education</li>
+                <li style={{ marginBottom: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Consistent top academic results</li>
               </ul>
             </div>
           </div>
-          <Reveal delay={0.2}>
-            <div style={{ position: 'relative', height: '400px', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.2)' }}>
-              <Image src="/PURPOSE-1.JPG.jpeg" alt="Rishi Vidyalaya Vision" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+        </div>
+      </section>
+
+      {/* Why Choose Us Checklist */}
+      <section className="section" style={{ textAlign: 'center', backgroundColor: 'var(--bg-card)' }}>
+        <div className="container">
+          <h2 style={{ marginBottom: '3rem' }}>Why Choose Rishi Vidyalaya?</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', textAlign: 'left', maxWidth: '1000px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Modern Infrastructure</strong>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Academics & Beyond */}
-      <section className="section">
-        <div className="section-header">
-          <h2>Academics & Beyond</h2>
-        </div>
-        <div className="grid3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))' }}>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            <h3>CBSE Curriculum</h3>
-            <p>A structured and innovative learning approach focusing on core subjects like Mathematics, Science, Social Science, and Languages.</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            <h3>Skill Development</h3>
-            <p>Encouraging problem-solving, analytical thinking, and communication skills.</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-            <h3>Sports & Extracurriculars</h3>
-            <p>Cricket, Basketball, Badminton, Music, Dance, Drama, Art, and more!</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.334.473A2 2 0 0 1 13.565 19h-3.13a2 2 0 0 1-1.638-1.157l-.334-.473z"></path></svg>
-            <h3>Science & AI Labs</h3>
-            <p>State-of-the-art facilities for practical learning and innovation.</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-            <h3>Library & Digital Resources</h3>
-            <p>A vast collection of books, journals, and e-learning tools to encourage reading and research.</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
-            <h3>Safe Transport</h3>
-            <p>GPS-enabled buses with trained staff for a secure journey.</p>
-          </div>
-          <div className="card">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1rem' }}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <h3>Hostel Facilities</h3>
-            <p>Spacious dormitories, nutritious meals, and 24/7 supervision.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Commitment to Excellence */}
-      <section className="section" style={{ backgroundColor: 'var(--primary)', color: 'white', borderRadius: '24px' }}>
-        <div className="section-header">
-          <h2 style={{ color: 'white' }}>Our Commitment to Excellence</h2>
-          <p style={{ color: 'rgba(255,255,255,0.8)' }}>At RISHI VIDYALAYA, every child is given the platform to dream, learn, and grow</p>
-        </div>
-        <div className="grid3">
-          <div style={{ padding: 'var(--spacing-md)' }}>
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}><span style={{color:'var(--accent)'}}>✔</span> Continuous Teacher Training</h3>
-            <p style={{ color: 'rgba(255,255,255,0.8)' }}>Ensuring top-notch education delivery.</p>
-          </div>
-          <div style={{ padding: 'var(--spacing-md)' }}>
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}><span style={{color:'var(--accent)'}}>✔</span> Student Evaluation System</h3>
-            <p style={{ color: 'rgba(255,255,255,0.8)' }}>Regular assessments, feedback, and parent meetings.</p>
-          </div>
-          <div style={{ padding: 'var(--spacing-md)' }}>
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}><span style={{color:'var(--accent)'}}>✔</span> Ethics & Advisory Board</h3>
-            <p style={{ color: 'rgba(255,255,255,0.8)' }}>Upholding integrity, discipline, and moral values.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Excellence Highlights */}
-      <section className="section" style={{ textAlign: 'center' }}>
-        <h2 style={{ color: 'var(--primary)', fontSize: '2.5rem', marginBottom: 'var(--spacing-sm)' }}>RISHI VIDYALAYA</h2>
-        <h3 style={{ color: 'var(--accent)', fontSize: '1.8rem', marginBottom: 'var(--spacing-2xl)' }}>Where Excellence Begins!</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
-          <span className={`btn btn-outline ${styles.highlightBadge}`}>CBSE Curriculum + IIT & NEET Foundation</span>
-          <span className={`btn btn-outline ${styles.highlightBadge}`}>Sports & Extracurriculars</span>
-          <span className={`btn btn-outline ${styles.highlightBadge}`}>Residential & Semi-Residential Facilities</span>
-          <span className={`btn btn-outline ${styles.highlightBadge}`}>Safe Transport</span>
-          <span className={`btn btn-outline ${styles.highlightBadge}`}>AI & Robotics Lab</span>
-        </div>
-      </section>
-
-      {/* Meet Our Faculty */}
-      <section className="section">
-        <div style={{ padding: 'var(--spacing-2xl)', backgroundColor: 'var(--bg)', borderRadius: '16px', borderLeft: '4px solid var(--primary)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-2xl)', alignItems: 'center' }}>
-          <div>
-            <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', fontSize: '1.8rem' }}>Meet Our Faculty</h3>
-            <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--text-muted)' }}>Our team of experienced and highly qualified teachers from across the country bring diverse knowledge and expertise to create a vibrant learning environment.</p>
-          </div>
-          <Reveal delay={0.2}>
-            <div style={{ position: 'relative', height: '300px', borderRadius: '12px', overflow: 'hidden' }}>
-              <Image src="/PERFRCTION-1.JPG.jpeg" alt="Our Faculty in Action" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Top IIT & NEET Prep</strong>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Contact & Admission CTA */}
-      <section id="admission" className="section">
-        <div className="section-header">
-          <h2 style={{ color: 'var(--accent)' }}>Admissions Open!</h2>
-          <p>Give your child the best start in life. Enroll today!</p>
-        </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-3xl)' }}>
-          <div>
-            <h3 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-lg)', fontSize: '2rem' }}>Contact Information</h3>
-            <p style={{ color: 'var(--text-muted)', marginBottom: 'var(--spacing-xl)' }}>How to get in touch with us.</p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div>
-                <h4 style={{ color: 'var(--primary)', marginBottom: '0.25rem' }}>Mailing Address</h4>
-                <p>N.S Gate road, Opp: Tidco Houses, Dharmavaram.</p>
-              </div>
-              <div>
-                <h4 style={{ color: 'var(--primary)', marginBottom: '0.25rem' }}>Contact</h4>
-                <p>+91 9063466944, 9063466945</p>
-                <p>rvschoold@gmail.com</p>
-              </div>
-              <div>
-                <h4 style={{ color: 'var(--primary)', marginBottom: '0.25rem' }}>Website</h4>
-                <p>www.rishividyalaya.in</p>
-              </div>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Leading AI & Robotics</strong>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Holistic Development</strong>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Safe Hostel & Transport</strong>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '1rem', background: 'white', borderRadius: '12px' }}>
+              <span style={{ color: '#22c55e', fontSize: '1.2rem' }}>✔</span> <strong>Strong Basics Today</strong>
             </div>
           </div>
           
-          <Reveal delay={0.2}>
-            <div style={{ backgroundColor: 'var(--bg-card)', padding: 'var(--spacing-3xl)', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', border: '2px solid var(--accent)' }}>
-              <h3 style={{ color: 'var(--primary)', marginBottom: 'var(--spacing-md)', fontSize: '2.5rem' }}>Ready to Apply?</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 'var(--spacing-xl)', fontSize: '1.2rem', maxWidth: '400px' }}>Join the Rishi Vidyalaya family today and give your child the foundation they need to succeed.</p>
-              
-              <Link href="/admission" className="btn btn-primary btn-pulse" style={{ padding: '1rem 3rem', fontSize: '1.2rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                Fill up our form
-              </Link>
-            </div>
-          </Reveal>
+          <div style={{ marginTop: '4rem' }}>
+            <h3 style={{ color: 'var(--accent)', fontSize: '2rem', marginBottom: '1rem' }}>Successful Future Tomorrow</h3>
+            <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>Your child deserves the best school in Dharmavaram for a bright future.</p>
+            <Link href="/admission" className="btn btn-primary btn-pulse" style={{ padding: '1.2rem 4rem', fontSize: '1.3rem' }}>
+              Apply Now
+            </Link>
+          </div>
         </div>
       </section>
 
+      {/* Contact Footer CTA */}
+      <section className="section">
+        <div className="container" style={{ textAlign: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <p>N.S Gate road, Opp: Tidco Houses, Dharmavaram.</p>
+            <p>+91 9063466944, 9063466945 | rvschoold@gmail.com</p>
+            <p>www.rishividyalaya.in</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
