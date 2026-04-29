@@ -79,6 +79,27 @@ export async function POST(req: NextRequest) {
       subjects,
     });
 
+    // Send Emails
+    try {
+      const { sendEmail } = await import('@/lib/mailer');
+      const { getCareerConfirmationTemplate, getAdminNotificationTemplate } = await import('@/lib/email-templates');
+      
+      // Applicant Confirmation
+      await sendEmail({
+        to: email,
+        subject: 'Application Received - Rishi Vidyalaya',
+        html: getCareerConfirmationTemplate({ fullName, positionName, positionType, experience })
+      });
+
+      // Admin Notification
+      await sendEmail({
+        to: process.env.ADMIN_EMAIL || 'rvschoold@gmail.com',
+        subject: `New Career Application: ${fullName}`,
+        html: getAdminNotificationTemplate('Career', { fullName, email, phone, positionName, experience, subjects })
+      });
+    } catch (e) {
+      console.error('Email error:', e);
+    }
 
     return NextResponse.json({ 
       success: true, 

@@ -50,13 +50,20 @@ export async function POST(req: Request) {
       status: 'PENDING'
     });
 
-    // In a real app, send email here. For now, we return the link.
-    const inviteLink = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admin/setup/${token}`;
+    // Send Invitation Email
+    const { sendEmail } = await import('@/lib/mailer');
+    const { getAdminInviteTemplate } = await import('@/lib/email-templates');
+    
+    await sendEmail({
+      to: email,
+      subject: 'Invitation to Join Rishi Vidyalaya Admin Team',
+      html: getAdminInviteTemplate(token)
+    });
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Invitation created successfully',
-      data: { ...invitation.toObject(), inviteLink } 
+      message: 'Invitation created and email sent successfully',
+      data: invitation
     });
 
   } catch (error: any) {

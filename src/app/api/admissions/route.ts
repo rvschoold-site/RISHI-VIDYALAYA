@@ -36,6 +36,27 @@ export async function POST(req: Request) {
       status: 'NEW',
     });
 
+    // Send Emails
+    try {
+      const { sendEmail } = await import('@/lib/mailer');
+      const { getAdmissionConfirmationTemplate, getAdminNotificationTemplate } = await import('@/lib/email-templates');
+      
+      // Parent Confirmation
+      await sendEmail({
+        to: email,
+        subject: 'Admission Inquiry Received - Rishi Vidyalaya',
+        html: getAdmissionConfirmationTemplate({ parentName, studentName, grade, phone })
+      });
+
+      // Admin Notification
+      await sendEmail({
+        to: process.env.ADMIN_EMAIL || 'rvschoold@gmail.com',
+        subject: `New Admission Inquiry: ${studentName}`,
+        html: getAdminNotificationTemplate('Admission', { studentName, grade, parentName, email, phone })
+      });
+    } catch (e) {
+      console.error('Email error:', e);
+    }
 
     return NextResponse.json({ message: 'Admission lead created successfully', lead }, { status: 201 });
   } catch (error) {
