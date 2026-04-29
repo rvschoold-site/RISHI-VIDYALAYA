@@ -80,6 +80,7 @@ export default function CareersPage() {
           experience: '',
           qualification: '',
           coverLetter: '',
+          subjects: [],
         });
         setResume(null);
         // Reset file input

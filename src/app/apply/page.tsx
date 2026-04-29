@@ -90,12 +90,12 @@ export default function ApplyPage() {
     try {
       const formData = new FormData();
       Object.entries(careerData).forEach(([key, value]) => {
-        if (key === 'subjects') {
-          (value as string[]).forEach(s => formData.append('subjects', s));
-        } else if (key === 'resume' && value) {
+        if (key === 'subjects' && Array.isArray(value)) {
+          value.forEach(s => formData.append('subjects', s));
+        } else if (key === 'resume' && value instanceof File) {
           formData.append('resume', value);
-        } else {
-          formData.append(key, value as string);
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, String(value));
         }
       });
 
