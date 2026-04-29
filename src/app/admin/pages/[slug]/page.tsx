@@ -35,12 +35,10 @@ export default function PageEditor() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const token = localStorage.getItem('adminToken');
       const res = await fetch(`/api/pages/${slug}`, {
         method: 'PATCH',
         headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(pageData)
       });
@@ -109,8 +107,28 @@ export default function PageEditor() {
       <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
         {/* Sidebar: Section List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>Page Sections</h3>
+          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b' }}>Page Structure</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div 
+              onClick={() => setActiveSectionId('metadata')}
+              style={{ 
+                padding: '1rem', 
+                backgroundColor: activeSectionId === 'metadata' ? '#eff6ff' : 'white',
+                border: `1px solid ${activeSectionId === 'metadata' ? '#3b82f6' : '#e2e8f0'}`,
+                borderRadius: '12px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>🔍 SEO & Metadata</div>
+              <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>PAGE SETTINGS</div>
+            </div>
+
+            <div style={{ margin: '0.5rem 0', borderTop: '1px solid #f1f5f9' }}></div>
+
             {pageData.sections.sort((a: any, b: any) => a.order - b.order).map((section: any) => (
               <div 
                 key={section.id} 
@@ -152,7 +170,13 @@ export default function PageEditor() {
 
         {/* Content Area: Section Editor */}
         <div className={styles.card}>
-          {activeSectionId ? (
+          {activeSectionId === 'metadata' ? (
+            <MetadataForm 
+              data={pageData.metadata || {}} 
+              pageTitle={pageData.title}
+              onUpdate={(updates: any) => setPageData({ ...pageData, ...updates })}
+            />
+          ) : activeSectionId ? (
             <SectionForm 
               section={pageData.sections.find((s: any) => s.id === activeSectionId)} 
               onUpdate={(updates: any) => updateSection(activeSectionId, updates)}
@@ -164,6 +188,64 @@ export default function PageEditor() {
               <p>Select a section from the left to start editing its content.</p>
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MetadataForm({ data, pageTitle, onUpdate }: any) {
+  return (
+    <div>
+      <div style={{ marginBottom: '2rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>SEO & Page Settings</h3>
+        <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Configure how this page appears in search engines and browser tabs.</p>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className={styles.formGroup}>
+          <label>Admin Page Title (CMS Internal)</label>
+          <input 
+            type="text" 
+            value={pageTitle || ''} 
+            onChange={(e) => onUpdate({ title: e.target.value })}
+            placeholder="e.g. Admissions Overview"
+          />
+        </div>
+
+        <div style={{ margin: '1rem 0', borderTop: '1px solid #f1f5f9' }}></div>
+
+        <div className={styles.formGroup}>
+          <label>SEO Browser Title</label>
+          <input 
+            type="text" 
+            value={data.title || ''} 
+            onChange={(e) => onUpdate({ metadata: { ...data, title: e.target.value } })}
+            placeholder="e.g. Admissions 2026-27 | Rishi Vidyalaya"
+          />
+          <p style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Visible in browser tabs and search results.</p>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Meta Description</label>
+          <textarea 
+            value={data.description || ''} 
+            onChange={(e) => onUpdate({ metadata: { ...data, description: e.target.value } })}
+            placeholder="Brief summary of the page content..."
+            style={{ minHeight: '100px' }}
+          />
+          <p style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Shown below the title in search results (recommended: 150-160 characters).</p>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Keywords</label>
+          <input 
+            type="text" 
+            value={data.keywords || ''} 
+            onChange={(e) => onUpdate({ metadata: { ...data, keywords: e.target.value } })}
+            placeholder="e.g. school, admissions, dharmavaram"
+          />
+          <p style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Comma-separated list of relevant search terms.</p>
         </div>
       </div>
     </div>
@@ -210,7 +292,43 @@ function SectionForm({ section, onUpdate, onRemove }: any) {
         </div>
 
         <div style={{ marginTop: '1rem' }}>
-          <h4 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Section Content (JSON Data)</h4>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 600 }}>Section Content (JSON Data)</h4>
+            <button 
+              onClick={() => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = async (e: any) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  
+                  try {
+                    const res = await fetch('/api/upload', {
+                      method: 'POST',
+                      body: formData
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                      alert(`Upload successful! URL: ${data.url}\n\nCopy this URL and paste it into your JSON content.`);
+                    } else {
+                      alert('Upload failed: ' + data.error);
+                    }
+                  } catch (err) {
+                    alert('Upload failed');
+                  }
+                };
+                input.click();
+              }}
+              className={styles.buttonGhost}
+              style={{ fontSize: '0.8rem' }}
+            >
+              📷 Upload Image Helper
+            </button>
+          </div>
           <textarea 
             style={{ 
               width: '100%', 

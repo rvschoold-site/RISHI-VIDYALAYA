@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import Image from 'next/image';
 import LazyLoad from '@/components/LazyLoad';
+import SocialFeed from '@/components/SocialFeed';
 
 export default function Home() {
   return (
@@ -24,7 +25,7 @@ export default function Home() {
             <span className="badge-premium animate-fade-in" style={{ marginBottom: '1rem', display: 'inline-block' }}>First Time in the Region</span>
             <h1 className="animate-fade-in">Rishi Vidyalaya</h1>
             <h2 className="animate-fade-in" style={{ fontSize: '1.5rem', fontWeight: '500', color: 'rgba(255,255,255,0.9)', marginBottom: '1.5rem' }}>
-              Best School in Dharmavaram | IIT-NEET Foundation School | Top CBSE School
+              Best School in Dharmavaram | IIT-NEET Foundation School
             </h2>
             <p className="animate-fade-in" style={{ animationDelay: '0.2s', opacity: 0, fontSize: '1.1rem', maxWidth: '700px' }}>
               AC Campus | 2 Acres Playground | Green Hostel | IIT–NEET Foundation | AI & Robotics
@@ -323,6 +324,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <LazyLoad rootMargin="100px 0px">
+        <SocialFeed />
+      </LazyLoad>
     </div>
   );
 }

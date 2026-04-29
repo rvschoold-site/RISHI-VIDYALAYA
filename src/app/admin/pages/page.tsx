@@ -33,6 +33,27 @@ export default function PagesManagement() {
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.5rem' }}>Page Management</h1>
           <p style={{ color: '#64748b' }}>Manage dynamic content and sections for your website pages.</p>
         </div>
+        <button 
+          onClick={() => {
+            const title = prompt('Enter page title:');
+            const slug = prompt('Enter page slug (URL path):');
+            if (title && slug) {
+              fetch('/api/pages', {
+                method: 'POST',
+                headers: { 
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ slug, title, sections: [] })
+              }).then(res => res.json()).then(data => {
+                if (data.success) fetchPages();
+                else alert(data.error);
+              });
+            }
+          }}
+          className="btn btn-primary"
+        >
+          + Create New Page
+        </button>
       </div>
 
       <div className={styles.statsGrid}>
@@ -74,13 +95,30 @@ export default function PagesManagement() {
                     </span>
                   </td>
                   <td>
-                    <Link 
-                      href={`/admin/pages/${page.slug}`}
-                      className={styles.buttonGhost}
-                      style={{ color: 'var(--accent)', borderColor: 'rgba(220, 38, 38, 0.2)' }}
-                    >
-                      Edit Sections
-                    </Link>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <Link 
+                        href={`/admin/pages/${page.slug}`}
+                        className={styles.buttonGhost}
+                        style={{ color: 'var(--accent)', borderColor: 'rgba(220, 38, 38, 0.2)' }}
+                      >
+                        Edit
+                      </Link>
+                      {page.slug !== 'home' && (
+                        <button
+                          onClick={async () => {
+                            if (confirm(`Are you sure you want to delete the "${page.title}" page?`)) {
+                              const res = await fetch(`/api/pages/${page.slug}`, { method: 'DELETE' });
+                              if (res.ok) fetchPages();
+                              else alert('Failed to delete page');
+                            }
+                          }}
+                          className={styles.buttonGhost}
+                          style={{ color: '#ef4444', borderColor: '#fee2e2' }}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -91,12 +129,10 @@ export default function PagesManagement() {
                     <button 
                       onClick={async () => {
                         // Initialize with home page if empty
-                        const token = localStorage.getItem('adminToken');
                         await fetch('/api/pages', {
                           method: 'POST',
                           headers: { 
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
+                            'Content-Type': 'application/json'
                           },
                           body: JSON.stringify({ slug: 'home', title: 'Home Page', sections: [] })
                         });

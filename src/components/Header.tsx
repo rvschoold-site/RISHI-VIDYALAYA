@@ -10,6 +10,31 @@ import { Menu, X } from 'lucide-react';
 export default function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState<any[]>([
+    { label: 'Home', path: '/' },
+    { label: 'About', path: '/about' },
+    { label: 'Academics', path: '/academics' },
+    { label: 'Gallery', path: '/gallery' },
+    { label: 'Careers', path: '/careers' },
+    { label: 'Contact', path: '/contact' }
+  ]);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data.NAV_LINKS) {
+          try {
+            const dynamicLinks = JSON.parse(data.data.NAV_LINKS);
+            if (Array.isArray(dynamicLinks) && dynamicLinks.length > 0) {
+              setNavLinks(dynamicLinks);
+            }
+          } catch (e) {
+            console.error('Failed to parse dynamic nav links');
+          }
+        }
+      });
+  }, []);
 
   // Close menu when pathname changes
   useEffect(() => {
@@ -47,12 +72,11 @@ export default function Header() {
 
         {/* Navigation */}
         <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
-          <Link href="/" className={getLinkClass('/')}>Home</Link>
-          <Link href="/about" className={getLinkClass('/about')}>About</Link>
-          <Link href="/academics" className={getLinkClass('/academics')}>Academics</Link>
-          <Link href="/gallery" className={getLinkClass('/gallery')}>Gallery</Link>
-          <Link href="/careers" className={getLinkClass('/careers')}>Careers</Link>
-          <Link href="/contact" className={getLinkClass('/contact')}>Contact</Link>
+          {navLinks.map((link) => (
+            <Link key={link.path} href={link.path} className={getLinkClass(link.path)}>
+              {link.label}
+            </Link>
+          ))}
           <Link href="/admission" className={styles.applyBtn}>Apply Now</Link>
         </nav>
 

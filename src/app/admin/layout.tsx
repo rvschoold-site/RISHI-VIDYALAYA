@@ -22,38 +22,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('adminToken');
-
-      if (!token && !isPublicRoute) {
-        router.push('/admin/login');
-        setLoading(false);
-        return;
-      }
-
-      if (token) {
-        try {
-          const res = await fetch('/api/auth/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          const data = await res.json();
-          if (data.success) {
-            setAdmin(data.data);
-            localStorage.setItem('adminUser', JSON.stringify(data.data));
-          } else if (!isPublicRoute) {
-            handleLogout();
-          }
-        } catch (err) {
-          if (!isPublicRoute) handleLogout();
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        if (data.success) {
+          setAdmin(data.data);
+          localStorage.setItem('adminUser', JSON.stringify(data.data));
+        } else if (!isPublicRoute) {
+          handleLogout();
         }
+      } catch (err) {
+        if (!isPublicRoute) handleLogout();
       }
       setLoading(false);
     };
 
-    checkAuth();
+    if (!isPublicRoute) {
+      checkAuth();
+    } else {
+      setLoading(false);
+    }
   }, [pathname, router, isPublicRoute]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
     localStorage.removeItem('adminUser');
     router.push('/admin/login');
   };
@@ -65,6 +57,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Page Management', href: '/admin/pages', icon: '📄' },
     { name: 'Site Settings', href: '/admin/settings', icon: '⚙️' },
   ];
+
+  // Add Admin Users link only for SUPER_ADMIN
+  if (admin?.role === 'SUPER_ADMIN') {
+    navLinks.push({ name: 'Admin Users', href: '/admin/users', icon: '👥' });
+  }
 
   // If loading or it's a public route, just render the content
   if (loading || isPublicRoute) {

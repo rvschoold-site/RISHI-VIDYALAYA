@@ -15,10 +15,7 @@ export default function SiteSettings() {
 
   const fetchSettings = async () => {
     try {
-      const token = localStorage.getItem('adminToken');
-      const res = await fetch('/api/settings', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch('/api/settings');
       const data = await res.json();
       if (data.success) {
         setSettings(data.data);
@@ -36,12 +33,10 @@ export default function SiteSettings() {
     setMessage({ type: '', text: '' });
 
     try {
-      const token = localStorage.getItem('adminToken');
       const res = await fetch('/api/settings', {
         method: 'PATCH',
         headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(settings)
       });
@@ -125,16 +120,25 @@ export default function SiteSettings() {
               <label htmlFor="admissions_open">Open for New Admissions</label>
             </div>
 
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', marginTop: '1rem' }}>External Links</h3>
-
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, borderBottom: '1px solid #e2e8f0', paddingBottom: '0.5rem', marginTop: '1rem' }}>Navigation Menu (JSON)</h3>
             <div className={styles.formGroup}>
-              <label>Online Application URL (Wix/Google Form)</label>
-              <input 
-                type="text" 
-                value={settings.APPLICATION_URL || ''} 
-                onChange={(e) => setSettings({ ...settings, APPLICATION_URL: e.target.value })}
-                style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+              <label>Main Navbar Links</label>
+              <textarea 
+                value={settings.NAV_LINKS || '[]'} 
+                onChange={(e) => setSettings({ ...settings, NAV_LINKS: e.target.value })}
+                style={{ 
+                  padding: '1rem', 
+                  borderRadius: '8px', 
+                  border: '1px solid #e2e8f0', 
+                  minHeight: '200px', 
+                  fontFamily: 'monospace',
+                  backgroundColor: '#f8fafc'
+                }}
+                placeholder='[{"label": "Home", "path": "/"}, ...]'
               />
+              <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.5rem' }}>
+                Format: <code>{'[{"label": "Name", "path": "/url"}]'}</code>
+              </p>
             </div>
 
             <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>

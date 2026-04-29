@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Admin from '@/models/Admin';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { createSession } from '@/lib/auth';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_dev_only';
 
@@ -27,17 +27,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Create JWT
-    const token = jwt.sign(
-      { id: admin.id, email: admin.email, role: admin.role },
-      JWT_SECRET,
-      { expiresIn: '1d' }
-    );
+    // Create Session via Cookie
+    const token = await createSession(admin.id);
 
     return NextResponse.json({
       success: true,
       data: {
-        token,
         admin: {
           id: admin.id,
           name: admin.name,

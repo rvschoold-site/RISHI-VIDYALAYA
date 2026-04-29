@@ -25,8 +25,7 @@ export default function LoginPage() {
 
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
-      // Store token
-      localStorage.setItem('adminToken', data.data.token);
+      // User info can be stored for UI purposes, but token is now in HttpOnly cookie
       localStorage.setItem('adminUser', JSON.stringify(data.data.admin));
 
       router.push('/admin');

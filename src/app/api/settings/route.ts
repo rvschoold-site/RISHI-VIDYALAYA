@@ -1,21 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import SiteSettings from '@/models/SiteSettings';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_dev_only';
-
-async function verifyAuth(req: Request) {
-  const authHeader = req.headers.get('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
-  
-  const token = authHeader.split(' ')[1];
-  try {
-    return jwt.verify(token, JWT_SECRET);
-  } catch (err) {
-    return null;
-  }
-}
+import { verifyAdmin, unauthorizedResponse } from '@/lib/auth';
 
 export async function GET() {
   try {
@@ -33,9 +19,9 @@ export async function GET() {
 
 export async function PATCH(req: Request) {
   try {
-    const decoded = await verifyAuth(req);
-    if (!decoded) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    const admin = await verifyAdmin(req);
+    if (!admin) {
+      return unauthorizedResponse();
     }
 
     await dbConnect();

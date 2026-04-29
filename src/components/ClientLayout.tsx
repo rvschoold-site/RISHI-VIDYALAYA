@@ -20,11 +20,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       {!hideHeaderFooter && <Header />}
       <main>{children}</main>
       {!hideHeaderFooter && (
-        <LazyLoad rootMargin="100px 0px">
-          <SocialFeed />
-        </LazyLoad>
-      )}
-      {!hideHeaderFooter && (
         <LazyLoad rootMargin="200px 0px">
           <Footer />
         </LazyLoad>

@@ -51,3 +51,32 @@ export async function PATCH(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+// Delete specific page
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  try {
+    const admin = await verifyAdmin(req);
+    if (!admin) return unauthorizedResponse();
+
+    await dbConnect();
+    const { slug } = await params;
+
+    // Prevent deleting the home page
+    if (slug === 'home') {
+      return NextResponse.json({ error: 'Cannot delete the home page' }, { status: 400 });
+    }
+
+    const result = await PageContent.findOneAndDelete({ slug });
+
+    if (!result) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Page deleted successfully' });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
