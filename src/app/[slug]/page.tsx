@@ -16,10 +16,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!page) return {};
 
+  const title = page.metadata?.title || page.title;
+  const description = page.metadata?.description;
+
   return {
-    title: page.metadata?.title || page.title,
-    description: page.metadata?.description,
+    title,
+    description,
     keywords: page.metadata?.keywords,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    }
   };
 }
 
