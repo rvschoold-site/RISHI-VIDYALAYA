@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styles from './gallery.module.css';
 import Reveal from '@/components/Reveal';
+import Image from 'next/image';
 
 const images = [
   { id: 1, title: 'Hands-on Activity', url: '/HANDS%20ON%20ACTIVITY%20(PROJECT%20BASED%20LEARNING).JPG.jpeg' },
@@ -34,7 +35,14 @@ export default function Gallery() {
           {images.map((img, index) => (
             <Reveal key={img.id} delay={index * 0.1}>
               <div className={styles.galleryItem} onClick={() => setSelectedImage(img.url)}>
-                <img src={img.url} alt={img.title} className={styles.image} />
+                <Image 
+                  src={img.url} 
+                  alt={img.title} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  className={styles.image} 
+                  style={{ objectFit: 'cover' }}
+                />
                 <div className={styles.overlay}>
                   <span>{img.title}</span>
                 </div>
@@ -48,7 +56,13 @@ export default function Gallery() {
       {selectedImage && (
         <div className={styles.lightbox} onClick={() => setSelectedImage(null)}>
           <div className={styles.lightboxClose}>&times;</div>
-          <img src={selectedImage} alt="Enlarged view" className={styles.lightboxImage} />
+          <Image 
+            src={selectedImage} 
+            alt="Enlarged view" 
+            fill 
+            className={styles.lightboxImage} 
+            style={{ objectFit: 'contain' }}
+          />
         </div>
       )}
     </div>

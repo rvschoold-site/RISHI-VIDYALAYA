@@ -10,12 +10,13 @@
   align-items: center;
   padding: var(--spacing-3xl) var(--spacing-2xl);
   background-color: var(--primary);
-  background-image: url('/PROJECT%20BASED%20LEARNING.JPG.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: scroll; /* Changed from fixed for better mobile performance */
+  /* background-image removed - now using next/image with priority */
   color: white;
   overflow: hidden;
+}
+
+.heroBg {
+  z-index: 0;
 }
 
 .heroOverlay {

@@ -3,12 +3,21 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import Image from 'next/image';
+import LazyLoad from '@/components/LazyLoad';
 
 export default function Home() {
   return (
     <div className={styles.container}>
       {/* Hero Section */}
       <section className={styles.hero}>
+        <Image 
+          src="/PROJECT%20BASED%20LEARNING.JPG.jpeg" 
+          alt="Rishi Vidyalaya Campus" 
+          fill 
+          priority 
+          className={styles.heroBg} 
+          style={{ objectFit: 'cover' }} 
+        />
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <div className={styles.heroTextContent}>
@@ -151,7 +160,8 @@ export default function Home() {
       </section>
 
       {/* Campus & Infrastructure */}
-      <section className="section">
+      <LazyLoad rootMargin="300px 0px">
+        <section className="section">
         <div className="container">
           <Reveal>
             <div className="section-header">
@@ -192,9 +202,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </LazyLoad>
 
       {/* Holistic Development */}
-      <section className="section" style={{ backgroundColor: 'var(--primary)', color: 'white' }}>
+      <LazyLoad rootMargin="300px 0px">
+        <section className="section" style={{ backgroundColor: 'var(--primary)', color: 'white' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
             <div>
@@ -223,9 +235,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </LazyLoad>
 
       {/* Residential & Facilities */}
-      <section className="section">
+      <LazyLoad rootMargin="300px 0px">
+        <section className="section">
         <div className="container">
           <div className="section-header">
             <h2>Best Residential & Day School</h2>
@@ -260,9 +274,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </LazyLoad>
 
       {/* Why Choose Us Checklist */}
-      <section className="section" style={{ textAlign: 'center', backgroundColor: 'var(--bg-card)' }}>
+      <LazyLoad rootMargin="300px 0px">
+        <section className="section" style={{ textAlign: 'center', backgroundColor: 'var(--bg-card)' }}>
         <div className="container">
           <h2 style={{ marginBottom: '3rem' }}>Why Choose Rishi Vidyalaya?</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', textAlign: 'left', maxWidth: '1000px', margin: '0 auto' }}>
@@ -295,6 +311,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </LazyLoad>
 
       {/* Contact Footer CTA */}
       <section className="section">

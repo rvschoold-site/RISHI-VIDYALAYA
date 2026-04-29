@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -26,10 +28,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://www.facebook.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://www.instagram.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />  
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://wa.me" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.instagram.com" />
+        <link rel="dns-prefetch" href="https://www.youtube.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+      </head>
       <body>
         <ClientLayout>
           {children}
         </ClientLayout>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

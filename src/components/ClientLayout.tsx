@@ -1,9 +1,13 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Header from "./Header";
-import Footer from "./Footer";
-import SocialFeed from "./SocialFeed";
+import LazyLoad from "./LazyLoad";
+
+// Dynamic imports for heavy components
+const SocialFeed = dynamic(() => import("./SocialFeed"), { ssr: false });
+const Footer = dynamic(() => import("./Footer"), { ssr: false });
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -15,8 +19,16 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     <>
       {!hideHeaderFooter && <Header />}
       <main>{children}</main>
-      {!hideHeaderFooter && <SocialFeed />}
-      {!hideHeaderFooter && <Footer />}
+      {!hideHeaderFooter && (
+        <LazyLoad rootMargin="100px 0px">
+          <SocialFeed />
+        </LazyLoad>
+      )}
+      {!hideHeaderFooter && (
+        <LazyLoad rootMargin="200px 0px">
+          <Footer />
+        </LazyLoad>
+      )}
     </>
   );
 }
