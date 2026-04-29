@@ -77,7 +77,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link href="/admission" className={styles.applyBtn}>Apply Now</Link>
+          <Link href="/apply" className={styles.applyBtn}>Apply Now</Link>
         </nav>
 
         {/* Overlay for mobile menu */}

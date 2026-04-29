@@ -50,7 +50,7 @@
   box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.5);
 }
 
-.footerLinks h3, .footerContact h3 {
+.footerLinks h3, .footerContact h3, .footerMap h3 {
   font-size: 1.2rem;
   color: white;
   margin-bottom: 1.5rem;
@@ -58,7 +58,7 @@
   display: inline-block;
 }
 
-.footerLinks h3::after, .footerContact h3::after {
+.footerLinks h3::after, .footerContact h3::after, .footerMap h3::after {
   content: '';
   position: absolute;
   left: 0;
@@ -66,6 +66,18 @@
   width: 40px;
   height: 2px;
   background-color: var(--accent);
+}
+
+.footerMap {
+  display: flex;
+  flex-direction: column;
+}
+
+.mapFrame {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .footerLinks ul {

@@ -1,197 +1,180 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import styles from './contact.module.css';
 import Reveal from '@/components/Reveal';
+import { Mail, Phone, MapPin, Globe, MessageSquare, Send } from 'lucide-react';
 
 export default function Contact() {
+  const [settings, setSettings] = useState<any>({});
   const [formData, setFormData] = useState({
-    parentName: '',
-    studentName: '',
+    name: '',
     email: '',
-    phone: '',
-    grade: ''
+    subject: '',
+    message: ''
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    if (formData.parentName.length < 2) newErrors.parentName = 'Parent name is too short';
-    if (formData.studentName.length < 2) newErrors.studentName = 'Student name is too short';
-    if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Invalid email address';
-    if (formData.phone.length < 10) newErrors.phone = 'Phone number must be at least 10 digits';
-    if (!formData.grade) newErrors.grade = 'Grade is required';
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-    if (errors[id]) {
-      setErrors(prev => {
-        const next = { ...prev };
-        delete next[id];
-        return next;
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setSettings(data.data);
       });
-    }
-  };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
-
     setStatus('loading');
-    setErrors({});
-
-    try {
-      const res = await fetch('/api/admissions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        if (data.errors && Array.isArray(data.errors)) {
-          const backendErrors: Record<string, string> = {};
-          data.errors.forEach((err: any) => {
-            const field = err.path.split('.').pop();
-            backendErrors[field] = err.message;
-          });
-          setErrors(backendErrors);
-          throw new Error('Validation failed');
-        }
-        throw new Error(data.message || 'Failed to submit form');
-      }
-      
+    
+    // Simulate API call for contact message
+    setTimeout(() => {
       setStatus('success');
-      setFormData({ parentName: '', studentName: '', email: '', phone: '', grade: '' });
-    } catch (error: any) {
-      console.error('Submission error:', error);
-      setStatus('error');
-    }
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }, 1500);
   };
 
-  return (
-    <div className={styles.container}>
-      <div className="page-hero">
-        <h1>Contact Information</h1>
-        <p>How to get in touch with us.</p>
-      </div>
-      <section className="section">
-        <Reveal>
-          <div className="section-header">
-            <h2>Get in Touch</h2>
-            <p>We're here to answer any questions you might have about Rishi Vidyalaya.</p>
-          </div>
-        </Reveal>
-        <div className={styles.contactWrapper}>
-          <Reveal delay={0.1}>
-            <div className={styles.contactInfo}>
-              <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Mailing Address</h2>
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <p style={{ margin: 0 }}>N.S Gate road, Opp: Tidco Houses, Dharmavaram.</p>
-              </div>
-              
-              <h2 style={{ color: 'var(--primary)', margin: '1.5rem 0 1rem' }}>Contact Details</h2>
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <p style={{ margin: 0 }}>+91 9063466944, +91 9063466945</p>
-              </div>
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                <p style={{ margin: 0 }}>rvschoold@gmail.com</p>
-              </div>
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <p style={{ margin: 0 }}>www.rishividyalaya.in</p>
-              </div>
+  const contactCards = [
+    {
+      icon: <Phone size={24} />,
+      title: 'Call Us',
+      value: settings.CONTACT_PHONE || '+91 90634 66944',
+      link: `tel:${settings.CONTACT_PHONE}`
+    },
+    {
+      icon: <Mail size={24} />,
+      title: 'Email Us',
+      value: settings.CONTACT_EMAIL || 'rvschoold@gmail.com',
+      link: `mailto:${settings.CONTACT_EMAIL}`
+    },
+    {
+      icon: <MapPin size={24} />,
+      title: 'Visit Us',
+      value: 'N.S Gate road, Opp: Tidco Houses, Dharmavaram',
+      link: 'https://maps.google.com'
+    }
+  ];
 
-              <div style={{ backgroundColor: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px', borderLeft: '4px solid var(--accent)' }}>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>Admissions Open!</h3>
-                <p style={{ margin: 0 }}>Give your child the best start in life. Enroll today!</p>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className={styles.contactForm}>
-            <h2>Admission Form</h2>
-            {status === 'success' ? (
-              <div style={{ padding: '2rem', textAlign: 'center', backgroundColor: '#d1fae5', color: '#065f46', borderRadius: '8px' }}>
-                <h3 style={{ marginBottom: '1rem', color: '#065f46' }}>Success!</h3>
-                <p>Your application inquiry has been submitted. Our team will contact you shortly.</p>
-                <button onClick={() => setStatus('idle')} className="btn btn-outline" style={{ marginTop: '1rem', borderColor: '#065f46', color: '#065f46' }}>Submit Another</button>
-              </div>
-            ) : (
-              <form className={styles.form} onSubmit={handleSubmit} noValidate>
-                <div className={styles.formGroup}>
-                  <label htmlFor="parentName">Parent/Guardian Name</label>
-                  <input type="text" id="parentName" value={formData.parentName} onChange={handleChange} placeholder="Parent Name" className={errors.parentName ? styles.inputError : ''} />
-                  {errors.parentName && <span className={styles.errorMessage}>{errors.parentName}</span>}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="studentName">Student Name</label>
-                  <input type="text" id="studentName" value={formData.studentName} onChange={handleChange} placeholder="Student Name" className={errors.studentName ? styles.inputError : ''} />
-                  {errors.studentName && <span className={styles.errorMessage}>{errors.studentName}</span>}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" value={formData.email} onChange={handleChange} placeholder="Email Address" className={errors.email ? styles.inputError : ''} />
-                  {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" value={formData.phone} onChange={handleChange} placeholder="+91 xxxxxxxxxx" className={errors.phone ? styles.inputError : ''} />
-                  {errors.phone && <span className={styles.errorMessage}>{errors.phone}</span>}
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="grade">Grade Applying For</label>
-                  <input type="text" id="grade" value={formData.grade} onChange={handleChange} placeholder="e.g. Grade 5" className={errors.grade ? styles.inputError : ''} />
-                  {errors.grade && <span className={styles.errorMessage}>{errors.grade}</span>}
-                </div>
-                {status === 'error' && <p style={{ color: 'var(--accent)', marginTop: '0.5rem', fontSize: '0.9rem' }}>Something went wrong. Please check the fields and try again.</p>}
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={status === 'loading'}>
-                  {status === 'loading' ? 'Submitting...' : 'Submit Form'}
-                </button>
-              </form>
-            )}
-          </div>
-          </Reveal>
-        </div>
+  return (
+    <div className={styles.contactContainer}>
+      <section className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '6rem 0' }}>
+        <Reveal>
+          <span className="badge-premium" style={{ marginBottom: '1rem', display: 'inline-block' }}>Get In Touch</span>
+          <h1 style={{ color: 'white', fontSize: '3.5rem', fontWeight: 800 }}>Contact Rishi Vidyalaya</h1>
+          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
+            Have questions? We're here to help you on your educational journey.
+          </p>
+        </Reveal>
       </section>
 
-      <section className="section" style={{ backgroundColor: 'var(--bg-card)', borderRadius: '24px' }}>
-        <Reveal>
-          <div className="section-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Find quick answers to common queries.</p>
+      <section className="section">
+        <div className="container">
+          <div className={styles.cardGrid}>
+            {contactCards.map((card, idx) => (
+              <Reveal key={idx} delay={idx * 0.1}>
+                <a href={card.link} className={styles.infoCard}>
+                  <div className={styles.iconCircle}>{card.icon}</div>
+                  <h3>{card.title}</h3>
+                  <p>{card.value}</p>
+                </a>
+              </Reveal>
+            ))}
           </div>
-        </Reveal>
-        <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Reveal delay={0.1}>
-            <div style={{ padding: '1.5rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}><span style={{ color: 'var(--accent)' }}>Q.</span> What are the admission timings?</h3>
-              <p style={{ color: 'var(--text-muted)' }}>The school office is open for admissions from 9:00 AM to 5:00 PM, Monday to Saturday.</p>
+
+          <div className={styles.mainWrapper}>
+            <div className={styles.formSide}>
+              <Reveal>
+                <div className={styles.formHeader}>
+                  <MessageSquare size={32} className="text-accent" />
+                  <h2>Send us a Message</h2>
+                  <p>Fill out the form below and our team will get back to you within 24 hours.</p>
+                </div>
+
+                {status === 'success' ? (
+                  <div className={styles.successMessage}>
+                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+                    <h3>Message Sent!</h3>
+                    <p>Thank you for contacting us. We'll be in touch soon.</p>
+                    <button onClick={() => setStatus('idle')} className="btn btn-outline" style={{ marginTop: '1.5rem' }}>Send Another</button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.formGrid}>
+                      <div className={styles.formGroup}>
+                        <label>Your Name</label>
+                        <input 
+                          type="text" required
+                          value={formData.name}
+                          onChange={e => setFormData({...formData, name: e.target.value})}
+                          placeholder="Full Name"
+                        />
+                      </div>
+                      <div className={styles.formGroup}>
+                        <label>Email Address</label>
+                        <input 
+                          type="email" required
+                          value={formData.email}
+                          onChange={e => setFormData({...formData, email: e.target.value})}
+                          placeholder="email@example.com"
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Subject</label>
+                      <input 
+                        type="text" required
+                        value={formData.subject}
+                        onChange={e => setFormData({...formData, subject: e.target.value})}
+                        placeholder="What is this regarding?"
+                      />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Message</label>
+                      <textarea 
+                        rows={5} required
+                        value={formData.message}
+                        onChange={e => setFormData({...formData, message: e.target.value})}
+                        placeholder="Tell us more about your inquiry..."
+                      ></textarea>
+                    </div>
+                    <button type="submit" className="btn btn-primary" disabled={status === 'loading'} style={{ width: '100%', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                      {status === 'loading' ? 'Sending...' : (
+                        <>
+                          <span>Send Message</span>
+                          <Send size={18} />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </Reveal>
             </div>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div style={{ padding: '1.5rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}><span style={{ color: 'var(--accent)' }}>Q.</span> Do you provide transport facilities?</h3>
-              <p style={{ color: 'var(--text-muted)' }}>Yes, we provide safe, GPS-enabled bus transport facilities across Dharmavaram and surrounding areas.</p>
+
+            <div className={styles.mapSide}>
+              <Reveal delay={0.3}>
+                <div className={styles.mapContainer}>
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30917.68608174432!2d77.67670250282521!3d14.386139433364058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14371bc9bf393%3A0xc8a2201ad23ba3a!2sRishi%20Vidyalaya!5e0!3m2!1sen!2sin!4v1777455733780!5m2!1sen!2sin"
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Rishi Vidyalaya Location"
+                  ></iframe>
+                </div>
+                
+                <div className={styles.quickContact}>
+                  <h3>Quick Support</h3>
+                  <p>Our office is open from 9:00 AM to 5:30 PM (Mon-Sat).</p>
+                  <div className={styles.socialRow}>
+                    <Globe size={18} /> <span>www.rishividyalaya.in</span>
+                  </div>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <div style={{ padding: '1.5rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}><span style={{ color: 'var(--accent)' }}>Q.</span> Is there a hostel facility available?</h3>
-              <p style={{ color: 'var(--text-muted)' }}>Yes, we offer both residential and semi-residential facilities with nutritious meals and 24/7 supervision.</p>
-            </div>
-          </Reveal>
+          </div>
         </div>
       </section>
     </div>

@@ -10,6 +10,7 @@ export interface IJobApplication extends Document {
   qualification: string;
   resumeUrl: string;
   coverLetter?: string;
+  subjects?: string[];
   status: string;
   createdAt: Date;
   updatedAt: Date;
@@ -25,6 +26,7 @@ const JobApplicationSchema: Schema = new Schema({
   qualification: { type: String, required: true },
   resumeUrl: { type: String, required: true },
   coverLetter: { type: String },
+  subjects: { type: [String] },
   status: { type: String, default: 'PENDING' },
 }, { 
   timestamps: true,

@@ -28,7 +28,10 @@ export async function POST(req: NextRequest) {
     // Upload to Cloudinary
     const uploadResponse = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream(
-        { folder: 'rishi-vidyalaya' },
+        { 
+          folder: 'rishi-vidyalaya',
+          resource_type: 'auto'
+        },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);

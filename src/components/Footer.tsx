@@ -62,8 +62,24 @@ export default function Footer() {
         <div className={styles.footerContact}>
           <h3>Contact Us</h3>
           <p><strong>Address:</strong><br />N.S Gate road, Opp: Tidco Houses, Dharmavaram.</p>
-          <p><strong>Phone:</strong><br />+91 9063466944,+91 9063466945</p>
+          <p><strong>Phone:</strong><br />+91 9063466944, +91 9063466945</p>
           <p><strong>Email:</strong><br />rvschoold@gmail.com</p>
+        </div>
+
+        <div className={styles.footerMap}>
+          <h3>Our Location</h3>
+          <div className={styles.mapFrame}>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30917.68608174432!2d77.67670250282521!3d14.386139433364058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14371bc9bf393%3A0xc8a2201ad23ba3a!2sRishi%20Vidyalaya!5e0!3m2!1sen!2sin!4v1777455733780!5m2!1sen!2sin"
+              width="100%" 
+              height="150" 
+              style={{ border: 0, borderRadius: '12px' }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Rishi Vidyalaya Map"
+            ></iframe>
+          </div>
         </div>
       </div>
       <div className={styles.footerBottom}>

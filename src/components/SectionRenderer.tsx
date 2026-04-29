@@ -16,10 +16,10 @@ export default function SectionRenderer({ section }: SectionProps) {
   const getCtaLink = (text: string) => {
     if (!text) return '/';
     const t = text.toLowerCase();
-    if (t.includes('admission') || t.includes('enquire') || t.includes('apply')) return '/admissions';
+    if (t.includes('admission') || t.includes('enquire') || t.includes('apply')) return '/apply';
+    if (t.includes('career') || t.includes('job') || t.includes('join')) return '/apply';
     if (t.includes('contact')) return '/contact';
     if (t.includes('about')) return '/about';
-    if (t.includes('career')) return '/careers';
     return '/';
   };
 

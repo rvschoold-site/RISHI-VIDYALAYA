@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     const experience = formData.get('experience') as string;
     const qualification = formData.get('qualification') as string;
     const coverLetter = formData.get('coverLetter') as string;
+    const subjects = formData.getAll('subjects') as string[];
     const resumeFile = formData.get('resume') as File;
 
     if (!resumeFile) {
@@ -53,7 +54,7 @@ export async function POST(req: NextRequest) {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: 'careers/resumes',
-          resource_type: 'raw', // Use raw for PDF/DOCX
+          resource_type: 'auto', // Auto-detect PDF, DOCX, or Image
           public_id: `${Date.now()}-${fullName.replace(/\s+/g, '_')}_resume`,
         },
         (error, result) => {
@@ -75,6 +76,7 @@ export async function POST(req: NextRequest) {
       qualification,
       resumeUrl: uploadResult.secure_url,
       coverLetter,
+      subjects,
     });
 
 

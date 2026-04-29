@@ -14,7 +14,23 @@ export default function CareersPage() {
     experience: '',
     qualification: '',
     coverLetter: '',
+    subjects: [] as string[],
   });
+
+  const subjectsList = [
+    'Mathematics', 'Physics', 'Chemistry', 'Biology', 'Social Studies', 
+    'English', 'Telugu', 'Hindi', 'Sanskrit', 'Computer Science', 
+    'AI & Robotics', 'Physical Education', 'Arts & Crafts', 'Music/Dance'
+  ];
+
+  const handleSubjectChange = (subject: string) => {
+    setFormData(prev => ({
+      ...prev,
+      subjects: prev.subjects.includes(subject)
+        ? prev.subjects.filter(s => s !== subject)
+        : [...prev.subjects, subject]
+    }));
+  };
   const [resume, setResume] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
@@ -36,7 +52,13 @@ export default function CareersPage() {
     setStatus(null);
 
     const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => data.append(key, value));
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'subjects') {
+        (value as string[]).forEach(s => data.append('subjects', s));
+      } else {
+        data.append(key, value as string);
+      }
+    });
     if (resume) data.append('resume', resume);
 
     try {
@@ -198,6 +220,33 @@ export default function CareersPage() {
                     placeholder="e.g. Senior Physics Teacher"
                   />
                 </div>
+
+                {formData.positionType === 'TEACHING' && (
+                  <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                    <label>Subjects of Expertise</label>
+                    <div style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+                      gap: '1rem',
+                      background: '#F8FAFC',
+                      padding: '1.5rem',
+                      borderRadius: '14px',
+                      marginTop: '0.5rem'
+                    }}>
+                      {subjectsList.map(subject => (
+                        <label key={subject} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontSize: '0.9rem' }}>
+                          <input 
+                            type="checkbox"
+                            checked={formData.subjects.includes(subject)}
+                            onChange={() => handleSubjectChange(subject)}
+                            style={{ width: '18px', height: '18px', accentColor: 'var(--accent)' }}
+                          />
+                          {subject}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className={styles.formGroup}>
                   <label>Total Experience (Years)</label>
