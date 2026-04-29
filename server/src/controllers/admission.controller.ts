@@ -3,21 +3,20 @@ import { sendEmail } from '../services/email.service';
 import { asyncHandler } from '../utils/asyncHandler';
 import { ApiResponse } from '../utils/ApiResponse';
 import { ApiError } from '../utils/ApiError';
-import prisma from '../config/db';
+import AdmissionLead from '../../../src/models/AdmissionLead';
 
 export const createAdmissionLead = asyncHandler(async (req: Request, res: Response) => {
   const { parentName, studentName, email, phone, grade } = req.body;
 
-  const lead = await prisma.admissionLead.create({
-    data: {
-      parentName,
-      studentName,
-      email,
-      phone,
-      grade,
-      status: 'NEW',
-    },
+  const lead = await AdmissionLead.create({
+    parentName,
+    studentName,
+    email,
+    phone,
+    grade,
+    status: 'NEW',
   });
+
 
   // Send confirmation email
   try {
@@ -44,9 +43,7 @@ export const createAdmissionLead = asyncHandler(async (req: Request, res: Respon
 });
 
 export const getAdmissionLeads = asyncHandler(async (req: Request, res: Response) => {
-  const leads = await prisma.admissionLead.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
+  const leads = await AdmissionLead.find().sort({ createdAt: -1 });
 
   return res.status(200).json(
     new ApiResponse(200, leads, "Leads fetched successfully")
@@ -57,10 +54,12 @@ export const updateLeadStatus = asyncHandler(async (req: Request, res: Response)
   const { id } = req.params;
   const { status } = req.body;
 
-  const updatedLead = await prisma.admissionLead.update({
-    where: { id: id as string },
-    data: { status },
-  });
+  const updatedLead = await AdmissionLead.findByIdAndUpdate(
+    id,
+    { status },
+    { new: true }
+  );
+
 
   return res.status(200).json(
     new ApiResponse(200, updatedLead, "Lead status updated successfully")

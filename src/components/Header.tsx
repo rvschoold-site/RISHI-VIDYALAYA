@@ -51,6 +51,7 @@ export default function Header() {
           <Link href="/about" className={getLinkClass('/about')}>About</Link>
           <Link href="/academics" className={getLinkClass('/academics')}>Academics</Link>
           <Link href="/gallery" className={getLinkClass('/gallery')}>Gallery</Link>
+          <Link href="/careers" className={getLinkClass('/careers')}>Careers</Link>
           <Link href="/contact" className={getLinkClass('/contact')}>Contact</Link>
           <Link href="/admission" className={styles.applyBtn}>Apply Now</Link>
         </nav>

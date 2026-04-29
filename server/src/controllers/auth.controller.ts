@@ -1,12 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import prisma from '../config/db';
-import { asyncHandler } from '../utils/asyncHandler';
-import { ApiError } from '../utils/ApiError';
-import { ApiResponse } from '../utils/ApiResponse';
-import { sendEmail } from '../services/email.service';
-import crypto from 'crypto';
+import Admin from '../../../src/models/Admin';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
@@ -19,9 +14,7 @@ export const setupSuperAdmin = asyncHandler(async (req: Request, res: Response) 
     throw new ApiError(403, 'Unauthorized setup attempt');
   }
 
-  const existingAdmin = await prisma.admin.findFirst({
-    where: { role: 'SUPER_ADMIN' }
-  });
+  const existingAdmin = await Admin.findOne({ role: 'SUPER_ADMIN' });
 
   if (existingAdmin) {
     throw new ApiError(400, 'Super admin already exists');
@@ -29,24 +22,22 @@ export const setupSuperAdmin = asyncHandler(async (req: Request, res: Response) 
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const admin = await prisma.admin.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-      role: 'SUPER_ADMIN'
-    }
+  const admin = await Admin.create({
+    name,
+    email,
+    password: hashedPassword,
+    role: 'SUPER_ADMIN'
   });
 
   return res.status(201).json(
-    new ApiResponse(201, { id: admin.id, email: admin.email }, 'Super admin created successfully')
+    new ApiResponse(201, { id: admin._id, email: admin.email }, 'Super admin created successfully')
   );
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const admin = await prisma.admin.findUnique({ where: { email } });
+  const admin = await Admin.findOne({ email });
 
   if (!admin) {
     throw new ApiError(401, 'Invalid credentials');
@@ -59,7 +50,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const token = jwt.sign(
-    { id: admin.id, email: admin.email, role: admin.role },
+    { id: admin._id, email: admin.email, role: admin.role },
     JWT_SECRET,
     { expiresIn: JWT_EXPIRES_IN as any }
   );
@@ -67,7 +58,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   return res.status(200).json(
     new ApiResponse(200, {
       token,
-      admin: { id: admin.id, name: admin.name, email: admin.email, role: admin.role }
+      admin: { id: admin._id, name: admin.name, email: admin.email, role: admin.role }
     }, 'Login successful')
   );
 });
@@ -75,7 +66,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 export const forgotPassword = asyncHandler(async (req: Request, res: Response) => {
   const { email } = req.body;
 
-  const admin = await prisma.admin.findUnique({ where: { email } });
+  const admin = await Admin.findOne({ email });
 
   if (!admin) {
     // We don't want to reveal if an email exists or not for security
@@ -85,12 +76,9 @@ export const forgotPassword = asyncHandler(async (req: Request, res: Response) =
   const resetToken = crypto.randomBytes(32).toString('hex');
   const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-  await prisma.admin.update({
-    where: { id: admin.id },
-    data: {
-      resetToken: hashedToken,
-      resetTokenExp: new Date(Date.now() + 3600000) // 1 hour
-    }
+  await Admin.findByIdAndUpdate(admin._id, {
+    resetToken: hashedToken,
+    resetTokenExp: new Date(Date.now() + 3600000) // 1 hour
   });
 
   const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/admin/reset-password/${resetToken}`;
@@ -118,11 +106,9 @@ export const resetPassword = asyncHandler(async (req: Request, res: Response) =>
 
   const hashedToken = crypto.createHash('sha256').update(token as string).digest('hex');
 
-  const admin = await prisma.admin.findFirst({
-    where: {
-      resetToken: hashedToken,
-      resetTokenExp: { gt: new Date() }
-    }
+  const admin = await Admin.findOne({
+    resetToken: hashedToken,
+    resetTokenExp: { $gt: new Date() }
   });
 
   if (!admin) {
@@ -131,23 +117,17 @@ export const resetPassword = asyncHandler(async (req: Request, res: Response) =>
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await prisma.admin.update({
-    where: { id: admin.id },
-    data: {
-      password: hashedPassword,
-      resetToken: null,
-      resetTokenExp: null
-    }
+  await Admin.findByIdAndUpdate(admin._id, {
+    password: hashedPassword,
+    resetToken: null,
+    resetTokenExp: null
   });
 
   return res.status(200).json(new ApiResponse(200, {}, 'Password reset successful. You can now login.'));
 });
 
 export const getMe = asyncHandler(async (req: any, res: Response) => {
-  const admin = await prisma.admin.findUnique({
-    where: { id: req.user.id },
-    select: { id: true, name: true, email: true, role: true }
-  });
+  const admin = await Admin.findById(req.user.id).select('-password');
 
   if (!admin) {
     throw new ApiError(404, 'Admin not found');
@@ -155,3 +135,4 @@ export const getMe = asyncHandler(async (req: any, res: Response) => {
 
   return res.status(200).json(new ApiResponse(200, admin, 'User data fetched'));
 });
+

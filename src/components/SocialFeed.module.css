@@ -1,0 +1,139 @@
+.socialFeed {
+  padding: 6rem 0;
+  background-color: #ffffff;
+  border-top: 1px solid #f1f5f9;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.header h2 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.header p {
+  font-size: 1.15rem;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 3rem;
+  align-items: start;
+}
+
+.embedCard {
+  background: #f8fafc;
+  border-radius: 32px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.embedHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.iconCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.facebook { background: #1877F2; }
+.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.youtube { background: #FF0000; }
+
+.embedHeader h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.iframeWrapper {
+  flex: 1;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: white;
+}
+
+.placeholder p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.visitBtn {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.visitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .socialFeed {
+    padding: 4rem 0;
+  }
+  .header h2 {
+    font-size: 2rem;
+  }
+  .embedCard {
+    height: 500px;
+  }
+}

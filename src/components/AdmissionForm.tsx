@@ -25,7 +25,7 @@ const AdmissionForm = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admissions`, {
+      const res = await fetch('/api/admissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -33,7 +33,7 @@ const AdmissionForm = () => {
 
       const data = await res.json();
 
-      if (data.success) {
+      if (res.ok) {
         setStatus({ type: 'success', message: 'Inquiry submitted successfully! We will contact you soon.' });
         setFormData({ parentName: '', studentName: '', email: '', phone: '', grade: '' });
       } else {
@@ -49,7 +49,7 @@ const AdmissionForm = () => {
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.title}>Admission Inquiry</h2>
-      <p className={styles.subtitle}>Fill in the details below and our team will get back to you shortly.</p>
+      <p className={styles.subtitle}>Start your child's journey with Rishi Vidyalaya today.</p>
 
       {status.message && (
         <div className={`${styles.alert} ${status.type === 'success' ? styles.success : styles.error}`}>
@@ -60,7 +60,7 @@ const AdmissionForm = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
           <div className={styles.group}>
-            <label htmlFor="parentName">Parent/Guardian Name *</label>
+            <label htmlFor="parentName">Parent/Guardian Name</label>
             <input
               type="text"
               id="parentName"
@@ -68,12 +68,12 @@ const AdmissionForm = () => {
               value={formData.parentName}
               onChange={handleChange}
               required
-              placeholder="Enter your full name"
+              placeholder="Your full name"
             />
           </div>
 
           <div className={styles.group}>
-            <label htmlFor="studentName">Student Name *</label>
+            <label htmlFor="studentName">Student Name</label>
             <input
               type="text"
               id="studentName"
@@ -81,12 +81,12 @@ const AdmissionForm = () => {
               value={formData.studentName}
               onChange={handleChange}
               required
-              placeholder="Enter student's full name"
+              placeholder="Student's full name"
             />
           </div>
 
           <div className={styles.group}>
-            <label htmlFor="email">Email Address *</label>
+            <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
@@ -99,7 +99,7 @@ const AdmissionForm = () => {
           </div>
 
           <div className={styles.group}>
-            <label htmlFor="phone">Phone Number *</label>
+            <label htmlFor="phone">Phone Number</label>
             <input
               type="tel"
               id="phone"
@@ -107,12 +107,12 @@ const AdmissionForm = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="Enter 10-digit number"
+              placeholder="10-digit number"
             />
           </div>
 
           <div className={styles.group}>
-            <label htmlFor="grade">Grade Applying For *</label>
+            <label htmlFor="grade">Grade Applying For</label>
             <select
               id="grade"
               name="grade"
@@ -123,8 +123,8 @@ const AdmissionForm = () => {
               <option value="">Select Grade</option>
               <option value="LKG">LKG</option>
               <option value="UKG">UKG</option>
-              {Array.from({ length: 7 }, (_, i) => (
-                <option key={i + 1} value={`Grade ${i + 1}`}>{`Grade ${i + 1}`}</option>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                <option key={n} value={`Grade ${n}`}>{`Grade ${n}`}</option>
               ))}
             </select>
           </div>
@@ -137,5 +137,6 @@ const AdmissionForm = () => {
     </div>
   );
 };
+
 
 export default AdmissionForm;

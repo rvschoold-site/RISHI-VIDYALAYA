@@ -1,89 +1,92 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
 }
 
 .contactWrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-3xl);
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  margin-top: 3rem;
 }
 
-.contactInfo h2, .contactForm h2 {
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactForm {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 3rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+.contactForm h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--primary);
-  margin-bottom: var(--spacing-lg);
-}
-
-.contactInfo p {
-  margin-bottom: var(--spacing-sm);
-  color: var(--text-muted);
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 1.5rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: 0.5rem;
 }
 
 .formGroup label {
-  font-weight: 500;
-  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
+  margin-left: 0.25rem;
 }
 
-.formGroup input, .formGroup textarea {
-  padding: 0.75rem;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 8px;
-  font-family: inherit;
+.formGroup input {
+  padding: 1rem 1.25rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  background-color: white;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.formGroup input:focus {
   outline: none;
-  transition: border-color 0.2s;
-}
-
-.formGroup input:focus, .formGroup textarea:focus {
-  border-color: var(--primary);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.05);
+  transform: translateY(-2px);
 }
 
 .inputError {
-  border-color: #f04444 !important;
-  background-color: rgba(240, 68, 68, 0.05);
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
 }
 
 .errorMessage {
-  color: #f04444;
+  color: #ef4444;
   font-size: 0.8rem;
-  margin-top: 2px;
   font-weight: 500;
+  margin-left: 0.25rem;
 }
 
-@media (max-width: 1024px) {
-  .contactWrapper {
-    gap: var(--spacing-xl);
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 968px) {
   .contactWrapper {
     grid-template-columns: 1fr;
-    gap: var(--spacing-2xl);
-  }
-  
-  .contactInfo {
-    order: 2; /* Form usually more important to be first on mobile? Or keep info first? */
+    gap: 4rem;
   }
   
   .contactForm {
-    order: 1;
-  }
-}
-
-@media (max-width: 480px) {
-  .contactWrapper {
-    gap: var(--spacing-xl);
+    padding: 2rem;
   }
 }

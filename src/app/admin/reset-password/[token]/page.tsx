@@ -21,10 +21,10 @@ export default function ResetPasswordPage() {
     setStatus({ loading: true, error: '', success: '' });
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/auth/reset-password/${token}`, {
+      const res = await fetch('/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
+        body: JSON.stringify({ token, password })
       });
 
       const data = await res.json();

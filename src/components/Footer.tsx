@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <div className={styles.socialLinks}>
             <Link 
-              href="https://www.facebook.com/profile.php?id=61572273309577" 
+              href="https://www.facebook.com/share/18NrMNiN1E/?mibextid=wwXIfr" 
               target="_blank" 
               className={styles.socialIcon} 
               aria-label="Facebook"
@@ -21,7 +21,7 @@ export default function Footer() {
               <FaFacebookF size={18} />
             </Link>
             <Link 
-              href="https://www.instagram.com/rishi_vidyalaya/" 
+              href="https://www.instagram.com/rishi_vidyalaya?igsh=MXhmdHpkcXZ0NzVpbQ==" 
               target="_blank" 
               className={styles.socialIcon} 
               aria-label="Instagram"
@@ -29,7 +29,7 @@ export default function Footer() {
               <FaInstagram size={20} />
             </Link>
             <Link 
-              href="https://www.youtube.com/@RishiVidyalaya" 
+              href="https://youtube.com/@rishividyalaya?si=UvrMNUWvgr1Gegyc" 
               target="_blank" 
               className={styles.socialIcon} 
               aria-label="YouTube"
@@ -54,6 +54,7 @@ export default function Footer() {
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/academics">Academics & Beyond</Link></li>
             <li><Link href="/gallery">Gallery</Link></li>
+            <li><Link href="/careers">Careers</Link></li>
             <li><Link href="/contact">Contact</Link></li>
           </ul>
         </div>

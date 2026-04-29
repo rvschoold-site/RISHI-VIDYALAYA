@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
-import prisma from '../config/db';
-import { asyncHandler } from '../utils/asyncHandler';
-import { ApiResponse } from '../utils/ApiResponse';
-import { ApiError } from '../utils/ApiError';
+import SiteSettings from '../../../src/models/SiteSettings';
 
 export const getSettings = asyncHandler(async (req: Request, res: Response) => {
-  const settings = await prisma.siteSettings.findMany();
+  const settings = await SiteSettings.find();
   
   // Convert array to object for easier consumption
-  const settingsObj = settings.reduce((acc: any, setting) => {
+  const settingsObj = settings.reduce((acc: any, setting: any) => {
     acc[setting.key] = setting.value;
     return acc;
   }, {});
@@ -20,12 +17,13 @@ export const updateSettings = asyncHandler(async (req: Request, res: Response) =
   const updates = req.body; // { key: value, ... }
 
   const updatePromises = Object.entries(updates).map(([key, value]) => {
-    return prisma.siteSettings.upsert({
-      where: { key },
-      update: { value: String(value) },
-      create: { key, value: String(value) }
-    });
+    return SiteSettings.findOneAndUpdate(
+      { key },
+      { value: String(value) },
+      { upsert: true, new: true }
+    );
   });
+
 
   await Promise.all(updatePromises);
 

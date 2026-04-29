@@ -21,15 +21,35 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    const userData = localStorage.getItem('adminUser');
+    const checkAuth = async () => {
+      const token = localStorage.getItem('adminToken');
 
-    if (!token && !isPublicRoute) {
-      router.push('/admin/login');
-    } else if (userData) {
-      setAdmin(JSON.parse(userData));
-    }
-    setLoading(false);
+      if (!token && !isPublicRoute) {
+        router.push('/admin/login');
+        setLoading(false);
+        return;
+      }
+
+      if (token) {
+        try {
+          const res = await fetch('/api/auth/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const data = await res.json();
+          if (data.success) {
+            setAdmin(data.data);
+            localStorage.setItem('adminUser', JSON.stringify(data.data));
+          } else if (!isPublicRoute) {
+            handleLogout();
+          }
+        } catch (err) {
+          if (!isPublicRoute) handleLogout();
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
   }, [pathname, router, isPublicRoute]);
 
   const handleLogout = () => {
@@ -41,6 +61,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navLinks = [
     { name: 'Dashboard', href: '/admin', icon: '📊' },
     { name: 'Admissions Inbox', href: '/admin/admissions', icon: '📬' },
+    { name: 'Job Applications', href: '/admin/careers', icon: '💼' },
+    { name: 'Page Management', href: '/admin/pages', icon: '📄' },
     { name: 'Site Settings', href: '/admin/settings', icon: '⚙️' },
   ];
 
