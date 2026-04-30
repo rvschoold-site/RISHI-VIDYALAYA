@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import JobApplication from '@/models/JobApplication';
-import { v2 as cloudinary } from 'cloudinary';
 import { verifyAdmin, unauthorizedResponse } from '@/lib/auth';
-
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import { uploadFile } from '@/lib/storage';
 
 export async function GET(req: NextRequest) {
   try {
@@ -45,25 +38,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Resume is required' }, { status: 400 });
     }
 
-    // Convert file to buffer for Cloudinary upload
-    const bytes = await resumeFile.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Upload to Cloudinary
-    const uploadResult = await new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder: 'careers/resumes',
-          resource_type: 'auto', // Auto-detect PDF, DOCX, or Image
-          public_id: `${Date.now()}-${fullName.replace(/\s+/g, '_')}_resume`,
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      );
-      uploadStream.end(buffer);
-    }) as any;
+    // Upload using unified storage utility (will use S3 for PDFs)
+    const uploadResult = await uploadFile(resumeFile);
 
     // Save to database
     const application = await JobApplication.create({
@@ -74,7 +50,7 @@ export async function POST(req: NextRequest) {
       positionName,
       experience,
       qualification,
-      resumeUrl: uploadResult.secure_url,
+      resumeUrl: uploadResult.url,
       coverLetter,
       subjects,
     });

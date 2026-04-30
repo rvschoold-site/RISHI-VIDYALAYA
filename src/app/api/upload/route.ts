@@ -1,14 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { v2 as cloudinary } from 'cloudinary';
 import { verifyAdmin, unauthorizedResponse } from '@/lib/auth';
 import File from '@/models/File';
 import dbConnect from '@/lib/mongodb';
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import { uploadFile } from '@/lib/storage';
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,28 +10,14 @@ export async function POST(req: NextRequest) {
     if (!admin) return unauthorizedResponse();
 
     const formData = await req.formData();
-    const file = formData.get('file') as File;
+    const file = formData.get('file') as any;
 
     if (!file) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Upload to Cloudinary
-    const uploadResponse = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        { 
-          folder: 'rishi-vidyalaya',
-          resource_type: 'auto'
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(buffer);
-    }) as any;
+    // Upload using unified storage utility
+    const uploadResponse = await uploadFile(file);
 
     await dbConnect();
     
@@ -46,15 +26,16 @@ export async function POST(req: NextRequest) {
       fileName: file.name,
       fileType: file.type.split('/')[0],
       mimeType: file.type,
-      storage: 'cloudinary',
-      url: uploadResponse.secure_url,
-      publicId: uploadResponse.public_id,
+      storage: uploadResponse.storage,
+      url: uploadResponse.url,
+      publicId: uploadResponse.publicId,
+      key: uploadResponse.key,
       size: file.size,
     });
 
     return NextResponse.json({ 
       success: true, 
-      url: uploadResponse.secure_url,
+      url: uploadResponse.url,
       data: fileDoc 
     });
 

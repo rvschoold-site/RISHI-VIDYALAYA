@@ -1,8 +1,11 @@
-import mongoose from 'mongoose';
 import dns from 'dns';
+import mongoose from 'mongoose';
 
 // Fix for ECONNREFUSED on querySrv by using Google DNS
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+if (process.env.NODE_ENV === 'development') {
+  console.log('Applying MongoDB DNS fix (Google DNS)...');
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
 

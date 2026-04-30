@@ -22,7 +22,23 @@ const images = [
 ];
 
 export default function Gallery() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [dynamicImages, setDynamicImages] = React.useState<any[]>([]);
+  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    fetch('/api/gallery')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setDynamicImages(data);
+        }
+      })
+      .catch(err => console.error('Failed to fetch gallery:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const displayImages = dynamicImages.length > 0 ? dynamicImages : images;
 
   return (
     <div className={styles.container}>
@@ -32,15 +48,19 @@ export default function Gallery() {
       </div>
       <section className="section">
         <div className={styles.gridGallery}>
-          {images.map((img, index) => (
-            <Reveal key={img.id} delay={index * 0.1}>
+          {displayImages.map((img, index) => (
+            <Reveal key={img._id || img.id} delay={index * 0.1}>
               <div className={styles.galleryItem} onClick={() => setSelectedImage(img.url)}>
                 <Image 
                   src={img.url} 
                   alt={img.title} 
                   fill 
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  quality={75}
+                  priority={index < 4}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className={styles.image} 
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                   style={{ objectFit: 'cover' }}
                 />
                 <div className={styles.overlay}>
@@ -60,7 +80,11 @@ export default function Gallery() {
             src={selectedImage} 
             alt="Enlarged view" 
             fill 
+            quality={85}
+            sizes="100vw"
             className={styles.lightboxImage} 
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
             style={{ objectFit: 'contain' }}
           />
         </div>

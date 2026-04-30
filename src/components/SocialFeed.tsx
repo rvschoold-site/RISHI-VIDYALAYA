@@ -6,6 +6,12 @@ import styles from './SocialFeed.module.css';
 import Reveal from './Reveal';
 
 export default function SocialFeed() {
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <section className={styles.socialFeed}>
       <div className={styles.container}>
@@ -26,18 +32,25 @@ export default function SocialFeed() {
                 <h3>Facebook Feed</h3>
               </div>
               <div className={styles.iframeWrapper}>
-                <iframe 
-                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61572273309577&tabs=timeline&width=360&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=776730922422337" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 'none', overflow: 'hidden' }} 
-                  scrolling="no" 
-                  frameBorder="0" 
-                  allowFullScreen={true} 
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="Rishi Vidyalaya Facebook"
-                  loading="lazy"
-                ></iframe>
+                {isMounted && (
+                  <iframe 
+                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61572273309577&tabs=timeline&width=360&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=776730922422337" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 'none', overflow: 'hidden' }} 
+                    scrolling="no" 
+                    frameBorder="0" 
+                    allowFullScreen={true} 
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    title="Rishi Vidyalaya Facebook"
+                    loading="lazy"
+                  ></iframe>
+                )}
+                {!isMounted && (
+                  <div className={styles.placeholder} style={{ height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ color: '#94a3b8' }}>Loading Social Feed...</p>
+                  </div>
+                )}
               </div>
             </div>
 

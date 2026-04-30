@@ -4,6 +4,21 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
+import { 
+  LayoutDashboard, 
+  Inbox, 
+  Briefcase, 
+  FileText, 
+  Image as ImageIcon, 
+  Settings, 
+  Users, 
+  LogOut, 
+  Home, 
+  Info, 
+  GraduationCap,
+  ExternalLink,
+  ChevronDown
+} from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -50,18 +65,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.push('/admin/login');
   };
 
+  const [openDropdown, setOpenDropdown] = useState<string | null>('pages');
+
   const navLinks = [
-    { name: 'Dashboard', href: '/admin', icon: '📊' },
-    { name: 'Admissions Inbox', href: '/admin/admissions', icon: '📬' },
-    { name: 'Job Applications', href: '/admin/careers', icon: '💼' },
-    { name: 'Page Management', href: '/admin/pages', icon: '📄' },
-    { name: 'Site Settings', href: '/admin/settings', icon: '⚙️' },
+    { name: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={18} /> },
+    { name: 'Admissions Inbox', href: '/admin/admissions', icon: <Inbox size={18} /> },
+    { name: 'Job Applications', href: '/admin/careers', icon: <Briefcase size={18} /> },
+    { name: 'Gallery', href: '/admin/gallery', icon: <ImageIcon size={18} /> },
+    { name: 'Site Settings', href: '/admin/settings', icon: <Settings size={18} /> },
   ];
 
   // Add Admin Users link only for SUPER_ADMIN
   if (admin?.role === 'SUPER_ADMIN') {
-    navLinks.push({ name: 'Admin Users', href: '/admin/users', icon: '👥' });
+    navLinks.push({ name: 'Admin Users', href: '/admin/users', icon: <Users size={18} /> });
   }
+
+  const toggleDropdown = (name: string) => {
+    setOpenDropdown(openDropdown === name ? null : name);
+  };
 
   // If loading or it's a public route, just render the content
   if (loading || isPublicRoute) {
@@ -73,24 +94,58 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className={styles.sidebar}>
         <div className={styles.sidebarBrand}>RISHI ADMIN</div>
         <nav className={styles.sidebarNav}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`${styles.navLink} ${pathname === link.href ? styles.navLinkActive : ''}`}
-            >
-              <span style={{ fontSize: '1.2rem' }}>{link.icon}</span>
-              <span>{link.name}</span>
-            </Link>
+          {navLinks.map((link: any) => (
+            <React.Fragment key={link.name}>
+              {link.subItems ? (
+                <div className={styles.navGroup}>
+                  <button
+                    onClick={() => toggleDropdown(link.name.toLowerCase())}
+                    className={`${styles.navLink} ${pathname.startsWith(link.href) ? styles.navLinkActive : ''}`}
+                    style={{ width: '100%', border: 'none', background: 'none', cursor: 'pointer', justifyContent: 'space-between' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{ display: 'flex', alignItems: 'center' }}>{link.icon}</span>
+                      <span>{link.name}</span>
+                    </div>
+                    <span style={{ display: 'flex', alignItems: 'center', transition: 'transform 0.3s', transform: openDropdown === link.name.toLowerCase() ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                      <ChevronDown size={14} />
+                    </span>
+                  </button>
+                  
+                  {openDropdown === link.name.toLowerCase() && (
+                    <div className={styles.subNav}>
+                      {link.subItems.map((sub: any) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={`${styles.subNavLink} ${pathname === sub.href ? styles.subNavLinkActive : ''}`}
+                        >
+                          <span>{sub.icon}</span>
+                          <span>{sub.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href={link.href}
+                  className={`${styles.navLink} ${pathname === link.href ? styles.navLinkActive : ''}`}
+                >
+                  <span style={{ display: 'flex', alignItems: 'center' }}>{link.icon}</span>
+                  <span>{link.name}</span>
+                </Link>
+              )}
+            </React.Fragment>
           ))}
         </nav>
 
-        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <Link href="/" className={styles.navLink}>
-            <span>🏠</span> <span>Back to Site</span>
+        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem', borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
+          <Link href="/" className={styles.navLink} style={{ fontSize: '0.85rem' }}>
+            <ExternalLink size={16} /> <span>Back to Site</span>
           </Link>
-          <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
-            <span>🚪</span> <span>Logout</span>
+          <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', fontSize: '0.85rem', color: '#ef4444' }}>
+            <LogOut size={16} /> <span>Logout</span>
           </button>
         </div>
       </aside>

@@ -78,6 +78,9 @@ export default function Academics() {
                 src="/PASSION.JPG.jpeg" 
                 alt="IIT-NEET Foundation Classes" 
                 fill 
+                quality={75}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                 sizes="(max-width: 1200px) 100vw, 1200px" 
                 style={{ objectFit: 'cover' }} 
               />

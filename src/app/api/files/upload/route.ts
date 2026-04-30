@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
       storage: result.storage,
       url: result.url,
       publicId: result.publicId,
+      key: result.key,
       size: file.size,
     });
 

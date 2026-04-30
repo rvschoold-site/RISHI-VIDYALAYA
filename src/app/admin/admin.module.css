@@ -5,22 +5,26 @@
 }
 
 .sidebar {
-  width: 280px;
+  width: 240px;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
-  position: sticky;
+  padding: 1.5rem 1rem;
+  position: fixed;
+  left: 0;
   top: 0;
+  bottom: 0;
   height: 100vh;
+  overflow-y: auto;
+  z-index: 50;
 }
 
 .sidebarBrand {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--primary);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   letter-spacing: -0.025em;
   padding-left: 0.5rem;
 }
@@ -34,12 +38,13 @@
 .navLink {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.875rem 1rem;
-  border-radius: 12px;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
   color: #64748b;
   font-weight: 600;
   text-decoration: none;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
 }
 
@@ -54,38 +59,71 @@
   color: var(--accent) !important;
 }
 
+.subNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-left: 2.25rem;
+  margin-top: 0.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.subNavLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  color: #64748b;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.subNavLink:hover {
+  background-color: #f8fafc;
+  color: var(--primary);
+}
+
+.subNavLinkActive {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  margin-left: 240px;
 }
 
 .topbar {
-  height: 80px;
+  height: 64px;
   background: white;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .content {
-  padding: 2.5rem;
+  padding: 1.5rem;
   flex: 1;
 }
 
 /* Common Components */
 .card {
   background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
 }
 
 .statsGrid {
@@ -97,23 +135,23 @@
 
 .statCard {
   background: white;
-  padding: 1.75rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  border-bottom: 4px solid var(--accent);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid var(--accent);
 }
 
 .statLabel {
   color: #64748b;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .statValue {
-  font-size: 2.25rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--primary);
 }
@@ -131,8 +169,8 @@
 }
 
 .table th {
-  padding: 1rem;
-  font-size: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #64748b;
@@ -141,9 +179,9 @@
 }
 
 .table td {
-  padding: 1.25rem 1rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid #f1f5f9;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   color: #1e293b;
 }
 
@@ -169,11 +207,11 @@
 .buttonGhost {
   background: none;
   border: 1px solid #e2e8f0;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -214,6 +252,9 @@
     width: 80px;
     padding: 2rem 0.75rem;
     align-items: center;
+  }
+  .main {
+    margin-left: 80px;
   }
   .sidebarBrand {
     font-size: 0;

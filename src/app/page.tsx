@@ -16,6 +16,10 @@ export default function Home() {
           alt="Rishi Vidyalaya Campus"
           fill
           priority
+          quality={75}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+          sizes="100vw"
           className={styles.heroBg}
           style={{ objectFit: 'cover' }}
         />
@@ -149,7 +153,16 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.2}>
               <div style={{ position: 'relative', height: '500px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.3)' }}>
-                <Image src="/PURPOSE-1.JPG.jpeg" alt="Innovation at Rishi Vidyalaya" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
+                <Image 
+                  src="/PURPOSE-1.JPG.jpeg" 
+                  alt="Innovation at Rishi Vidyalaya" 
+                  fill 
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                  style={{ objectFit: 'cover' }} 
+                />
                 <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.8))', color: 'white' }}>
                   <h3 style={{ marginBottom: '0.5rem' }}>Digi Fest</h3>
                   <p>A platform for creativity, innovation, and digital presentation skills.</p>
@@ -176,7 +189,16 @@ export default function Home() {
               <Reveal delay={0.1}>
                 <div className="card-hover-scale">
                   <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                    <Image src="/PERFRCTION-1.JPG.jpeg" alt="2 Acres Playground" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
+                    <Image 
+                      src="/PERFRCTION-1.JPG.jpeg" 
+                      alt="2 Acres Playground" 
+                      fill 
+                      quality={75}
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <h3>2 Acres Playground</h3>
                   <p>Cricket, football, volleyball, and athletics. Promoting fitness, teamwork, and discipline.</p>
@@ -185,7 +207,16 @@ export default function Home() {
               <Reveal delay={0.2}>
                 <div className="card-hover-scale">
                   <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                    <Image src="/PASSION.JPG.jpeg" alt="AC Smart Classrooms" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
+                    <Image 
+                      src="/PASSION.JPG.jpeg" 
+                      alt="AC Smart Classrooms" 
+                      fill 
+                      quality={75}
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <h3>AC Smart Classrooms</h3>
                   <p>Digital learning environment that improves concentration and productivity.</p>
@@ -194,7 +225,16 @@ export default function Home() {
               <Reveal delay={0.3}>
                 <div className="card-hover-scale">
                   <div style={{ position: 'relative', height: '240px', borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                    <Image src="/PERFECTION.JPG.jpeg" alt="Green Campus" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
+                    <Image 
+                      src="/PERFECTION.JPG.jpeg" 
+                      alt="Green Campus" 
+                      fill 
+                      quality={75}
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <h3>Green Campus</h3>
                   <p>Eco-friendly, peaceful, and safe environment for healthy learning.</p>
@@ -231,7 +271,16 @@ export default function Home() {
                 </div>
               </div>
               <div style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden' }}>
-                <Image src="/PROJECT%20BASED%20LEARNING-1.JPG.jpeg" alt="Student Activities" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
+                <Image 
+                  src="/PROJECT%20BASED%20LEARNING-1.JPG.jpeg" 
+                  alt="Student Activities" 
+                  fill 
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                  style={{ objectFit: 'cover' }} 
+                />
               </div>
             </div>
           </div>

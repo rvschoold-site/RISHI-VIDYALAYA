@@ -55,6 +55,9 @@ export default function About() {
                 src="/PROJECT%20BASED%20LEARNING-1.JPG.jpeg" 
                 alt="Students Learning" 
                 fill 
+                quality={75}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
                 style={{ objectFit: 'cover' }} 
               />
@@ -144,6 +147,9 @@ export default function About() {
                   src="/PERFECTION.JPG.jpeg" 
                   alt="Rishi Vidyalaya Campus" 
                   fill 
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
                   style={{ objectFit: 'cover' }} 
                 />

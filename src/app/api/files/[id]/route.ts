@@ -20,7 +20,7 @@ export async function GET(
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
-    // Generate dynamic URL if needed
+    // Generate dynamic URL (pre-signed for S3)
     const accessUrl = await getAccessUrl(file);
 
     return NextResponse.json({
@@ -53,9 +53,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
-    // Delete from physical storage (Cloudinary)
-    if (file.publicId) {
-      await deleteStoredFile(file.storage, file.publicId);
+    // Delete from physical storage
+    const storageId = file.storage === 'cloudinary' ? file.publicId : file.key;
+    if (storageId) {
+      await deleteStoredFile(file.storage, storageId);
     }
 
     // Delete from MongoDB

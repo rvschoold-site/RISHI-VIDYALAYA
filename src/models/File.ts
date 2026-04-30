@@ -5,9 +5,10 @@ export interface IFile extends Document {
   fileName: string;
   fileType: string;
   mimeType: string;
-  storage: 'cloudinary';
+  storage: 'cloudinary' | 's3';
   url: string;
   publicId?: string; // Cloudinary
+  key?: string; // S3
   size: number;
   createdAt: Date;
   updatedAt: Date;
@@ -18,9 +19,10 @@ const FileSchema: Schema = new Schema({
   fileName: { type: String, required: true },
   fileType: { type: String, required: true },
   mimeType: { type: String, required: true },
-  storage: { type: String, enum: ['cloudinary'], required: true },
+  storage: { type: String, enum: ['cloudinary', 's3'], required: true },
   url: { type: String, required: true },
   publicId: { type: String },
+  key: { type: String },
   size: { type: Number, required: true },
 }, { 
   timestamps: true,

@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 const dns = require('dns');
+require('dotenv').config();
 
-// Use Google DNS as in the app
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-const MONGODB_URI = "mongodb+srv://rvschoold_db_user:fEfkwixUu8uKJYei@rishividyalaya.e9iomnk.mongodb.net/RishiVidyalaya_DB?retryWrites=true&w=majority&appName=rishividyalaya";
+const uri = process.env.MONGODB_URI;
 
-async function testConn() {
+async function testConnection() {
+  console.log('Testing MongoDB connection to:', uri.split('@')[1]);
   try {
-    console.log('Connecting to MongoDB...');
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(uri);
     console.log('Connected successfully!');
     process.exit(0);
-  } catch (err) {
-    console.error('Connection failed:', err);
+  } catch (error) {
+    console.error('Connection failed:', error);
     process.exit(1);
   }
 }
 
-testConn();
+testConnection();
