@@ -17,7 +17,8 @@ import {
   Info, 
   GraduationCap,
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  History
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -78,6 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // Add Admin Users link only for SUPER_ADMIN
   if (admin?.role === 'SUPER_ADMIN') {
     navLinks.push({ name: 'Admin Users', href: '/admin/users', icon: <Users size={18} /> });
+    navLinks.push({ name: 'Activity Logs', href: '/admin/logs', icon: <History size={18} /> });
   }
 
   const toggleDropdown = (name: string) => {

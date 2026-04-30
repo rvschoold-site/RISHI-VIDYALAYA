@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Admin from '@/models/Admin';
 import bcrypt from 'bcryptjs';
+import { createAdminLog } from '@/lib/logger';
 
 export async function GET() {
   try {
@@ -39,6 +40,16 @@ export async function POST(req: Request) {
       email,
       password: hashedPassword,
       role: 'SUPER_ADMIN'
+    });
+
+    // Log Activity
+    await createAdminLog({
+      adminId: admin.id,
+      adminName: admin.name,
+      action: 'SYSTEM_SETUP_COMPLETED',
+      module: 'AUTH',
+      details: 'First Super Admin account created during setup.',
+      req
     });
 
     return NextResponse.json({ 

@@ -3,6 +3,7 @@ import dbConnect from '@/lib/mongodb';
 import Admin from '@/models/Admin';
 import bcrypt from 'bcryptjs';
 import { createSession } from '@/lib/auth';
+import { createAdminLog } from '@/lib/logger';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_dev_only';
 
@@ -29,6 +30,16 @@ export async function POST(req: Request) {
 
     // Create Session via Cookie
     const token = await createSession(admin.id);
+
+    // Log Activity
+    await createAdminLog({
+      adminId: admin.id,
+      adminName: admin.name,
+      action: 'LOGIN',
+      module: 'AUTH',
+      details: `Admin logged in successfully from IP: ${req.headers.get('x-forwarded-for') || 'local'}`,
+      req
+    });
 
     return NextResponse.json({
       success: true,

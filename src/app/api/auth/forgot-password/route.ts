@@ -3,6 +3,7 @@ import dbConnect from '@/lib/mongodb';
 import Admin from '@/models/Admin';
 import crypto from 'crypto';
 import { sendEmail } from '@/lib/email';
+import { createAdminLog } from '@/lib/logger';
 
 export async function POST(req: Request) {
   try {
@@ -40,10 +41,27 @@ export async function POST(req: Request) {
       html: message
     });
 
+    // Log Activity
+    await createAdminLog({
+      adminId: admin._id as string,
+      adminName: admin.name,
+      action: 'FORGOT_PASSWORD_REQUEST',
+      module: 'AUTH',
+      details: `Password reset link requested for ${admin.email}`,
+      req
+    });
+
     return NextResponse.json({ message: 'Password reset link sent to email.' });
 
   } catch (error: any) {
-    console.error('Forgot Password API Error:', error);
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    console.error('Forgot Password API Error:', {
+      message: error.message,
+      stack: error.stack,
+      error
+    });
+    return NextResponse.json(
+      { message: error.message || 'Internal Server Error' }, 
+      { status: 500 }
+    );
   }
 }

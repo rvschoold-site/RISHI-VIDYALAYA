@@ -53,3 +53,15 @@ export async function verifyAdmin(req: Request) {
 export function unauthorizedResponse() {
   return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
 }
+
+export function forbiddenResponse() {
+  return NextResponse.json({ message: 'Forbidden: Super Admin access required' }, { status: 403 });
+}
+
+export async function verifySuperAdmin(req: Request) {
+  const admin = await verifyAdmin(req);
+  if (!admin || admin.role !== 'SUPER_ADMIN') {
+    return null;
+  }
+  return admin;
+}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import SiteSettings from '@/models/SiteSettings';
 import { verifyAdmin, unauthorizedResponse } from '@/lib/auth';
+import { createAdminLog } from '@/lib/logger';
 
 export async function GET() {
   try {
@@ -51,6 +52,16 @@ export async function PATCH(req: NextRequest) {
     });
 
     await Promise.all(updatePromises);
+
+    // Log Activity
+    await createAdminLog({
+      adminId: admin.id,
+      adminName: admin.name,
+      action: 'UPDATE_SETTINGS',
+      module: 'SETTINGS',
+      details: `Updated site settings: ${Object.keys(updates).join(', ')}`,
+      req
+    });
 
     return NextResponse.json({ success: true, message: 'Settings updated successfully' });
 
