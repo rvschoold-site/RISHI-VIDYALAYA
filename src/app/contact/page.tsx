@@ -3,13 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from './contact.module.css';
 import Reveal from '@/components/Reveal';
-import { Mail, Phone, MapPin, Globe, MessageSquare, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, Loader2, CheckCircle } from 'lucide-react';
 
+/**
+ * Contact page – clean, professional layout.
+ * Info strip → two-column (form + map/details) → office hours.
+ */
 export default function Contact() {
   const [settings, setSettings] = useState<any>({});
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
@@ -20,156 +25,169 @@ export default function Contact() {
       .then(res => res.json())
       .then(data => {
         if (data.success) setSettings(data.data);
-      });
+      })
+      .catch(() => {});
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    
-    // Simulate API call for contact message
+    // Simulate sending — replace with real API when ready
     setTimeout(() => {
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    }, 1200);
   };
 
-  const contactCards = [
-    {
-      icon: <Phone size={24} />,
-      title: 'Call Us',
-      value: settings.CONTACT_PHONE || '+91 90634 66944',
-      link: `tel:${settings.CONTACT_PHONE}`
-    },
-    {
-      icon: <Mail size={24} />,
-      title: 'Email Us',
-      value: settings.CONTACT_EMAIL || 'rvschoold@gmail.com',
-      link: `mailto:${settings.CONTACT_EMAIL}`
-    },
-    {
-      icon: <MapPin size={24} />,
-      title: 'Visit Us',
-      value: 'N.S Gate road, Opp: Tidco Houses, Dharmavaram',
-      link: 'https://maps.google.com'
-    }
-  ];
+  const phone = settings.CONTACT_PHONE || '+91 90634 66944';
+  const email = settings.CONTACT_EMAIL || 'rvschoold@gmail.com';
 
   return (
-    <div className={styles.contactContainer}>
-      <section className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '6rem 2rem' }}>
-        <Reveal>
-          <span className="badge-premium" style={{ marginBottom: '1rem', display: 'inline-block' }}>Get In Touch</span>
-          <h1 style={{ color: 'white', fontSize: '3.5rem', fontWeight: 800 }}>Contact Rishi Vidyalaya</h1>
-          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
-            Have questions? We're here to help you on your educational journey.
-          </p>
-        </Reveal>
+    <div className={styles.page}>
+      {/* Hero */}
+      <div className="page-hero">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you. Reach out for admissions, careers, or general inquiries.</p>
+      </div>
+
+      {/* Contact Info Strip */}
+      <section className={styles.infoStrip}>
+        <div className={`container ${styles.infoGrid}`}>
+          <Reveal delay={0}>
+            <a href={`tel:${phone}`} className={styles.infoItem}>
+              <div className={styles.infoIcon}><Phone size={20} /></div>
+              <div>
+                <span className={styles.infoLabel}>Phone</span>
+                <span className={styles.infoValue}>{phone}</span>
+              </div>
+            </a>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <a href={`mailto:${email}`} className={styles.infoItem}>
+              <div className={styles.infoIcon}><Mail size={20} /></div>
+              <div>
+                <span className={styles.infoLabel}>Email</span>
+                <span className={styles.infoValue}>{email}</span>
+              </div>
+            </a>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <a href="https://maps.app.goo.gl/rishividyalaya" target="_blank" rel="noopener noreferrer" className={styles.infoItem}>
+              <div className={styles.infoIcon}><MapPin size={20} /></div>
+              <div>
+                <span className={styles.infoLabel}>Address</span>
+                <span className={styles.infoValue}>N.S Gate Road, Opp: Tidco Houses, Dharmavaram</span>
+              </div>
+            </a>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <div className={styles.infoItem}>
+              <div className={styles.infoIcon}><Clock size={20} /></div>
+              <div>
+                <span className={styles.infoLabel}>Office Hours</span>
+                <span className={styles.infoValue}>Mon – Sat, 9:00 AM – 5:30 PM</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
+      {/* Main Content */}
       <section className="section">
         <div className="container">
-          <div className={styles.cardGrid}>
-            {contactCards.map((card, idx) => (
-              <Reveal key={idx} delay={idx * 0.1}>
-                <a href={card.link} className={styles.infoCard}>
-                  <div className={styles.iconCircle}>{card.icon}</div>
-                  <h3>{card.title}</h3>
-                  <p>{card.value}</p>
-                </a>
-              </Reveal>
-            ))}
-          </div>
+          <div className={styles.mainGrid}>
 
-          <div className={styles.mainWrapper}>
-            <div className={styles.formSide}>
-              <Reveal>
-                <div className={styles.formHeader}>
-                  <MessageSquare size={32} className="text-accent" />
-                  <h2>Send us a Message</h2>
-                  <p>Fill out the form below and our team will get back to you within 24 hours.</p>
-                </div>
+            {/* Form */}
+            <Reveal>
+              <div className={styles.formCard}>
+                <h2 className={styles.formTitle}>Send a Message</h2>
+                <p className={styles.formSubtitle}>Fill out the form and we'll get back to you within 24 hours.</p>
 
                 {status === 'success' ? (
-                  <div className={styles.successMessage}>
-                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+                  <div className={styles.successBox}>
+                    <CheckCircle size={40} />
                     <h3>Message Sent!</h3>
-                    <p>Thank you for contacting us. We'll be in touch soon.</p>
-                    <button onClick={() => setStatus('idle')} className="btn btn-outline" style={{ marginTop: '1.5rem' }}>Send Another</button>
+                    <p>Thank you for reaching out. Our team will respond shortly.</p>
+                    <button onClick={() => setStatus('idle')} className={styles.btnOutline}>Send Another</button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className={styles.form}>
-                    <div className={styles.formGrid}>
-                      <div className={styles.formGroup}>
-                        <label>Your Name</label>
-                        <input 
-                          type="text" required
-                          value={formData.name}
-                          onChange={e => setFormData({...formData, name: e.target.value})}
-                          placeholder="Full Name"
-                        />
+                    <div className={styles.row}>
+                      <div className={styles.field}>
+                        <label htmlFor="name">Full Name *</label>
+                        <input id="name" name="name" type="text" required placeholder="Your name" value={formData.name} onChange={handleChange} />
                       </div>
-                      <div className={styles.formGroup}>
-                        <label>Email Address</label>
-                        <input 
-                          type="email" required
-                          value={formData.email}
-                          onChange={e => setFormData({...formData, email: e.target.value})}
-                          placeholder="email@example.com"
-                        />
+                      <div className={styles.field}>
+                        <label htmlFor="email">Email *</label>
+                        <input id="email" name="email" type="email" required placeholder="email@example.com" value={formData.email} onChange={handleChange} />
                       </div>
                     </div>
-                    <div className={styles.formGroup}>
-                      <label>Subject</label>
-                      <input 
-                        type="text" required
-                        value={formData.subject}
-                        onChange={e => setFormData({...formData, subject: e.target.value})}
-                        placeholder="What is this regarding?"
-                      />
+                    <div className={styles.row}>
+                      <div className={styles.field}>
+                        <label htmlFor="phone">Phone</label>
+                        <input id="phone" name="phone" type="tel" placeholder="+91 00000 00000" value={formData.phone} onChange={handleChange} />
+                      </div>
+                      <div className={styles.field}>
+                        <label htmlFor="subject">Subject *</label>
+                        <select id="subject" name="subject" required value={formData.subject} onChange={handleChange}>
+                          <option value="">Select a topic</option>
+                          <option value="Admissions">Admissions</option>
+                          <option value="Academics">Academics</option>
+                          <option value="Careers">Careers</option>
+                          <option value="General">General Inquiry</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
                     </div>
-                    <div className={styles.formGroup}>
-                      <label>Message</label>
-                      <textarea 
-                        rows={5} required
-                        value={formData.message}
-                        onChange={e => setFormData({...formData, message: e.target.value})}
-                        placeholder="Tell us more about your inquiry..."
-                      ></textarea>
+                    <div className={styles.field}>
+                      <label htmlFor="message">Message *</label>
+                      <textarea id="message" name="message" rows={5} required placeholder="How can we help you?" value={formData.message} onChange={handleChange} />
                     </div>
-                    <button type="submit" className="btn btn-primary" disabled={status === 'loading'} style={{ width: '100%', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
-                      {status === 'loading' ? 'Sending...' : (
-                        <>
-                          <span>Send Message</span>
-                          <Send size={18} />
-                        </>
+                    <button type="submit" className={styles.btnSubmit} disabled={status === 'loading'}>
+                      {status === 'loading' ? (
+                        <><Loader2 size={18} className="animate-spin" /> Sending...</>
+                      ) : (
+                        <><Send size={18} /> Send Message</>
                       )}
                     </button>
                   </form>
                 )}
-              </Reveal>
-            </div>
+              </div>
+            </Reveal>
 
-            <div className={styles.mapSide}>
-              <Reveal delay={0.3}>
-                <div className={styles.mapContainer}>
-                  <iframe 
+            {/* Map + Details */}
+            <div className={styles.rightCol}>
+              <Reveal delay={0.2}>
+                <div className={styles.mapWrapper}>
+                  <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30917.68608174432!2d77.67670250282521!3d14.386139433364058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14371bc9bf393%3A0xc8a2201ad23ba3a!2sRishi%20Vidyalaya!5e0!3m2!1sen!2sin!4v1777455733780!5m2!1sen!2sin"
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen 
-                    loading="lazy" 
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Rishi Vidyalaya Location"
-                  ></iframe>
+                  />
                 </div>
-                
-                <div className={styles.quickContact}>
-                  <h3>Quick Support</h3>
-                  <p>Our office is open from 9:00 AM to 5:30 PM (Mon-Sat).</p>
-                  <div className={styles.socialRow}>
-                    <Globe size={18} /> <span>www.rishividyalaya.in</span>
+              </Reveal>
+
+              <Reveal delay={0.3}>
+                <div className={styles.detailsCard}>
+                  <h3>Rishi Vidyalaya</h3>
+                  <p>N.S Gate Road, Opp: Tidco Houses,<br />Dharmavaram, Andhra Pradesh</p>
+                  <div className={styles.detailRow}>
+                    <Phone size={15} /> <span>{phone}</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <Mail size={15} /> <span>{email}</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <Clock size={15} /> <span>Mon – Sat, 9:00 AM – 5:30 PM</span>
                   </div>
                 </div>
               </Reveal>
