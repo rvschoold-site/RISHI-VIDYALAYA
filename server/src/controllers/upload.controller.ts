@@ -9,13 +9,12 @@ export const handleImageUpload = (req: Request, res: Response) => {
       });
     }
 
-    // req.file.path will contain the Cloudinary URL because of multer-storage-cloudinary
-    const imageUrl = req.file.path;
-
+    // With memory storage, file buffer is in req.file.buffer
+    // This legacy endpoint is kept for backward compatibility
     res.status(200).json({
       success: true,
-      message: 'Image uploaded successfully to Cloudinary.',
-      url: imageUrl,
+      message: 'Image uploaded successfully.',
+      fileName: req.file.originalname,
     });
   } catch (error: any) {
     console.error('Upload Error:', error);

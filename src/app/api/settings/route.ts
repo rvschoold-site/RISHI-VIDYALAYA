@@ -47,7 +47,7 @@ export async function PATCH(req: NextRequest) {
       return SiteSettings.findOneAndUpdate(
         { key },
         { value: String(value) },
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: 'after' }
       );
     });
 

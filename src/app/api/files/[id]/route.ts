@@ -54,7 +54,7 @@ export async function DELETE(
     }
 
     // Delete from physical storage
-    const storageId = file.storage === 'cloudinary' ? file.publicId : file.key;
+    const storageId = file.key;
     if (storageId) {
       await deleteStoredFile(file.storage, storageId);
     }

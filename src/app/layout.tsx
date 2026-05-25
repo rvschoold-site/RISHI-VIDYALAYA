@@ -67,14 +67,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="preconnect" href="https://www.instagram.com" />
         <link rel="preconnect" href="https://www.youtube.com" />  
-        <link rel="preconnect" href="https://res.cloudinary.com" />
+
         <link rel="preconnect" href="https://rishividalaya.s3.ap-southeast-2.amazonaws.com" />
         <link rel="preconnect" href="https://wa.me" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.instagram.com" />
         <link rel="dns-prefetch" href="https://www.youtube.com" />
-        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
         <link rel="dns-prefetch" href="https://rishividalaya.s3.ap-southeast-2.amazonaws.com" />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>

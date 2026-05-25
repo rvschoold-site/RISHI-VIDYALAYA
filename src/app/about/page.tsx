@@ -69,7 +69,7 @@ export default function About() {
             <Reveal delay={0.3}>
               <div className={styles.philosophyImage}>
                 <Image 
-                  src="/PROJECT%20BASED%20LEARNING-1.JPG.jpeg" 
+                  src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703712755-PROJECT_BASED_LEARNING-1.JPG.jpeg" 
                   alt="Students Learning" 
                   fill 
                   quality={75}
@@ -191,7 +191,7 @@ export default function About() {
               <Reveal delay={0.2}>
                 <div className={styles.journeyImage}>
                   <Image 
-                    src="/PERFECTION.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703710632-PERFECTION.JPG.jpeg" 
                     alt="Rishi Vidyalaya Campus" 
                     fill 
                     quality={75}

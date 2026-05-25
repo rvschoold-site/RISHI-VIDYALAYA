@@ -1,18 +1,22 @@
 import dns from 'dns';
 import mongoose from 'mongoose';
 
-// Fix for ECONNREFUSED on querySrv by using Google DNS
-try {
-  dns.setServers(['8.8.8.8', '8.8.4.4']);
-} catch (error) {
-  console.warn('Warning: Could not set Google DNS servers:', error);
-}
-
-
 const MONGODB_URI = process.env.MONGODB_URI || '';
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env');
+}
+
+/**
+ * Force Google DNS resolvers to fix ECONNREFUSED on querySrv
+ * for MongoDB Atlas SRV connection strings on restricted networks.
+ */
+function setGoogleDNS() {
+  try {
+    dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+  } catch (error) {
+    console.warn('Warning: Could not set Google DNS servers:', error);
+  }
 }
 
 /**
@@ -27,6 +31,9 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  // Always set Google DNS before connecting
+  setGoogleDNS();
+
   if (cached.conn) {
     return cached.conn;
   }

@@ -5,23 +5,21 @@ export interface IFile extends Document {
   fileName: string;
   fileType: string;
   mimeType: string;
-  storage: 'cloudinary' | 's3';
+  storage: 's3';
   url: string;
-  publicId?: string; // Cloudinary
-  key?: string; // S3
+  key?: string; // S3 object key
   size: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const FileSchema: Schema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'Admin', required: false }, // Optional for now
+  userId: { type: Schema.Types.ObjectId, ref: 'Admin', required: false },
   fileName: { type: String, required: true },
   fileType: { type: String, required: true },
   mimeType: { type: String, required: true },
-  storage: { type: String, enum: ['cloudinary', 's3'], required: true },
+  storage: { type: String, enum: ['s3'], required: true },
   url: { type: String, required: true },
-  publicId: { type: String },
   key: { type: String },
   size: { type: Number, required: true },
 }, { 

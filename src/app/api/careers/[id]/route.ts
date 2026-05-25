@@ -18,7 +18,7 @@ export async function PATCH(
     const application = await JobApplication.findByIdAndUpdate(
       id,
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
     
     if (!application) {

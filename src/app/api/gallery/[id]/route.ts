@@ -1,16 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { v2 as cloudinary } from 'cloudinary';
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { verifyAdmin, unauthorizedResponse } from '@/lib/auth';
 import GalleryItem from '@/models/GalleryItem';
 import dbConnect from '@/lib/mongodb';
 import fs from 'fs/promises';
 import path from 'path';
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+// AWS S3 Config
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION || 'ap-southeast-2',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  },
 });
+
+const BUCKET = process.env.AWS_S3_BUCKET || 'rishividalaya';
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -21,7 +26,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const body = await req.json();
 
     await dbConnect();
-    const item = await GalleryItem.findByIdAndUpdate(id, body, { new: true });
+    const item = await GalleryItem.findByIdAndUpdate(id, body, { returnDocument: 'after' });
 
     if (!item) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });
@@ -48,8 +53,13 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     }
 
     // Delete from storage
-    if (item.type === 'cloudinary' && item.publicId) {
-      await cloudinary.uploader.destroy(item.publicId);
+    if (item.type === 's3' && item.key) {
+      await s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: BUCKET,
+          Key: item.key,
+        })
+      );
     } else if (item.type === 'local') {
       const fileName = item.url.split('/').pop();
       if (fileName) {

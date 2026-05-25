@@ -1,8 +1,43 @@
+/* ===== Tab Bar ===== */
+.tabBar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--primary);
+}
+
+.tabActive {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ===== Gallery Grid ===== */
 .galleryGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .galleryCard {
@@ -10,18 +45,25 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   border: 1px solid #e2e8f0;
 }
 
 .galleryCard:hover {
   transform: translateY(-4px);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.1);
 }
 
+.galleryCardFeatured {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Image Wrapper ===== */
 .imageWrapper {
   position: relative;
   width: 100%;
-  padding-top: 75%; /* 4:3 Aspect Ratio */
+  padding-top: 75%;
   background: #f1f5f9;
 }
 
@@ -34,6 +76,39 @@
   object-fit: cover;
 }
 
+/* ===== Featured Badge ===== */
+.featuredBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(245, 158, 11, 0.9);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  backdrop-filter: blur(4px);
+}
+
+.staticBadge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: rgba(100, 116, 139, 0.85);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+}
+
+/* ===== Card Content ===== */
 .cardContent {
   padding: 1rem;
 }
@@ -56,6 +131,7 @@
   align-items: center;
 }
 
+/* ===== Storage Badges ===== */
 .badge {
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
@@ -64,9 +140,9 @@
   text-transform: uppercase;
 }
 
-.badgeCloudinary {
-  background: #eff6ff;
-  color: #2563eb;
+.badgeS3 {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .badgeLocal {
@@ -74,28 +150,43 @@
   color: #166534;
 }
 
+/* ===== Card Actions ===== */
 .cardActions {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.75rem;
   padding-top: 0.75rem;
   border-top: 1px solid #f1f5f9;
+  align-items: center;
 }
 
-.deleteBtn {
-  color: #ef4444;
+/* ===== Featured Toggle ===== */
+.featuredToggle {
   background: none;
-  border: none;
+  border: 1.5px solid #e2e8f0;
+  color: #cbd5e1;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.35rem;
   border-radius: 6px;
-  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.deleteBtn:hover {
-  background: #fef2f2;
+.featuredToggle:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+  background: #fffbeb;
 }
 
+.featuredToggleActive {
+  border-color: #f59e0b;
+  color: #f59e0b;
+  background: #fef3c7;
+}
+
+/* ===== Upload Section ===== */
 .uploadSection {
   margin-bottom: 1.5rem;
   padding: 1.25rem;
@@ -116,24 +207,28 @@
   grid-column: span 2;
 }
 
-.submitBtn {
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.25rem;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.submitBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
+/* ===== Empty State ===== */
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;
   color: #64748b;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .uploadForm {
+    grid-template-columns: 1fr;
+  }
+  
+  .fullWidth {
+    grid-column: span 1;
+  }
+
+  .tabBar {
+    overflow-x: auto;
+  }
+
+  .galleryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
 }

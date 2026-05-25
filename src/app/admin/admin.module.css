@@ -170,7 +170,8 @@
   flex-direction: column;
   min-width: 0;
   margin-left: 260px;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 @media (max-width: 1024px) {
@@ -250,6 +251,19 @@
   padding: 1.5rem;
   border: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .statsGrid {

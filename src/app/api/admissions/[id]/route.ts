@@ -17,7 +17,7 @@ export async function PATCH(
     const lead = await AdmissionLead.findByIdAndUpdate(
       id,
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
     return NextResponse.json(lead);
   } catch (error) {

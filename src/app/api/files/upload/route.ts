@@ -28,7 +28,6 @@ export async function POST(req: NextRequest) {
       mimeType: file.type,
       storage: result.storage,
       url: result.url,
-      publicId: result.publicId,
       key: result.key,
       size: file.size,
     });

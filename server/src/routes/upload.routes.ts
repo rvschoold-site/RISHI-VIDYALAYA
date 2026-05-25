@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import { handleImageUpload } from '../controllers/upload.controller';
-import { upload } from '../services/cloudinary.service';
+import multer from 'multer';
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const router = Router();
 

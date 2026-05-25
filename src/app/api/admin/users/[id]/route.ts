@@ -30,7 +30,7 @@ export async function PATCH(
     const updatedAdmin = await Admin.findByIdAndUpdate(
       id,
       { role },
-      { new: true }
+      { returnDocument: 'after' }
     ).select('-password');
 
     if (!updatedAdmin) {

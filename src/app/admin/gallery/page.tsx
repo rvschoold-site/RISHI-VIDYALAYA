@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Upload, Trash2, Image as ImageIcon, Plus, Loader2, X } from 'lucide-react';
+import { Upload, Trash2, Image as ImageIcon, Plus, Loader2, X, Star, Cloud, HardDrive } from 'lucide-react';
 import styles from './gallery.module.css';
 import adminStyles from '../admin.module.css';
 
@@ -10,9 +10,11 @@ interface GalleryItem {
   title: string;
   description?: string;
   category?: string;
-  type: 'local' | 'cloudinary';
+  type: 'local' | 's3';
   url: string;
   fileName: string;
+  isFeatured?: boolean;
+  isStatic?: boolean; // true for static files from /public
   createdAt: string;
 }
 
@@ -21,12 +23,13 @@ export default function GalleryManagement() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [activeTab, setActiveTab] = useState<'all' | 's3' | 'local'>('all');
 
   // Form State
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('General');
-  const [storageType, setStorageType] = useState<'local' | 'cloudinary'>('cloudinary');
+  const [storageType, setStorageType] = useState<'local' | 's3'>('s3');
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -35,11 +38,28 @@ export default function GalleryManagement() {
 
   const fetchGallery = async () => {
     try {
-      const res = await fetch('/api/gallery');
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setItems(data);
+      // Fetch DB gallery items (S3 + uploaded local)
+      const dbRes = await fetch('/api/gallery');
+      const dbData = await dbRes.json();
+      const dbItems: GalleryItem[] = Array.isArray(dbData) ? dbData : [];
+
+      // Try to fetch static local images (best-effort, may fail on Vercel)
+      let localItems: GalleryItem[] = [];
+      try {
+        const localRes = await fetch('/api/gallery/local');
+        const localData = await localRes.json();
+        localItems = Array.isArray(localData) ? localData : [];
+      } catch {
+        // Local scan not available (e.g., serverless deployment)
       }
+
+      // Merge: DB items first, then static local images not already in DB
+      const dbFileNames = new Set(dbItems.map(i => i.fileName));
+      const uniqueLocalItems = localItems.filter(
+        li => !dbFileNames.has(li.fileName)
+      );
+
+      setItems([...dbItems, ...uniqueLocalItems]);
     } catch (error) {
       console.error('Failed to fetch gallery:', error);
     } finally {
@@ -101,6 +121,32 @@ export default function GalleryManagement() {
     }
   };
 
+  const handleToggleFeatured = async (id: string, currentStatus: boolean) => {
+    try {
+      const res = await fetch(`/api/gallery/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isFeatured: !currentStatus }),
+      });
+
+      if (res.ok) {
+        setItems(items.map(item =>
+          item._id === id ? { ...item, isFeatured: !currentStatus } : item
+        ));
+      } else {
+        alert('Failed to update featured status');
+      }
+    } catch (error) {
+      console.error('Featured toggle error:', error);
+    }
+  };
+
+  const filteredItems = activeTab === 'all'
+    ? items
+    : items.filter(item => item.type === activeTab);
+
+  const featuredCount = items.filter(i => i.isFeatured).length;
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
@@ -115,6 +161,34 @@ export default function GalleryManagement() {
         >
           {showUploadForm ? <X size={16} /> : <Plus size={16} />}
           <span>{showUploadForm ? 'Cancel Upload' : 'Upload Image'}</span>
+        </button>
+      </div>
+
+      {/* Featured counter */}
+      <div style={{ marginBottom: '1.25rem', fontSize: '0.85rem', color: '#64748b' }}>
+        <Star size={14} style={{ display: 'inline', verticalAlign: 'middle', color: '#f59e0b', marginRight: '0.35rem' }} />
+        <strong>{featuredCount}</strong> image{featuredCount !== 1 ? 's' : ''} marked as featured for homepage hero slideshow
+      </div>
+
+      {/* Tabs */}
+      <div className={styles.tabBar}>
+        <button 
+          className={`${styles.tab} ${activeTab === 'all' ? styles.tabActive : ''}`}
+          onClick={() => setActiveTab('all')}
+        >
+          All ({items.length})
+        </button>
+        <button 
+          className={`${styles.tab} ${activeTab === 's3' ? styles.tabActive : ''}`}
+          onClick={() => setActiveTab('s3')}
+        >
+          <Cloud size={14} /> S3 Cloud ({items.filter(i => i.type === 's3').length})
+        </button>
+        <button 
+          className={`${styles.tab} ${activeTab === 'local' ? styles.tabActive : ''}`}
+          onClick={() => setActiveTab('local')}
+        >
+          <HardDrive size={14} /> Local ({items.filter(i => i.type === 'local').length})
         </button>
       </div>
 
@@ -142,22 +216,13 @@ export default function GalleryManagement() {
                 <option value="Academic">Academic</option>
               </select>
             </div>
-            <div className={`${adminStyles.formGroup} ${styles.fullWidth}`}>
-              <label>Description</label>
-              <input 
-                type="text" 
-                value={description} 
-                onChange={(e) => setDescription(e.target.value)} 
-                placeholder="Brief description of the image or activity..." 
-              />
-            </div>
             <div className={adminStyles.formGroup}>
               <label>Storage Server</label>
               <select 
                 value={storageType} 
-                onChange={(e) => setStorageType(e.target.value as 'local' | 'cloudinary')}
+                onChange={(e) => setStorageType(e.target.value as 'local' | 's3')}
               >
-                <option value="cloudinary">Cloudinary (Recommended)</option>
+                <option value="s3">AWS S3 Cloud (Recommended)</option>
                 <option value="local">Local Storage (Development only)</option>
               </select>
             </div>
@@ -201,40 +266,67 @@ export default function GalleryManagement() {
           <Loader2 className="animate-spin" size={24} />
           <span>Loading Gallery...</span>
         </div>
-      ) : items.length === 0 ? (
+      ) : filteredItems.length === 0 ? (
         <div className={styles.emptyState}>
           <ImageIcon size={48} strokeWidth={1.5} style={{ marginBottom: '1rem', opacity: 0.5, color: '#64748b' }} />
           <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>No images found</h3>
-          <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.25rem' }}>Start by adding some images to your gallery.</p>
+          <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.25rem' }}>
+            {activeTab === 'all' ? 'Start by adding some images to your gallery.' : `No ${activeTab === 's3' ? 'S3 Cloud' : 'Local'} images found.`}
+          </p>
         </div>
       ) : (
         <div className={styles.galleryGrid}>
-          {items.map((item) => (
-            <div key={item._id} className={styles.galleryCard}>
+          {filteredItems.map((item) => (
+            <div key={item._id} className={`${styles.galleryCard} ${item.isFeatured ? styles.galleryCardFeatured : ''}`}>
               <div className={styles.imageWrapper}>
                 <img src={item.url} alt={item.title} loading="lazy" />
+                {item.isFeatured && (
+                  <div className={styles.featuredBadge}>
+                    <Star size={12} /> Featured
+                  </div>
+                )}
+                {item.isStatic && (
+                  <div className={styles.staticBadge}>
+                    Static
+                  </div>
+                )}
               </div>
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle} title={item.title}>{item.title}</h3>
-                <div className={styles.cardMeta} style={{ marginTop: '0.5rem' }}>
+                <div className={styles.cardMeta}>
                   <span style={{ backgroundColor: '#f1f5f9', padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600 }}>
                     {item.category}
                   </span>
-                  <span className={`${styles.badge} ${item.type === 'cloudinary' ? styles.badgeCloudinary : styles.badgeLocal}`}>
-                    {item.type}
+                  <span className={`${styles.badge} ${item.type === 's3' ? styles.badgeS3 : styles.badgeLocal}`}>
+                    {item.type === 's3' ? 'S3' : 'Local'}
                   </span>
                 </div>
                 <div className={styles.cardActions} style={{ marginTop: '1rem', paddingTop: '0.75rem' }}>
-                  <button 
-                    className={adminStyles.buttonDanger} 
-                    onClick={() => handleDelete(item._id)}
-                    title="Delete Image"
-                    style={{ padding: '0.4rem' }}
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                  {!item.isStatic && (
+                    <>
+                      <button
+                        className={`${styles.featuredToggle} ${item.isFeatured ? styles.featuredToggleActive : ''}`}
+                        onClick={() => handleToggleFeatured(item._id, !!item.isFeatured)}
+                        title={item.isFeatured ? 'Remove from featured' : 'Set as featured'}
+                      >
+                        <Star size={14} />
+                      </button>
+                      <button 
+                        className={adminStyles.buttonDanger} 
+                        onClick={() => handleDelete(item._id)}
+                        title="Delete Image"
+                        style={{ padding: '0.4rem' }}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </>
+                  )}
+                  {item.isStatic && (
+                    <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontStyle: 'italic' }}>
+                      Upload to S3 to manage
+                    </span>
+                  )}
                   <div style={{ marginLeft: 'auto', fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center' }}>
-                    {new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    {item.isStatic ? 'Static' : new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                   </div>
                 </div>
               </div>

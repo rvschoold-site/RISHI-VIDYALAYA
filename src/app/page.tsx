@@ -5,6 +5,7 @@ import Reveal from '@/components/Reveal';
 import Image from 'next/image';
 import LazyLoad from '@/components/LazyLoad';
 import SocialFeed from '@/components/SocialFeed';
+import HeroSlideshow from '@/components/HeroSlideshow';
 import { 
   BookOpen, 
   Award, 
@@ -23,18 +24,8 @@ export default function Home() {
     <div className={styles.container}>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <Image
-          src="/PROJECT%20BASED%20LEARNING.JPG.jpeg"
-          alt="Rishi Vidyalaya Campus"
-          fill
-          priority
-          quality={80}
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
-          sizes="100vw"
-          className={styles.heroBg}
-          style={{ objectFit: 'cover' }}
-        />
+        <HeroSlideshow />
+
         <div className={styles.heroOverlay}></div>
         
         <div className="container">
@@ -178,7 +169,7 @@ export default function Home() {
             <Reveal delay={0.2}>
               <div className={styles.splitImageWrapper}>
                 <Image 
-                  src="/PURPOSE-1.JPG.jpeg" 
+                  src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703713806-PURPOSE-1.JPG.jpeg" 
                   alt="Digi Fest Innovation at Rishi Vidyalaya" 
                   fill 
                   quality={75}
@@ -214,7 +205,7 @@ export default function Home() {
               <div className={styles.facilityCard}>
                 <div className={styles.facilityImageWrapper}>
                   <Image 
-                    src="/PASSION.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703708523-PASSION.JPG.jpeg" 
                     alt="AC Smart Classrooms" 
                     fill 
                     quality={75}
@@ -240,7 +231,7 @@ export default function Home() {
               <div className={styles.facilityCard}>
                 <div className={styles.facilityImageWrapper}>
                   <Image 
-                    src="/ground.JPG" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703703401-ground.JPG" 
                     alt="2 Acres Playground" 
                     fill 
                     quality={75}
@@ -266,7 +257,7 @@ export default function Home() {
               <div className={styles.facilityCard}>
                 <div className={styles.facilityImageWrapper}>
                   <Image 
-                    src="/PERFRCTION-1.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703711717-PERFRCTION-1.JPG.jpeg" 
                     alt="Hostel & Facilities" 
                     fill 
                     quality={75}

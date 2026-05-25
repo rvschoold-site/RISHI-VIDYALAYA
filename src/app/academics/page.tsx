@@ -134,7 +134,7 @@ export default function Academics() {
             <Reveal delay={0.4}>
               <div className={styles.foundationImage} style={{ marginTop: '2rem' }}>
                 <Image 
-                  src="/PASSION.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703708523-PASSION.JPG.jpeg" 
                   alt="IIT-NEET Foundation Classes" 
                   fill 
                   quality={75}
@@ -165,7 +165,7 @@ export default function Academics() {
               <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
                 <div className={styles.cardImageWrapper}>
                   <Image 
-                    src="/HANDS ON ACTIVITY (PROJECT BASED LEARNING).JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703706293-HANDS_ON_ACTIVITY_(PROJECT_BASED_LEARNING).JPG.jpeg" 
                     alt="AI & Robotics Lab Setup" 
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"
@@ -195,7 +195,7 @@ export default function Academics() {
               <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
                 <div className={styles.cardImageWrapper}>
                   <Image 
-                    src="/PROJECT BASED LEARNING-1.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703712755-PROJECT_BASED_LEARNING-1.JPG.jpeg" 
                     alt="Space Lab astronomical studies" 
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"
@@ -225,7 +225,7 @@ export default function Academics() {
               <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
                 <div className={styles.cardImageWrapper}>
                   <Image 
-                    src="/PROJECT BASED LEARNING.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703713281-PROJECT_BASED_LEARNING.JPG.jpeg" 
                     alt="Science Discovery Lab Experiments" 
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"
@@ -255,7 +255,7 @@ export default function Academics() {
               <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
                 <div className={styles.cardImageWrapper}>
                   <Image 
-                    src="/PERFECTION-3.JPG.jpeg" 
+                    src="https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery/1779703709593-PERFECTION-3.JPG.jpeg" 
                     alt="Computer and Coding Lab" 
                     fill
                     sizes="(max-width: 768px) 100vw, 500px"

@@ -4,21 +4,23 @@ import styles from './gallery.module.css';
 import Reveal from '@/components/Reveal';
 import Image from 'next/image';
 
+const S3_BASE = 'https://rishividalaya.s3.ap-southeast-2.amazonaws.com/gallery';
+
 const images = [
-  { id: 1, title: 'Hands-on Activity', url: '/HANDS%20ON%20ACTIVITY%20(PROJECT%20BASED%20LEARNING).JPG.jpeg' },
-  { id: 2, title: 'Passion', url: '/PASSION.JPG.jpeg' },
-  { id: 3, title: 'Passion Activity', url: '/PASSION-1.JPG.jpeg' },
-  { id: 4, title: 'Perfection', url: '/PERFECTION.JPG.jpeg' },
-  { id: 5, title: 'Perfection Class', url: '/PERFRCTION-1.JPG.jpeg' },
-  { id: 6, title: 'Perfection Activity', url: '/PERFECTION-%202.JPG.jpeg' },
-  { id: 7, title: 'Perfection Learning', url: '/PERFECTION-3.JPG.jpeg' },
-  { id: 8, title: 'Perfection Engagement', url: '/PERFECTION-4.JPG.jpeg' },
-  { id: 9, title: 'Performance', url: '/PERFROMANCE.JPG.jpeg' },
-  { id: 10, title: 'Performance Event', url: '/PERFORMANCE-1.JPG.jpeg' },
-  { id: 11, title: 'Project Based Learning', url: '/PROJECT%20BASED%20LEARNING.JPG.jpeg' },
-  { id: 12, title: 'Project Activities', url: '/PROJECT%20BASED%20LEARNING-1.JPG.jpeg' },
-  { id: 13, title: 'Purpose', url: '/PURPOSE.JPG.jpeg' },
-  { id: 14, title: 'Purpose Event', url: '/PURPOSE-1.JPG.jpeg' },
+  { id: 1, title: 'Hands-on Activity', url: `${S3_BASE}/1779703706293-HANDS_ON_ACTIVITY_(PROJECT_BASED_LEARNING).JPG.jpeg` },
+  { id: 2, title: 'Passion', url: `${S3_BASE}/1779703708523-PASSION.JPG.jpeg` },
+  { id: 3, title: 'Passion Activity', url: `${S3_BASE}/1779703707840-PASSION-1.JPG.jpeg` },
+  { id: 4, title: 'Perfection', url: `${S3_BASE}/1779703710632-PERFECTION.JPG.jpeg` },
+  { id: 5, title: 'Perfection Class', url: `${S3_BASE}/1779703711717-PERFRCTION-1.JPG.jpeg` },
+  { id: 6, title: 'Perfection Activity', url: `${S3_BASE}/1779703709048-PERFECTION-_2.JPG.jpeg` },
+  { id: 7, title: 'Perfection Learning', url: `${S3_BASE}/1779703709593-PERFECTION-3.JPG.jpeg` },
+  { id: 8, title: 'Perfection Engagement', url: `${S3_BASE}/1779703710117-PERFECTION-4.JPG.jpeg` },
+  { id: 9, title: 'Performance', url: `${S3_BASE}/1779703712227-PERFROMANCE.JPG.jpeg` },
+  { id: 10, title: 'Performance Event', url: `${S3_BASE}/1779703711160-PERFORMANCE-1.JPG.jpeg` },
+  { id: 11, title: 'Project Based Learning', url: `${S3_BASE}/1779703713281-PROJECT_BASED_LEARNING.JPG.jpeg` },
+  { id: 12, title: 'Project Activities', url: `${S3_BASE}/1779703712755-PROJECT_BASED_LEARNING-1.JPG.jpeg` },
+  { id: 13, title: 'Purpose', url: `${S3_BASE}/1779703714320-PURPOSE.JPG.jpeg` },
+  { id: 14, title: 'Purpose Event', url: `${S3_BASE}/1779703713806-PURPOSE-1.JPG.jpeg` },
 ];
 
 export default function Gallery() {
@@ -63,9 +65,6 @@ export default function Gallery() {
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                   style={{ objectFit: 'cover' }}
                 />
-                <div className={styles.overlay}>
-                  <span>{img.title}</span>
-                </div>
               </div>
             </Reveal>
           ))}
