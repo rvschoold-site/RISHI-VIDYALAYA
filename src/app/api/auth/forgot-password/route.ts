@@ -8,6 +8,15 @@ import { getPasswordResetTemplate } from '@/lib/email-templates';
 
 export async function POST(req: Request) {
   try {
+    // Validate SMTP Environment configuration to prevent silent Vercel email failures
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.SMTP_HOST) {
+      console.error('SMTP configuration is missing from environment variables');
+      return NextResponse.json(
+        { message: 'SMTP email service is not configured. Please define SMTP_HOST, SMTP_USER, and SMTP_PASS in your Vercel/environment configuration.' },
+        { status: 500 }
+      );
+    }
+
     await dbConnect();
     const { email } = await req.json();
 
