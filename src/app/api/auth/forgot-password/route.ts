@@ -4,6 +4,7 @@ import Admin from '@/models/Admin';
 import crypto from 'crypto';
 import { sendEmail } from '@/lib/email';
 import { createAdminLog } from '@/lib/logger';
+import { getPasswordResetTemplate } from '@/lib/email-templates';
 
 export async function POST(req: Request) {
   try {
@@ -25,15 +26,7 @@ export async function POST(req: Request) {
       resetTokenExp: new Date(Date.now() + 3600000) // 1 hour
     });
 
-    const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/admin/reset-password?token=${resetToken}`;
-
-    const message = `
-      <h1>Password Reset Request</h1>
-      <p>You requested a password reset. Please click the link below to reset your password:</p>
-      <a href="${resetUrl}">${resetUrl}</a>
-      <p>This link will expire in 1 hour.</p>
-      <p>If you did not request this, please ignore this email.</p>
-    `;
+    const message = getPasswordResetTemplate(resetToken);
 
     await sendEmail({
       to: admin.email,

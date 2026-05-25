@@ -10,6 +10,8 @@ export default function AdminUsersManagement() {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [inviteData, setInviteData] = useState({ email: '', role: 'ADMIN' });
+  const [directData, setDirectData] = useState({ name: '', email: '', password: '', role: 'ADMIN' });
+  const [formMode, setFormMode] = useState<'invite' | 'direct'>('invite');
   const [status, setStatus] = useState({ loading: false, message: '', error: '' });
   const [refreshing, setRefreshing] = useState(false);
 
@@ -65,6 +67,28 @@ export default function AdminUsersManagement() {
       }
     } catch (error) {
       setStatus({ loading: false, message: '', error: 'Failed to send invitation' });
+    }
+  };
+
+  const handleDirectCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus({ loading: true, message: '', error: '' });
+    try {
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(directData)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ loading: false, message: 'Administrator account created successfully!', error: '' });
+        setDirectData({ name: '', email: '', password: '', role: 'ADMIN' });
+        fetchData(true);
+      } else {
+        setStatus({ loading: false, message: '', error: data.error || 'Failed to create administrator' });
+      }
+    } catch (error) {
+      setStatus({ loading: false, message: '', error: 'Failed to create administrator' });
     }
   };
 
@@ -298,77 +322,204 @@ export default function AdminUsersManagement() {
           </div>
         </div>
 
-        {/* Invite Form */}
+        {/* Invite/Create Form */}
         <aside>
           <div className={styles.card}>
-            <h3 style={{ marginBottom: '1.25rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <UserPlus size={18} style={{ color: 'var(--accent, #DC2626)' }} />
-              <span>Invite Colleague</span>
-            </h3>
-            <form onSubmit={handleInvite} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div className={styles.formGroup}>
-                <label>Email Address</label>
-                <input 
-                  type="email" 
-                  required 
-                  value={inviteData.email}
-                  onChange={(e) => setInviteData({ ...inviteData, email: e.target.value })}
-                  placeholder="colleague@rishividyalaya.in"
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label>Access Role</label>
-                <select 
-                  value={inviteData.role}
-                  onChange={(e) => setInviteData({ ...inviteData, role: e.target.value })}
-                >
-                  <option value="ADMIN">Standard Admin</option>
-                  <option value="SUPER_ADMIN">Super Admin</option>
-                </select>
-              </div>
-              
-              {status.error && (
-                <div style={{ 
-                  backgroundColor: '#fef2f2', 
-                  color: '#b91c1c', 
-                  padding: '0.75rem', 
-                  borderRadius: '6px', 
-                  fontSize: '0.8rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  border: '1px solid #fee2e2'
-                }}>
-                  <AlertTriangle size={14} />
-                  <span>{status.error}</span>
-                </div>
-              )}
-              
-              {status.message && (
-                <div style={{ 
-                  backgroundColor: '#f0fdf4', 
-                  color: '#166534', 
-                  padding: '0.75rem', 
-                  borderRadius: '6px', 
-                  fontSize: '0.8rem', 
-                  wordBreak: 'break-all',
-                  border: '1px solid #dcfce7'
-                }}>
-                  {status.message}
-                </div>
-              )}
-
-              <button type="submit" className={styles.buttonPrimary} disabled={status.loading} style={{ marginTop: '0.5rem' }}>
-                {status.loading ? (
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Loader2 className="animate-spin" size={14} />
-                    <span>Sending...</span>
-                  </span>
-                ) : (
-                  <span>Send Invitation Email</span>
-                )}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', backgroundColor: '#f1f5f9', padding: '0.25rem', borderRadius: '8px' }}>
+              <button
+                type="button"
+                onClick={() => { setFormMode('invite'); setStatus({ loading: false, message: '', error: '' }); }}
+                style={{
+                  flex: 1,
+                  padding: '0.4rem',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  backgroundColor: formMode === 'invite' ? 'white' : 'transparent',
+                  color: formMode === 'invite' ? 'var(--primary)' : '#64748b',
+                  boxShadow: formMode === 'invite' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none'
+                }}
+              >
+                Invite Link
               </button>
-            </form>
+              <button
+                type="button"
+                onClick={() => { setFormMode('direct'); setStatus({ loading: false, message: '', error: '' }); }}
+                style={{
+                  flex: 1,
+                  padding: '0.4rem',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  backgroundColor: formMode === 'direct' ? 'white' : 'transparent',
+                  color: formMode === 'direct' ? 'var(--primary)' : '#64748b',
+                  boxShadow: formMode === 'direct' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none'
+                }}
+              >
+                Direct Create
+              </button>
+            </div>
+
+            <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <UserPlus size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+              <span>{formMode === 'invite' ? 'Invite Colleague' : 'Direct Create Admin'}</span>
+            </h3>
+
+            {formMode === 'invite' ? (
+              <form onSubmit={handleInvite} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div className={styles.formGroup}>
+                  <label>Email Address</label>
+                  <input 
+                    type="email" 
+                    required 
+                    value={inviteData.email}
+                    onChange={(e) => setInviteData({ ...inviteData, email: e.target.value })}
+                    placeholder="colleague@rishividyalaya.in"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Access Role</label>
+                  <select 
+                    value={inviteData.role}
+                    onChange={(e) => setInviteData({ ...inviteData, role: e.target.value })}
+                  >
+                    <option value="ADMIN">Standard Admin</option>
+                    <option value="SUPER_ADMIN">Super Admin</option>
+                  </select>
+                </div>
+                
+                {status.error && (
+                  <div style={{ 
+                    backgroundColor: '#fef2f2', 
+                    color: '#b91c1c', 
+                    padding: '0.75rem', 
+                    borderRadius: '6px', 
+                    fontSize: '0.8rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    border: '1px solid #fee2e2'
+                  }}>
+                    <AlertTriangle size={14} />
+                    <span>{status.error}</span>
+                  </div>
+                )}
+                
+                {status.message && (
+                  <div style={{ 
+                    backgroundColor: '#f0fdf4', 
+                    color: '#166534', 
+                    padding: '0.75rem', 
+                    borderRadius: '6px', 
+                    fontSize: '0.8rem', 
+                    wordBreak: 'break-all',
+                    border: '1px solid #dcfce7'
+                  }}>
+                    {status.message}
+                  </div>
+                )}
+
+                <button type="submit" className={styles.buttonPrimary} disabled={status.loading} style={{ marginTop: '0.5rem' }}>
+                  {status.loading ? (
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Loader2 className="animate-spin" size={14} />
+                      <span>Sending...</span>
+                    </span>
+                  ) : (
+                    <span>Send Invitation Email</span>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleDirectCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div className={styles.formGroup}>
+                  <label>Full Name</label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={directData.name}
+                    onChange={(e) => setDirectData({ ...directData, name: e.target.value })}
+                    placeholder="e.g. Anand Kumar"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Email Address</label>
+                  <input 
+                    type="email" 
+                    required 
+                    value={directData.email}
+                    onChange={(e) => setDirectData({ ...directData, email: e.target.value })}
+                    placeholder="admin@rishividyalaya.in"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Password</label>
+                  <input 
+                    type="password" 
+                    required 
+                    value={directData.password}
+                    onChange={(e) => setDirectData({ ...directData, password: e.target.value })}
+                    placeholder="••••••••"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Access Role</label>
+                  <select 
+                    value={directData.role}
+                    onChange={(e) => setDirectData({ ...directData, role: e.target.value })}
+                  >
+                    <option value="ADMIN">Standard Admin</option>
+                    <option value="SUPER_ADMIN">Super Admin</option>
+                  </select>
+                </div>
+                
+                {status.error && (
+                  <div style={{ 
+                    backgroundColor: '#fef2f2', 
+                    color: '#b91c1c', 
+                    padding: '0.75rem', 
+                    borderRadius: '6px', 
+                    fontSize: '0.8rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    border: '1px solid #fee2e2'
+                  }}>
+                    <AlertTriangle size={14} />
+                    <span>{status.error}</span>
+                  </div>
+                )}
+                
+                {status.message && (
+                  <div style={{ 
+                    backgroundColor: '#f0fdf4', 
+                    color: '#166534', 
+                    padding: '0.75rem', 
+                    borderRadius: '6px', 
+                    fontSize: '0.8rem', 
+                    wordBreak: 'break-all',
+                    border: '1px solid #dcfce7'
+                  }}>
+                    {status.message}
+                  </div>
+                )}
+
+                <button type="submit" className={styles.buttonPrimary} disabled={status.loading} style={{ marginTop: '0.5rem' }}>
+                  {status.loading ? (
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Loader2 className="animate-spin" size={14} />
+                      <span>Creating...</span>
+                    </span>
+                  ) : (
+                    <span>Create Administrator</span>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
         </aside>
       </div>

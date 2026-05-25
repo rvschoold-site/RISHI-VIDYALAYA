@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         {status.error && <div className={styles.error}>{status.error}</div>}
-        {status.success && <div style={{ backgroundColor: '#f0fdf4', color: '#15803d', padding: '0.75rem 1rem', borderRadius: '6px', marginBottom: '1.5rem', fontSize: '0.875rem', border: '1px solid #dcfce7' }}>{status.success}</div>}
+        {status.success && <div className={styles.success}>{status.success}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>

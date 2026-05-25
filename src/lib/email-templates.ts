@@ -99,3 +99,21 @@ export const getAdminNotificationTemplate = (type: 'Admission' | 'Career' | 'Con
   
   <a href="${baseUrl}/admin" class="button" style="background: #0f172a;">View in Dashboard</a>
 `);
+
+export const getPasswordResetTemplate = (token: string) => getBaseTemplate(`
+  <h2 style="color: #0f172a; margin-top: 0;">Password Reset Request</h2>
+  <p>Hello,</p>
+  <p>We received a request to reset your administrator password for Rishi Vidyalaya.</p>
+  <p>Please click the button below to set a new password. This reset link is valid for 1 hour.</p>
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="${baseUrl}/admin/reset-password/${token}" class="button">Reset Password</a>
+  </div>
+  <p style="font-size: 14px; color: #64748b; margin-top: 20px;">
+    If you did not request a password reset, please ignore this email.
+  </p>
+  <p style="font-size: 12px; color: #94a3b8; word-break: break-all; margin-top: 20px;">
+    If the button above does not work, copy and paste this URL into your browser:<br>
+    <a href="${baseUrl}/admin/reset-password/${token}" style="color: #dc2626;">${baseUrl}/admin/reset-password/${token}</a>
+  </p>
+`);
+

@@ -8,8 +8,18 @@ const COOKIE_NAME = 'admin_session';
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only protect /admin routes, but exclude /admin/login
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+  const publicPrefixes = [
+    '/admin/login',
+    '/admin/forgot-password',
+    '/admin/reset-password',
+    '/admin/setup',
+    '/admin/register'
+  ];
+
+  const isPublicRoute = publicPrefixes.some(prefix => pathname.startsWith(prefix));
+
+  // Only protect /admin routes, but exclude public admin routes
+  if (pathname.startsWith('/admin') && !isPublicRoute) {
     const token = request.cookies.get(COOKIE_NAME)?.value;
 
     if (!token) {

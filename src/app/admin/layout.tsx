@@ -40,6 +40,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     '/admin/forgot-password',
     '/admin/reset-password',
     '/admin/setup',
+    '/admin/register',
   ];
 
   const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
