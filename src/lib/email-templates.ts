@@ -1,3 +1,5 @@
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
 export const getBaseTemplate = (content: string) => `
 <!DOCTYPE html>
 <html>
@@ -41,7 +43,7 @@ export const getAdminInviteTemplate = (token: string) => getBaseTemplate(`
     <span style="font-family: monospace; font-size: 24px; font-weight: 800; color: #dc2626; letter-spacing: 4px;">${token}</span>
   </div>
   <p>Please use this token on the registration page. This link will expire in 7 days.</p>
-  <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/register?token=${token}" class="button">Complete Registration</a>
+  <a href="${baseUrl}/admin/setup/${token}" class="button">Complete Registration</a>
   <p style="margin-top: 20px; font-size: 14px; color: #64748b;">If you did not expect this invitation, please ignore this email.</p>
 `);
 
@@ -60,7 +62,7 @@ export const getAdmissionConfirmationTemplate = (data: any) => getBaseTemplate(`
   </table>
   
   <p style="margin-top: 30px;">In the meantime, feel free to explore our campus gallery or follow us on social media.</p>
-  <a href="${process.env.NEXT_PUBLIC_BASE_URL}/gallery" class="button">Explore Campus</a>
+  <a href="${baseUrl}/gallery" class="button">Explore Campus</a>
 `);
 
 export const getCareerConfirmationTemplate = (data: any) => getBaseTemplate(`
@@ -95,5 +97,5 @@ export const getAdminNotificationTemplate = (type: 'Admission' | 'Career' | 'Con
     ${data.subjects ? `<tr><td>Subjects</td><td>${data.subjects.join(', ')}</td></tr>` : ''}
   </table>
   
-  <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin" class="button" style="background: #0f172a;">View in Dashboard</a>
+  <a href="${baseUrl}/admin" class="button" style="background: #0f172a;">View in Dashboard</a>
 `);

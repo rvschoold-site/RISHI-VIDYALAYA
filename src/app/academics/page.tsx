@@ -10,7 +10,9 @@ import {
   Compass, 
   Check, 
   Award,
-  BookMarked
+  BookMarked,
+  Beaker,
+  Code2
 } from 'lucide-react';
 
 export default function Academics() {
@@ -160,17 +162,28 @@ export default function Academics() {
           
           <div className="grid2" style={{ marginTop: '3rem' }}>
             <Reveal delay={0.1}>
-              <div className="card-premium" style={{ padding: '2.5rem' }}>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.4rem' }}>
-                  <div className="icon-circle" style={{ width: '44px', height: '44px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
-                    <Cpu size={20} />
+              <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
+                <div className={styles.cardImageWrapper}>
+                  <Image 
+                    src="/HANDS ON ACTIVITY (PROJECT BASED LEARNING).JPG.jpeg" 
+                    alt="AI & Robotics Lab Setup" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    style={{ objectFit: 'cover' }}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  />
+                </div>
+                <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.3rem' }}>
+                  <div className="icon-circle" style={{ width: '40px', height: '40px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
+                    <Cpu size={18} />
                   </div>
                   AI & Robotics Lab
                 </h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
                   First school in the region featuring hands-on kits to learn block coding, IoT sensor setups, automated mechanics, and algorithmic logic.
                 </p>
-                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)' }}>
+                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)', fontSize: '0.85rem' }}>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Real-time coding & robotics projects</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Practical learning with engineering tools</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Team collaboration & logical thinking</li>
@@ -179,20 +192,91 @@ export default function Academics() {
             </Reveal>
             
             <Reveal delay={0.2}>
-              <div className="card-premium" style={{ padding: '2.5rem' }}>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.4rem' }}>
-                  <div className="icon-circle" style={{ width: '44px', height: '44px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
-                    <Compass size={20} />
+              <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
+                <div className={styles.cardImageWrapper}>
+                  <Image 
+                    src="/PROJECT BASED LEARNING-1.JPG.jpeg" 
+                    alt="Space Lab astronomical studies" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    style={{ objectFit: 'cover' }}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  />
+                </div>
+                <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.3rem' }}>
+                  <div className="icon-circle" style={{ width: '40px', height: '40px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
+                    <Compass size={18} />
                   </div>
                   Space Lab
                 </h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
                   Encouraging space science, astronomical observation, and stellar coordinate mapping with experiments tailored for younger grades.
                 </p>
-                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)' }}>
+                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)', fontSize: '0.85rem' }}>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Astronomy models & scale coordinates</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Interactive sky-mapping sessions</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Certified science project showcases</li>
+                </ul>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
+                <div className={styles.cardImageWrapper}>
+                  <Image 
+                    src="/PROJECT BASED LEARNING.JPG.jpeg" 
+                    alt="Science Discovery Lab Experiments" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    style={{ objectFit: 'cover' }}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  />
+                </div>
+                <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.3rem' }}>
+                  <div className="icon-circle" style={{ width: '40px', height: '40px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
+                    <Beaker size={18} />
+                  </div>
+                  Science Discovery Lab
+                </h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
+                  Fully equipped Physics, Chemistry, and Biology workspaces allowing students to conduct experiments and visually verify concepts.
+                </p>
+                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)', fontSize: '0.85rem' }}>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Hands-on chemical and physical analysis</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Bio-microscopy and anatomical studies</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Safety-first practical protocols and guidelines</li>
+                </ul>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.4}>
+              <div className="card-premium" style={{ padding: '1.75rem', height: '100%' }}>
+                <div className={styles.cardImageWrapper}>
+                  <Image 
+                    src="/PERFECTION-3.JPG.jpeg" 
+                    alt="Computer and Coding Lab" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                    style={{ objectFit: 'cover' }}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                  />
+                </div>
+                <h3 style={{ color: 'var(--primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '1.3rem' }}>
+                  <div className="icon-circle" style={{ width: '40px', height: '40px', backgroundColor: '#fef2f2', color: 'var(--accent)' }}>
+                    <Code2 size={18} />
+                  </div>
+                  Computer & Coding Lab
+                </h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.25rem' }}>
+                  Premium digital workspace fostering keyboarding skills, Scratch block coding, python logic, and algorithmic thinking from early grades.
+                </p>
+                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', color: 'var(--text)', fontSize: '0.85rem' }}>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Modern workstations with structured software</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Early exposure to programming foundations</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: 'var(--accent)' }}>✔</span> Safe digital literacy and internet practices</li>
                 </ul>
               </div>
             </Reveal>
