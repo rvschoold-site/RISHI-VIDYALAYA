@@ -1,16 +1,18 @@
+/* Rishi Vidyalaya Homepage Stylesheet */
+
 .container {
   display: flex;
   flex-direction: column;
 }
 
+/* Hero Section */
 .hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
-  padding: var(--spacing-3xl) var(--spacing-2xl);
+  padding: var(--spacing-3xl) 0;
   background-color: var(--primary);
-  /* background-image removed - now using next/image with priority */
   color: white;
   overflow: hidden;
 }
@@ -25,7 +27,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.4) 100%);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 50%, rgba(15, 23, 42, 0.5) 100%);
   z-index: 1;
 }
 
@@ -33,83 +35,303 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
 }
 
 .heroTextContent {
-  max-width: 800px;
+  max-width: 750px;
   text-align: left;
 }
 
-.heroTag {
-  display: inline-block;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  margin-bottom: var(--spacing-lg);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  text-transform: uppercase;
-}
-
 .heroTextContent h1 {
-  font-size: clamp(2.5rem, 10vw, 4.5rem);
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.15;
   margin-bottom: var(--spacing-md);
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
+}
+
+.heroTextContent h2 {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--spacing-xs);
+}
+
+.heroTextContent h3 {
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: var(--spacing-xl);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .heroTextContent p {
-  font-size: clamp(1.1rem, 4vw, 1.5rem);
-  margin-bottom: var(--spacing-xl);
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 300;
-  max-width: 650px;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  margin-bottom: var(--spacing-md);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .ctaGroup {
   display: flex;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-3xl);
+  margin-top: var(--spacing-2xl);
   flex-wrap: wrap;
 }
 
-.trustBadges {
-  display: flex;
-  gap: var(--spacing-xl);
-  flex-wrap: wrap;
-  padding-top: var(--spacing-xl);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.badge {
-  font-size: 1rem;
-  font-weight: 500;
+/* Quick Highlights bar */
+.highlightsBar {
+  background-color: var(--primary-light);
   color: white;
+  padding: 1.5rem 0;
+  border-bottom: 4px solid var(--accent);
+}
+
+.highlightsInner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.highlightItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.highlightIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 0.85rem;
+}
+
+/* Redesigned Minimal Cards */
+.pillarCard {
+  background: var(--bg-card);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(15, 23, 75, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pillarCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px -10px rgba(15, 23, 75, 0.08);
+  border-color: rgba(220, 38, 38, 0.15);
+}
+
+.pillarCardIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background-color: #fef2f2;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+  transition: all 0.3s ease;
+}
+
+.pillarCard:hover .pillarCardIcon {
+  background-color: var(--accent);
+  color: white;
+  transform: scale(1.05);
+}
+
+.pillarCard h3 {
+  font-size: 1.35rem;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.pillarCard p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.pillarList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.pillarList li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.pillarCheck {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Vision Split Grid */
+.splitGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+.splitContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.splitImageWrapper {
+  position: relative;
+  height: 480px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(15, 23, 75, 0.08);
+}
+
+.splitImageText {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-xl);
+  background: linear-gradient(transparent, rgba(15, 23, 42, 0.85));
+  color: white;
+}
+
+/* Facilities Cards */
+.facilityCard {
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.facilityCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -8px rgba(0, 0, 0, 0.08);
+}
+
+.facilityImageWrapper {
+  position: relative;
+  height: 220px;
+  width: 100%;
+}
+
+.facilityBody {
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.facilityBody h3 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.facilityBody p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.facilityList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  font-size: 0.875rem;
+}
+
+.facilityList li {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: default;
+  color: var(--text);
 }
 
-.badge:hover {
-  transform: translateY(-3px) scale(1.05);
-  color: var(--accent);
+/* Admissions Call to Action Banner */
+.admissionBanner {
+  background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+  color: white;
+  border-radius: 24px;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15);
 }
 
+.admissionBannerContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.admissionBannerContent h2 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  font-weight: 800;
+  color: white;
+}
+
+.admissionBannerContent p {
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--spacing-2xl);
+  line-height: 1.6;
+}
+
+.admissionBannerButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive Overrides */
 @media (max-width: 1024px) {
   .heroOverlay {
-    background: linear-gradient(0deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+    background: linear-gradient(0deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.98) 100%);
   }
-  
+
   .heroTextContent {
     max-width: 100%;
     text-align: center;
@@ -118,42 +340,68 @@
     align-items: center;
   }
   
-  .heroTextContent p {
-    margin-left: auto;
-    margin-right: auto;
+  .heroTextContent h3 {
+    margin-bottom: var(--spacing-lg);
   }
 
   .ctaGroup {
     justify-content: center;
   }
 
-  .trustBadges {
-    justify-content: center;
+  .splitGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+  
+  .splitImageWrapper {
+    height: 380px;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 80vh;
-    padding: 6rem 1.5rem 4rem;
+    min-height: auto;
+    padding: 5rem 1.5rem 4rem;
+  }
+
+  .highlightsInner {
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .highlightItem {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pillarCard {
+    padding: 2rem 1.5rem;
+  }
+  
+  .splitImageWrapper {
+    height: 300px;
+  }
+  
+  .admissionBanner {
+    padding: 3rem 1.5rem;
+    border-radius: 0; /* Bleed to edge on mobile for better space usage */
   }
 }
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 70vh;
-    padding: 5rem 1rem 3rem;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .ctaGroup {
+    width: 100%;
   }
 
   .ctaGroup .btn {
     width: 100%;
   }
-
-  .trustBadges {
-    gap: 1rem;
-  }
   
-  .badge {
-    font-size: 0.9rem;
+  .splitImageWrapper {
+    height: 250px;
   }
 }

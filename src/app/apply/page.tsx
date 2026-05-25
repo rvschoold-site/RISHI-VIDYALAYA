@@ -3,6 +3,12 @@
 import React, { useState } from 'react';
 import styles from './apply.module.css';
 import Reveal from '@/components/Reveal';
+import { 
+  GraduationCap, 
+  Briefcase, 
+  Upload, 
+  ArrowLeft 
+} from 'lucide-react';
 
 type ApplyType = 'admission' | 'career';
 
@@ -119,12 +125,12 @@ export default function ApplyPage() {
 
   if (success) {
     return (
-      <div className="container" style={{ padding: '8rem 0', textAlign: 'center' }}>
+      <div className="container" style={{ padding: '8rem 2rem', textAlign: 'center' }}>
         <Reveal>
           <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>🎉</div>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Application Submitted!</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-            Thank you for reaching out to Rishi Vidyalaya. Our team will review your application and get back to you shortly.
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--primary)', fontWeight: 800 }}>Application Submitted!</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: '1.6' }}>
+            Thank you for reaching out to Rishi Vidyalaya. Our team will review your application details and contact you shortly.
           </p>
           <button onClick={() => window.location.href = '/'} className="btn btn-primary">Back to Home</button>
         </Reveal>
@@ -133,11 +139,12 @@ export default function ApplyPage() {
   }
 
   return (
-    <div className="container" style={{ padding: '6rem 0' }}>
+    <div className="container" style={{ padding: '6rem 2rem' }}>
       <Reveal>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem' }}>Join Rishi Vidyalaya</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+          <span className="badge-premium" style={{ marginBottom: '1rem' }}>Registration Portal</span>
+          <h1 style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem', letterSpacing: '-0.03em' }}>Join Rishi Vidyalaya</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
             Whether you are a parent seeking excellence for your child or a professional looking to inspire future generations, your journey starts here.
           </p>
         </div>
@@ -148,215 +155,224 @@ export default function ApplyPage() {
           className={`${styles.tab} ${type === 'admission' ? styles.tabActive : ''}`}
           onClick={() => { setType('admission'); setError(null); }}
         >
-          🎓 For Students (Admissions)
+          <GraduationCap size={18} />
+          <span>For Students (Admissions)</span>
         </button>
         <button 
           className={`${styles.tab} ${type === 'career' ? styles.tabActive : ''}`}
           onClick={() => { setType('career'); setError(null); }}
         >
-          💼 For Professionals (Careers)
+          <Briefcase size={18} />
+          <span>For Professionals (Careers)</span>
         </button>
       </div>
 
       <div className={styles.formWrapper}>
-        {type === 'admission' ? (
-          <form className={styles.form} onSubmit={handleAdmissionSubmit}>
-            <div className={styles.sectionHeader}>
-              <h2>Student Admission Inquiry</h2>
-              <p>Apply for the Academic Year 2026-27. We focus on concept-based learning and IIT-NEET foundation from early grades.</p>
-            </div>
-            
-            <div className={styles.grid}>
-              <div className={styles.field}>
-                <label>Parent/Guardian Name</label>
-                <input 
-                  type="text" required
-                  value={admissionData.parentName}
-                  onChange={e => setAdmissionData({...admissionData, parentName: e.target.value})}
-                  placeholder="Full Name"
-                />
+        <Reveal key={type} delay={0.1}>
+          {type === 'admission' ? (
+            <form className={styles.form} onSubmit={handleAdmissionSubmit}>
+              <div className={styles.sectionHeader}>
+                <h2>Student Admission Inquiry</h2>
+                <p>Apply for the Academic Year 2026-27. We focus on concept-based teaching and IIT-NEET foundation from early grades.</p>
               </div>
-              <div className={styles.field}>
-                <label>Student Name</label>
-                <input 
-                  type="text" required
-                  value={admissionData.studentName}
-                  onChange={e => setAdmissionData({...admissionData, studentName: e.target.value})}
-                  placeholder="Child's Full Name"
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Email Address</label>
-                <input 
-                  type="email" required
-                  value={admissionData.email}
-                  onChange={e => setAdmissionData({...admissionData, email: e.target.value})}
-                  placeholder="email@example.com"
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Phone Number</label>
-                <input 
-                  type="tel" required
-                  value={admissionData.phone}
-                  onChange={e => setAdmissionData({...admissionData, phone: e.target.value})}
-                  placeholder="+91 XXXXX XXXXX"
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Seeking Admission for Grade</label>
-                <select 
-                  required
-                  value={admissionData.grade}
-                  onChange={e => setAdmissionData({...admissionData, grade: e.target.value})}
-                >
-                  <option value="">Select Grade</option>
-                  {[...Array(10)].map((_, i) => (
-                    <option key={i+1} value={`Grade ${i+1}`}>Grade {i+1}</option>
-                  ))}
-                  <option value="Kindergarten">Kindergarten</option>
-                </select>
-              </div>
-              <div className={styles.field}>
-                <label>Previous School Name</label>
-                <input 
-                  type="text"
-                  value={admissionData.previousSchool}
-                  onChange={e => setAdmissionData({...admissionData, previousSchool: e.target.value})}
-                  placeholder="Last attended school"
-                />
-              </div>
-            </div>
-            
-            <div className={styles.field} style={{ marginTop: '1rem' }}>
-              <label>Residential Address</label>
-              <textarea 
-                rows={3}
-                value={admissionData.address}
-                onChange={e => setAdmissionData({...admissionData, address: e.target.value})}
-                placeholder="Complete address"
-              ></textarea>
-            </div>
-
-            {error && <div className={styles.errorMessage}>{error}</div>}
-            <button type="submit" disabled={loading} className="btn btn-primary" style={{ marginTop: '2rem', width: '100%', padding: '1rem' }}>
-              {loading ? 'Submitting...' : 'Submit Admission Inquiry'}
-            </button>
-          </form>
-        ) : (
-          <form className={styles.form} onSubmit={handleCareerSubmit}>
-            <div className={styles.sectionHeader}>
-              <h2>Career Application</h2>
-              <p>Be part of a vision that blends traditional basics with modern technology. We are looking for passionate educators and staff.</p>
-            </div>
-
-            <div className={styles.grid}>
-              <div className={styles.field}>
-                <label>Full Name</label>
-                <input 
-                  type="text" required
-                  value={careerData.fullName}
-                  onChange={e => setCareerData({...careerData, fullName: e.target.value})}
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Email Address</label>
-                <input 
-                  type="email" required
-                  value={careerData.email}
-                  onChange={e => setCareerData({...careerData, email: e.target.value})}
-                />
-              </div>
-              <div className={styles.field}>
-                <label>Position Type</label>
-                <select 
-                  value={careerData.positionType}
-                  onChange={e => setCareerData({...careerData, positionType: e.target.value})}
-                >
-                  <option value="teaching">Teaching Staff</option>
-                  <option value="non-teaching">Non-Teaching Staff</option>
-                  <option value="administration">Administration</option>
-                </select>
-              </div>
-              <div className={styles.field}>
-                <label>Designation/Post</label>
-                <input 
-                  type="text" required
-                  value={careerData.positionName}
-                  onChange={e => setCareerData({...careerData, positionName: e.target.value})}
-                  placeholder="e.g. Senior Math Teacher"
-                />
-              </div>
-            </div>
-
-            {careerData.positionType === 'teaching' && (
-              <div className={styles.subjectsSection}>
-                <label style={{ fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Subjects of Expertise</label>
-                <div className={styles.subjectsGrid}>
-                  {subjectsList.map(subject => (
-                    <label key={subject} className={styles.checkboxLabel}>
-                      <input 
-                        type="checkbox"
-                        checked={careerData.subjects.includes(subject)}
-                        onChange={() => handleSubjectChange(subject)}
-                      />
-                      <span>{subject}</span>
-                    </label>
-                  ))}
+              
+              <div className={styles.grid}>
+                <div className={styles.field}>
+                  <label>Parent/Guardian Name</label>
+                  <input 
+                    type="text" required
+                    value={admissionData.parentName}
+                    onChange={e => setAdmissionData({...admissionData, parentName: e.target.value})}
+                    placeholder="Parent's full name"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Student Name</label>
+                  <input 
+                    type="text" required
+                    value={admissionData.studentName}
+                    onChange={e => setAdmissionData({...admissionData, studentName: e.target.value})}
+                    placeholder="Child's full name"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Email Address</label>
+                  <input 
+                    type="email" required
+                    value={admissionData.email}
+                    onChange={e => setAdmissionData({...admissionData, email: e.target.value})}
+                    placeholder="email@example.com"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Phone Number</label>
+                  <input 
+                    type="tel" required
+                    value={admissionData.phone}
+                    onChange={e => setAdmissionData({...admissionData, phone: e.target.value})}
+                    placeholder="10-digit number"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Seeking Admission for Grade</label>
+                  <select 
+                    required
+                    value={admissionData.grade}
+                    onChange={e => setAdmissionData({...admissionData, grade: e.target.value})}
+                  >
+                    <option value="">Select Grade</option>
+                    {[...Array(10)].map((_, i) => (
+                      <option key={i+1} value={`Grade ${i+1}`}>Grade {i+1}</option>
+                    ))}
+                    <option value="Kindergarten">Kindergarten</option>
+                  </select>
+                </div>
+                <div className={styles.field}>
+                  <label>Previous School Name</label>
+                  <input 
+                    type="text"
+                    value={admissionData.previousSchool}
+                    onChange={e => setAdmissionData({...admissionData, previousSchool: e.target.value})}
+                    placeholder="Last attended school"
+                  />
                 </div>
               </div>
-            )}
-
-            <div className={styles.grid} style={{ marginTop: '1.5rem' }}>
-              <div className={styles.field}>
-                <label>Total Experience (Years)</label>
-                <input 
-                  type="text" required
-                  value={careerData.experience}
-                  onChange={e => setCareerData({...careerData, experience: e.target.value})}
-                />
+              
+              <div className={styles.field} style={{ marginTop: '1.5rem' }}>
+                <label>Residential Address</label>
+                <textarea 
+                  rows={3}
+                  value={admissionData.address}
+                  onChange={e => setAdmissionData({...admissionData, address: e.target.value})}
+                  placeholder="Complete home address"
+                ></textarea>
               </div>
-              <div className={styles.field}>
-                <label>Highest Qualification</label>
-                <input 
-                  type="text" required
-                  value={careerData.qualification}
-                  onChange={e => setCareerData({...careerData, qualification: e.target.value})}
-                />
-              </div>
-            </div>
 
-            <div className={styles.field} style={{ marginTop: '1.5rem' }}>
-              <label>Resume / CV (PDF/DOCX/Image)</label>
-              <div className={styles.fileInputWrapper}>
-                <input 
-                  type="file" 
-                  required 
-                  accept=".pdf,.doc,.docx,image/*"
-                  onChange={e => setCareerData({...careerData, resume: e.target.files?.[0] || null})}
-                />
-                <div className={styles.fileCustomUi}>
-                  {careerData.resume ? `📄 ${careerData.resume.name}` : 'Click to select your resume'}
+              {error && <div className={styles.errorMessage}>{error}</div>}
+              <button type="submit" disabled={loading} className="btn btn-primary" style={{ marginTop: '2.5rem', width: '100%', padding: '1rem' }}>
+                {loading ? 'Submitting...' : 'Submit Admission Inquiry'}
+              </button>
+            </form>
+          ) : (
+            <form className={styles.form} onSubmit={handleCareerSubmit}>
+              <div className={styles.sectionHeader}>
+                <h2>Career Application</h2>
+                <p>Be part of a vision that blends core basics with modern technology. We are looking for passionate educators and staff.</p>
+              </div>
+
+              <div className={styles.grid}>
+                <div className={styles.field}>
+                  <label>Full Name</label>
+                  <input 
+                    type="text" required
+                    value={careerData.fullName}
+                    onChange={e => setCareerData({...careerData, fullName: e.target.value})}
+                    placeholder="Your full name"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Email Address</label>
+                  <input 
+                    type="email" required
+                    value={careerData.email}
+                    onChange={e => setCareerData({...careerData, email: e.target.value})}
+                    placeholder="email@example.com"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Position Type</label>
+                  <select 
+                    value={careerData.positionType}
+                    onChange={e => setCareerData({...careerData, positionType: e.target.value})}
+                  >
+                    <option value="teaching">Teaching Staff</option>
+                    <option value="non-teaching">Non-Teaching Staff</option>
+                    <option value="administration">Administration</option>
+                  </select>
+                </div>
+                <div className={styles.field}>
+                  <label>Designation / Post</label>
+                  <input 
+                    type="text" required
+                    value={careerData.positionName}
+                    onChange={e => setCareerData({...careerData, positionName: e.target.value})}
+                    placeholder="e.g. Senior Math Teacher"
+                  />
                 </div>
               </div>
-            </div>
 
-            <div className={styles.field} style={{ marginTop: '1.5rem' }}>
-              <label>Cover Letter (Optional)</label>
-              <textarea 
-                rows={4}
-                value={careerData.coverLetter}
-                onChange={e => setCareerData({...careerData, coverLetter: e.target.value})}
-                placeholder="Briefly describe why you want to join us"
-              ></textarea>
-            </div>
+              {careerData.positionType === 'teaching' && (
+                <div className={styles.subjectsSection}>
+                  <label style={{ fontWeight: 700, display: 'block', marginBottom: '1rem', color: 'var(--primary)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.025em' }}>Subjects of Expertise</label>
+                  <div className={styles.subjectsGrid}>
+                    {subjectsList.map(subject => (
+                      <label key={subject} className={styles.checkboxLabel}>
+                        <input 
+                          type="checkbox"
+                          checked={careerData.subjects.includes(subject)}
+                          onChange={() => handleSubjectChange(subject)}
+                        />
+                        <span>{subject}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-            {error && <div className={styles.errorMessage}>{error}</div>}
-            <button type="submit" disabled={loading} className="btn btn-primary" style={{ marginTop: '2rem', width: '100%', padding: '1rem' }}>
-              {loading ? 'Uploading & Submitting...' : 'Submit Application'}
-            </button>
-          </form>
-        )}
+              <div className={styles.grid} style={{ marginTop: '1.5rem' }}>
+                <div className={styles.field}>
+                  <label>Total Experience (Years)</label>
+                  <input 
+                    type="text" required
+                    value={careerData.experience}
+                    onChange={e => setCareerData({...careerData, experience: e.target.value})}
+                    placeholder="e.g. 3 Years"
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label>Highest Qualification</label>
+                  <input 
+                    type="text" required
+                    value={careerData.qualification}
+                    onChange={e => setCareerData({...careerData, qualification: e.target.value})}
+                    placeholder="e.g. M.Sc, B.Ed"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.field} style={{ marginTop: '1.5rem' }}>
+                <label>Resume / CV (PDF / DOCX)</label>
+                <div className={styles.fileInputWrapper}>
+                  <input 
+                    type="file" 
+                    required 
+                    accept=".pdf,.doc,.docx"
+                    onChange={e => setCareerData({...careerData, resume: e.target.files?.[0] || null})}
+                  />
+                  <div className={styles.fileCustomUi}>
+                    <Upload size={18} style={{ marginRight: '0.5rem' }} />
+                    {careerData.resume ? `📄 ${careerData.resume.name}` : 'Click to select your resume file'}
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.field} style={{ marginTop: '1.5rem' }}>
+                <label>Cover Letter (Optional)</label>
+                <textarea 
+                  rows={4}
+                  value={careerData.coverLetter}
+                  onChange={e => setCareerData({...careerData, coverLetter: e.target.value})}
+                  placeholder="Briefly describe why you want to join us..."
+                ></textarea>
+              </div>
+
+              {error && <div className={styles.errorMessage}>{error}</div>}
+              <button type="submit" disabled={loading} className="btn btn-primary" style={{ marginTop: '2.5rem', width: '100%', padding: '1rem' }}>
+                {loading ? 'Uploading & Submitting...' : 'Submit Application'}
+              </button>
+            </form>
+          )}
+        </Reveal>
       </div>
     </div>
   );

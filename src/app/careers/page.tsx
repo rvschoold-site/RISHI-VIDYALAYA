@@ -3,6 +3,17 @@
 import React, { useState } from 'react';
 import styles from './careers.module.css';
 import Reveal from '@/components/Reveal';
+import { 
+  GraduationCap, 
+  Building, 
+  Sparkles, 
+  Upload,
+  User,
+  Mail,
+  Phone,
+  Briefcase,
+  FileText
+} from 'lucide-react';
 
 export default function CareersPage() {
   const [formData, setFormData] = useState({
@@ -98,6 +109,7 @@ export default function CareersPage() {
 
   return (
     <div className={styles.careersContainer}>
+      {/* Page Hero */}
       <section className="page-hero">
         <Reveal>
           <h1>Build the Future of Education</h1>
@@ -105,215 +117,224 @@ export default function CareersPage() {
         </Reveal>
       </section>
 
+      {/* Highlights/Benefits */}
       <section className="section">
-        <div className="grid3">
-          <Reveal delay={0.1}>
-            <div className="card icon-float">
-              <div className={styles.careerIcon}>🎓</div>
-              <h3>Teaching Excellence</h3>
-              <p>Empower students with knowledge. We seek experts in Mathematics, Sciences, Languages, and Humanities.</p>
-              <ul className={styles.careerList}>
-                <li>• Subject Matter Experts</li>
-                <li>• Foundation Specialists (IIT/NEET)</li>
-                <li>• AI & Robotics Mentors</li>
-              </ul>
-            </div>
-          </Reveal>
+        <div className="container">
+          <div className="grid3">
+            <Reveal delay={0.1}>
+              <div className="card" style={{ height: '100%' }}>
+                <div className={styles.benefitIcon}>
+                  <GraduationCap size={28} />
+                </div>
+                <h3>Teaching Excellence</h3>
+                <p>Empower students with basic concepts. We seek mentors in Mathematics, Sciences, Languages, and tech labs.</p>
+                <ul className={styles.careerList}>
+                  <li>• Subject Matter Specialists</li>
+                  <li>• Early IIT/NEET Foundations mentors</li>
+                  <li>• AI & Robotics Lab coaches</li>
+                </ul>
+              </div>
+            </Reveal>
 
-          <Reveal delay={0.2}>
-            <div className="card icon-float">
-              <div className={styles.careerIcon}>🏛️</div>
-              <h3>Operations & Support</h3>
-              <p>Be the backbone of our institution. Opportunities in administration, finance, and IT support.</p>
-              <ul className={styles.careerList}>
-                <li>• Academic Coordinators</li>
-                <li>• Admin Executives</li>
-                <li>• Front Office Relations</li>
-              </ul>
-            </div>
-          </Reveal>
+            <Reveal delay={0.2}>
+              <div className="card" style={{ height: '100%' }}>
+                <div className={styles.benefitIcon}>
+                  <Building size={28} />
+                </div>
+                <h3>Administration & Care</h3>
+                <p>Be the operational pillar. Professional options in front office, student hostel warden-care, and management.</p>
+                <ul className={styles.careerList}>
+                  <li>• Academic Coordinators</li>
+                  <li>• Admissions & Public Relations</li>
+                  <li>• Campus Operations Executives</li>
+                </ul>
+              </div>
+            </Reveal>
 
-          <Reveal delay={0.3}>
-            <div className="card icon-float">
-              <div className={styles.careerIcon}>✨</div>
-              <h3>Professional Growth</h3>
-              <p>We invest in our staff with regular workshops and a supportive environment for career advancement.</p>
-              <ul className={styles.careerList}>
-                <li>• Performance Bonuses</li>
-                <li>• Health Benefits</li>
-                <li>• Continuous Learning</li>
-              </ul>
-            </div>
-          </Reveal>
+            <Reveal delay={0.3}>
+              <div className="card" style={{ height: '100%' }}>
+                <div className={styles.benefitIcon}>
+                  <Sparkles size={28} />
+                </div>
+                <h3>Growth Environment</h3>
+                <p>We invest in our staff's development through periodic training sessions and clear appraisal milestones.</p>
+                <ul className={styles.careerList}>
+                  <li>• Professional Development Workshops</li>
+                  <li>• Consistent Appraisal Roadmaps</li>
+                  <li>• Collaborative & Caring Work Culture</li>
+                </ul>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      <section className="section" style={{ 
-        backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-        backdropFilter: 'blur(10px)',
-        borderRadius: '40px', 
-        boxShadow: '0 20px 50px rgba(0,0,0,0.05)',
-        border: '1px solid rgba(255,255,255,0.3)'
-      }}>
-        <div className={styles.formWrapper}>
-          <Reveal>
-            <div className="section-header">
-              <h2>Submit Your Application</h2>
-              <p>Tell us about your skills and why you'd like to join Rishi Vidyalaya.</p>
-            </div>
-          </Reveal>
+      {/* Application Form */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className={styles.formWrapper}>
+            <Reveal>
+              <div className="section-header">
+                <span className="badge-premium" style={{ marginBottom: '1rem' }}>Apply Today</span>
+                <h2>Submit Your Application</h2>
+                <p>Tell us about your educational background and why you want to join the Rishi Vidyalaya family.</p>
+              </div>
+            </Reveal>
 
-          <Reveal delay={0.2}>
-            <form onSubmit={handleSubmit} className={styles.careersForm}>
-              <div className={styles.formGrid}>
-                <div className={styles.formGroup}>
-                  <label>Full Name</label>
-                  <input 
-                    type="text" 
-                    name="fullName" 
-                    value={formData.fullName} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="John Doe"
-                  />
-                </div>
+            <Reveal delay={0.2}>
+              <form onSubmit={handleSubmit} className={styles.careersForm}>
+                <div className={styles.formGrid}>
+                  <div className={styles.formGroup}>
+                    <label>Full Name</label>
+                    <input 
+                      type="text" 
+                      name="fullName" 
+                      value={formData.fullName} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="e.g. Ramesh Kumar"
+                    />
+                  </div>
 
-                <div className={styles.formGroup}>
-                  <label>Email Address</label>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    value={formData.email} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="john@example.com"
-                  />
-                </div>
+                  <div className={styles.formGroup}>
+                    <label>Email Address</label>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      value={formData.email} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="email@example.com"
+                    />
+                  </div>
 
-                <div className={styles.formGroup}>
-                  <label>Phone Number</label>
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={formData.phone} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="+91 XXXXX XXXXX"
-                  />
-                </div>
+                  <div className={styles.formGroup}>
+                    <label>Phone Number</label>
+                    <input 
+                      type="tel" 
+                      name="phone" 
+                      value={formData.phone} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="10-digit number"
+                    />
+                  </div>
 
-                <div className={styles.formGroup}>
-                  <label>Staff Category</label>
-                  <select name="positionType" value={formData.positionType} onChange={handleInputChange}>
-                    <option value="TEACHING">Teaching Staff</option>
-                    <option value="NON_TEACHING">Non-Teaching Staff</option>
-                  </select>
-                </div>
+                  <div className={styles.formGroup}>
+                    <label>Staff Category</label>
+                    <select name="positionType" value={formData.positionType} onChange={handleInputChange}>
+                      <option value="TEACHING">Teaching Staff</option>
+                      <option value="NON_TEACHING">Non-Teaching Staff</option>
+                    </select>
+                  </div>
 
-                <div className={styles.formGroup}>
-                  <label>Desired Position</label>
-                  <input 
-                    type="text" 
-                    name="positionName" 
-                    value={formData.positionName} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="e.g. Senior Physics Teacher"
-                  />
-                </div>
-
-                {formData.positionType === 'TEACHING' && (
                   <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
-                    <label>Subjects of Expertise</label>
-                    <div style={{ 
-                      display: 'grid', 
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
-                      gap: '1rem',
-                      background: '#F8FAFC',
-                      padding: '1.5rem',
-                      borderRadius: '14px',
-                      marginTop: '0.5rem'
-                    }}>
-                      {subjectsList.map(subject => (
-                        <label key={subject} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontSize: '0.9rem' }}>
-                          <input 
-                            type="checkbox"
-                            checked={formData.subjects.includes(subject)}
-                            onChange={() => handleSubjectChange(subject)}
-                            style={{ width: '18px', height: '18px', accentColor: 'var(--accent)' }}
-                          />
-                          {subject}
-                        </label>
-                      ))}
+                    <label>Desired Designation</label>
+                    <input 
+                      type="text" 
+                      name="positionName" 
+                      value={formData.positionName} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="e.g. Senior Mathematics Teacher"
+                    />
+                  </div>
+
+                  {formData.positionType === 'TEACHING' && (
+                    <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                      <label>Subjects of Expertise</label>
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', 
+                        gap: '0.75rem',
+                        background: '#f8fafc',
+                        padding: '1.25rem',
+                        borderRadius: '14px',
+                        border: '1px solid #e2e8f0',
+                        marginTop: '0.25rem'
+                      }}>
+                        {subjectsList.map(subject => (
+                          <label key={subject} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.85rem', color: '#475569' }}>
+                            <input 
+                              type="checkbox"
+                              checked={formData.subjects.includes(subject)}
+                              onChange={() => handleSubjectChange(subject)}
+                              style={{ width: '16px', height: '16px', accentColor: 'var(--accent)', cursor: 'pointer' }}
+                            />
+                            {subject}
+                          </label>
+                        ))}
+                      </div>
                     </div>
+                  )}
+
+                  <div className={styles.formGroup}>
+                    <label>Total Experience (Years)</label>
+                    <input 
+                      type="text" 
+                      name="experience" 
+                      value={formData.experience} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="e.g. 5 Years"
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label>Highest Qualification</label>
+                    <input 
+                      type="text" 
+                      name="qualification" 
+                      value={formData.qualification} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="e.g. M.Sc, B.Ed"
+                    />
+                  </div>
+
+                  <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                    <label>Upload Resume (PDF / DOCX)</label>
+                    <div className={styles.fileInputWrapper}>
+                      <input 
+                        type="file" 
+                        id="resume" 
+                        onChange={handleFileChange} 
+                        accept=".pdf,.doc,.docx" 
+                        required 
+                      />
+                      <div className={styles.fileCustomUi}>
+                        <Upload size={18} style={{ marginRight: '0.5rem' }} />
+                        {resume ? `📄 ${resume.name}` : 'Click to select your resume file'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                    <label>Brief Cover Letter (Optional)</label>
+                    <textarea 
+                      name="coverLetter" 
+                      value={formData.coverLetter} 
+                      onChange={handleInputChange} 
+                      rows={4} 
+                      placeholder="Describe why you want to join us..."
+                    ></textarea>
+                  </div>
+                </div>
+
+                {status && (
+                  <div className={`${styles.formStatus} ${styles[status.type]}`}>
+                    {status.message}
                   </div>
                 )}
 
-                <div className={styles.formGroup}>
-                  <label>Total Experience (Years)</label>
-                  <input 
-                    type="text" 
-                    name="experience" 
-                    value={formData.experience} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="e.g. 5 Years"
-                  />
+                <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                  <button type="submit" className="btn btn-primary btn-pulse" disabled={loading} style={{ width: '100%', maxWidth: '350px' }}>
+                    {loading ? 'Submitting Application...' : 'Submit Application'}
+                  </button>
                 </div>
-
-                <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
-                  <label>Highest Qualification</label>
-                  <input 
-                    type="text" 
-                    name="qualification" 
-                    value={formData.qualification} 
-                    onChange={handleInputChange} 
-                    required 
-                    placeholder="e.g. M.Sc Physics, B.Ed"
-                  />
-                </div>
-
-                <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
-                  <label>Upload Resume (PDF/DOCX)</label>
-                  <div className={styles.fileInputWrapper}>
-                    <input 
-                      type="file" 
-                      id="resume" 
-                      onChange={handleFileChange} 
-                      accept=".pdf,.doc,.docx" 
-                      required 
-                    />
-                    <div className={styles.fileCustomUi}>
-                      {resume ? `📄 ${resume.name}` : 'Click to select your resume'}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
-                  <label>Brief Cover Letter (Optional)</label>
-                  <textarea 
-                    name="coverLetter" 
-                    value={formData.coverLetter} 
-                    onChange={handleInputChange} 
-                    rows={4} 
-                    placeholder="Tell us a bit about yourself and why you're a good fit..."
-                  ></textarea>
-                </div>
-              </div>
-
-              {status && (
-                <div className={`${styles.formStatus} ${styles[status.type]}`}>
-                  {status.message}
-                </div>
-              )}
-
-              <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                <button type="submit" className="btn btn-primary btn-pulse" disabled={loading} style={{ width: '100%', maxWidth: '400px' }}>
-                  {loading ? 'Submitting Application...' : 'Submit Application'}
-                </button>
-              </div>
-            </form>
-          </Reveal>
+              </form>
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>

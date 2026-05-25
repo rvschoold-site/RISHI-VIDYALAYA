@@ -1,66 +1,75 @@
+/* Apply Page Stylesheet */
+
 .tabContainer {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 0.5rem;
+  margin-bottom: 3.5rem;
   background: #f1f5f9;
-  padding: 0.5rem;
+  padding: 0.4rem;
   border-radius: 16px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 .tab {
-  padding: 1rem 2rem;
+  padding: 0.85rem 1.75rem;
   border-radius: 12px;
   border: none;
   background: transparent;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: #64748b;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.tab:hover {
+  color: var(--primary);
 }
 
 .tabActive {
   background: white;
-  color: var(--primary);
+  color: var(--accent) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .formWrapper {
   max-width: 900px;
   margin: 0 auto;
-  background: white;
-  border-radius: 32px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
-  overflow: hidden;
 }
 
 .form {
-  padding: 3rem;
+  background: white;
+  padding: 3.5rem 3rem;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
 }
 
 .sectionHeader {
   margin-bottom: 2.5rem;
   border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
 }
 
 .sectionHeader h2 {
-  font-size: 2rem;
+  font-size: 1.65rem;
   color: var(--primary);
   margin-bottom: 0.5rem;
+  font-weight: 800;
 }
 
 .sectionHeader p {
-  color: #64748b;
+  color: var(--text-muted);
   line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 .grid {
@@ -76,9 +85,11 @@
 }
 
 .field label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 .field input, 
@@ -86,10 +97,11 @@
 .field textarea {
   padding: 0.85rem 1rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  font-size: 1rem;
-  transition: all 0.2s;
+  border: 1.5px solid #e2e8f0;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
   background-color: #f8fafc;
+  font-family: inherit;
 }
 
 .field input:focus, 
@@ -98,29 +110,30 @@
   outline: none;
   border-color: var(--accent);
   background-color: white;
-  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.05);
 }
 
 .subjectsSection {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   background: #f8fafc;
-  padding: 2rem;
-  border-radius: 20px;
-  border: 1px dashed #cbd5e1;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
 }
 
 .subjectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .checkboxLabel {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.4rem;
   border-radius: 8px;
   transition: background 0.2s;
 }
@@ -130,20 +143,15 @@
 }
 
 .checkboxLabel input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--accent);
   cursor: pointer;
 }
 
 .checkboxLabel span {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #475569;
-}
-
-.fileInput {
-  background: white !important;
-  cursor: pointer;
 }
 
 .errorMessage {
@@ -155,6 +163,7 @@
   font-weight: 600;
   text-align: center;
   border: 1px solid #fee2e2;
+  font-size: 0.9rem;
 }
 
 .fileInputWrapper {
@@ -178,20 +187,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #F8FAFC;
-  border: 2px dashed #CBD5E1;
-  border-radius: 14px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: var(--text-muted);
   transition: all 0.3s ease;
   font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .fileInputWrapper:hover .fileCustomUi {
   border-color: var(--accent);
-  background: #FEF2F2;
+  background: #fef2f2;
   color: var(--accent);
 }
 
@@ -203,6 +213,7 @@
   .tabContainer {
     flex-direction: column;
     width: 100%;
+    gap: 0.25rem;
   }
   
   .tab {
@@ -211,6 +222,7 @@
   }
   
   .form {
-    padding: 1.5rem;
+    padding: 2.25rem 1.25rem;
+    border-radius: 0;
   }
 }

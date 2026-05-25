@@ -1,12 +1,15 @@
+/* Admission Page Stylesheet */
+
 .main {
   min-height: 100vh;
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
-  padding: 6rem 1rem 10rem 1rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  padding: 6rem var(--spacing-lg) 10rem var(--spacing-lg);
   text-align: center;
   color: white;
+  border-bottom: 4px solid var(--accent);
 }
 
 .heroContent {
@@ -15,14 +18,14 @@
 }
 
 .heroContent h1 {
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
   font-weight: 800;
   margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .heroContent p {
-  font-size: 1.25rem;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
   opacity: 0.9;
   line-height: 1.6;
 }
@@ -33,11 +36,7 @@
 }
 
 @media (max-width: 768px) {
-  .heroContent h1 {
-    font-size: 2.25rem;
-  }
-  
-  .heroContent p {
-    font-size: 1.1rem;
+  .hero {
+    padding: 5rem var(--spacing-md) 8rem var(--spacing-md);
   }
 }

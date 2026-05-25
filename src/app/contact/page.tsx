@@ -57,7 +57,7 @@ export default function Contact() {
 
   return (
     <div className={styles.contactContainer}>
-      <section className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '6rem 0' }}>
+      <section className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '6rem 2rem' }}>
         <Reveal>
           <span className="badge-premium" style={{ marginBottom: '1rem', display: 'inline-block' }}>Get In Touch</span>
           <h1 style={{ color: 'white', fontSize: '3.5rem', fontWeight: 800 }}>Contact Rishi Vidyalaya</h1>

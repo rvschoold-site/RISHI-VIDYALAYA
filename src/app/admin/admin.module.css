@@ -303,3 +303,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+.header {
+  margin-bottom: 2rem;
+}

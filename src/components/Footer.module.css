@@ -138,7 +138,7 @@
     justify-content: center;
   }
   
-  .footerLinks h3::after, .footerContact h3::after {
+  .footerLinks h3::after, .footerContact h3::after, .footerMap h3::after {
     left: 50%;
     transform: translateX(-50%);
   }

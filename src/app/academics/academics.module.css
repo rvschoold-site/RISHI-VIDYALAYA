@@ -1,14 +1,18 @@
+/* Academics Page Stylesheet */
+
 .container {
   display: flex;
   flex-direction: column;
 }
 
+/* Foundation dark background section */
 .foundationSection {
   background-color: var(--primary);
   color: white;
   border-radius: 24px;
   padding: var(--spacing-3xl) var(--spacing-2xl);
-  margin-top: var(--spacing-2xl);
+  margin-top: var(--spacing-xl);
+  box-shadow: 0 15px 35px rgba(15, 23, 75, 0.12);
 }
 
 .foundationGrid {
@@ -19,32 +23,79 @@
 }
 
 .foundationCard {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: var(--spacing-xl);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 2.25rem 1.75rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   height: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.foundationCard:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(220, 38, 38, 0.3);
 }
 
 .foundationCard h3 {
   color: var(--accent);
-  margin-bottom: 0.5rem;
-  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 
 .foundationCard p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .foundationImage {
   position: relative;
-  height: 400px;
+  height: 440px;
   width: 100%;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
+/* CBSE check list styling */
+.listGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.listItem:hover {
+  border-color: rgba(220, 38, 38, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.03);
+}
+
+.listIcon {
+  color: var(--accent);
+  margin-top: 1px;
+}
+
+/* Responsive configurations */
 @media (max-width: 768px) {
   .foundationSection {
     padding: var(--spacing-2xl) var(--spacing-lg);
@@ -52,12 +103,16 @@
   }
   
   .foundationImage {
-    height: 300px;
+    height: 320px;
   }
 }
 
 @media (max-width: 480px) {
   .foundationImage {
     height: 250px;
+  }
+  
+  .listItem {
+    padding: 1.25rem;
   }
 }
