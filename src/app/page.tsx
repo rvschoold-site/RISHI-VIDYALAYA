@@ -240,7 +240,7 @@ export default function Home() {
               <div className={styles.facilityCard}>
                 <div className={styles.facilityImageWrapper}>
                   <Image 
-                    src="/ground.jpg" 
+                    src="/ground.JPG" 
                     alt="2 Acres Playground" 
                     fill 
                     quality={75}
