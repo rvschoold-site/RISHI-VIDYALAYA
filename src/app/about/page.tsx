@@ -80,15 +80,15 @@ export default function About() {
                 <h3 style={{ color: 'var(--accent)', marginBottom: '1rem' }}>🏅 Awards & Recognitions</h3>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                   <li style={{ marginBottom: '1rem' }}>• National-level awards in education and service.</li>
-                  <li style={{ marginBottom: '1rem' }}>• One of the first ISO-certified schools in the Dharmavaram region.</li>
-                  <li style={{ marginBottom: '1rem' }}>• Consistently recognized for student achievements and academic excellence.</li>
+                  <li style={{ marginBottom: '1rem' }}>• First ISO Certified School in the region (Certified ISO 9001:2015 School).</li>
+                  <li style={{ marginBottom: '1rem' }}>• Consistently recognized for academic achievements and student success.</li>
                 </ul>
               </div>
             </Reveal>
             <Reveal delay={0.4}>
               <div style={{ color: 'white' }}>
-                <h3 style={{ color: 'var(--accent)', marginBottom: '1rem' }}>🏠 Best Residential School</h3>
-                <p style={{ lineHeight: '1.8' }}>Our separate green hostel campus provides a safe, secure, and well-maintained environment. With nutritious food and caring supervision, we ensure a home-away-from-home experience for our students.</p>
+                <h3 style={{ color: 'var(--accent)', marginBottom: '1rem' }}>🏠 Hostel Facility</h3>
+                <p style={{ lineHeight: '1.8' }}>Our separate green hostel campus provides a safe, secure, and dedicated hostel environment. With nutritious food, caring supervision, and separate boy/girl blocks, we ensure a home-away-from-home experience.</p>
               </div>
             </Reveal>
           </div>

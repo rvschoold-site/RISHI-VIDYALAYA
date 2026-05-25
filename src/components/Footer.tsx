@@ -62,7 +62,7 @@ export default function Footer() {
         <div className={styles.footerContact}>
           <h3>Contact Us</h3>
           <p><strong>Address:</strong><br />N.S Gate road, Opp: Tidco Houses, Dharmavaram.</p>
-          <p><strong>Phone:</strong><br />+91 9063466944, +91 9063466945</p>
+          <p><strong>Phone:</strong><br />+91 9063466944, +91 9063466945, +91 9063466941</p>
           <p><strong>Email:</strong><br />rvschoold@gmail.com</p>
         </div>
 
