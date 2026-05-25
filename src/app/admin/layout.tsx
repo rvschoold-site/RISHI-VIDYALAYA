@@ -18,7 +18,9 @@ import {
   GraduationCap,
   ExternalLink,
   ChevronDown,
-  History
+  History,
+  Menu,
+  X
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -26,6 +28,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const [admin, setAdmin] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [pathname]);
 
   // Define public routes that don't need authentication
   const publicRoutes = [
@@ -93,8 +100,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className={styles.layout}>
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarBrand}>RISHI ADMIN</div>
+      {isSidebarOpen && (
+        <div className={styles.backdrop} onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+        <div className={styles.sidebarHeader}>
+          <div className={styles.sidebarBrand}>RISHI ADMIN</div>
+          <button className={styles.closeButton} onClick={() => setIsSidebarOpen(false)} aria-label="Close menu">
+            <X size={20} />
+          </button>
+        </div>
         <nav className={styles.sidebarNav}>
           {navLinks.map((link: any) => (
             <React.Fragment key={link.name}>
@@ -154,8 +170,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <main className={styles.main}>
         <header className={styles.topbar}>
-          <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>
-            {navLinks.find(l => l.href === pathname)?.name || 'Admin Panel'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <button className={styles.menuButton} onClick={() => setIsSidebarOpen(true)} aria-label="Open menu">
+              <Menu size={20} />
+            </button>
+            <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>
+              {navLinks.find(l => l.href === pathname)?.name || 'Admin Panel'}
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ textAlign: 'right' }}>

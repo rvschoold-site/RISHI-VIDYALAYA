@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import styles from '../admin.module.css';
 import { 
   Settings as SettingsIcon, 
   Phone, 
@@ -11,8 +10,10 @@ import {
   Share2, 
   Save, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
+import styles from '../admin.module.css';
 
 export default function SiteSettings() {
   const [settings, setSettings] = useState<any>({});
@@ -55,7 +56,7 @@ export default function SiteSettings() {
 
       if (res.ok) {
         setMessage({ type: 'success', text: 'Settings updated successfully!' });
-        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+        setTimeout(() => setMessage({ type: '', text: '' }), 4000);
       } else {
         throw new Error('Failed to update settings');
       }
@@ -66,7 +67,14 @@ export default function SiteSettings() {
     }
   };
 
-  if (loading) return <div className={styles.loading}>Loading settings...</div>;
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        <Loader2 className="animate-spin" size={24} />
+        <span>Loading settings...</span>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'general', name: 'General Info', icon: <SettingsIcon size={16} /> },
@@ -76,19 +84,19 @@ export default function SiteSettings() {
   ];
 
   return (
-    <div style={{ maxWidth: '900px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.25rem' }}>Site Settings</h1>
-          <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Configure global website properties and contact information.</p>
+    <div style={{ maxWidth: '1000px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+        <div className={styles.header} style={{ margin: 0 }}>
+          <h1>Site Settings</h1>
+          <p>Configure global website parameters, admissions, and contact details</p>
         </div>
         <button 
           onClick={handleSave} 
-          className="btn btn-primary" 
+          className={styles.buttonPrimary} 
           disabled={saving}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1.25rem' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem' }}
         >
-          {saving ? <div className="animate-spin">⌛</div> : <Save size={16} />}
+          {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
           <span>{saving ? 'Saving...' : 'Save All Changes'}</span>
         </button>
       </div>
@@ -107,48 +115,49 @@ export default function SiteSettings() {
           gap: '0.5rem'
         }}>
           {message.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-          {message.text}
+          <span>{message.text}</span>
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: '2rem' }}>
+      <div className={styles.settingsLayout}>
         {/* Tabs Sidebar */}
-        <div style={{ width: '200px', flexShrink: 0 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '10px',
-                  border: 'none',
-                  background: activeTab === tab.id ? '#fef2f2' : 'transparent',
-                  color: activeTab === tab.id ? 'var(--accent)' : '#64748b',
-                  fontWeight: activeTab === tab.id ? 700 : 600,
-                  fontSize: '0.85rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  textAlign: 'left'
-                }}
-              >
-                {tab.icon}
-                {tab.name}
-              </button>
-            ))}
-          </div>
+        <div className={styles.settingsTabs}>
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                border: 'none',
+                background: activeTab === tab.id ? '#fef2f2' : 'transparent',
+                color: activeTab === tab.id ? 'var(--accent, #DC2626)' : '#64748b',
+                fontWeight: activeTab === tab.id ? 700 : 600,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                textAlign: 'left',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {tab.icon}
+              <span>{tab.name}</span>
+            </button>
+          ))}
         </div>
 
         {/* Tab Content */}
         <div className={styles.card} style={{ flex: 1, minHeight: '400px' }}>
-          <form onSubmit={handleSave}>
+          <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {activeTab === 'general' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Mail size={16} style={{ color: 'var(--accent)' }} /> Contact Information
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                  <Mail size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+                  <span>Contact Information</span>
                 </h3>
                 
                 <div className={styles.formGroup}>
@@ -177,7 +186,7 @@ export default function SiteSettings() {
                     value={settings.CONTACT_ADDRESS || ''} 
                     onChange={(e) => setSettings({ ...settings, CONTACT_ADDRESS: e.target.value })}
                     placeholder="Enter school location..."
-                    style={{ minHeight: '80px' }}
+                    rows={4}
                   />
                 </div>
               </div>
@@ -185,8 +194,9 @@ export default function SiteSettings() {
 
             {activeTab === 'admissions' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Calendar size={16} style={{ color: 'var(--accent)' }} /> Enrollment Cycles
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                  <Calendar size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+                  <span>Enrollment Cycles</span>
                 </h3>
                 
                 <div className={styles.formGroup}>
@@ -200,19 +210,21 @@ export default function SiteSettings() {
 
                 <div style={{ 
                   backgroundColor: '#f8fafc', 
-                  padding: '1rem', 
-                  borderRadius: '10px',
+                  padding: '1.25rem', 
+                  borderRadius: '8px',
                   border: '1px solid #e2e8f0',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '1rem'
                 }}>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>Admissions Status</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Control visibility of the Join Now button.</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--primary)' }}>Admissions Lead Inbound status</div>
+                    <div style={{ fontSize: '0.775rem', color: '#64748b', marginTop: '0.15rem' }}>Control visibility of the Admissions button on the homepage.</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700, color: settings.ADMISSIONS_OPEN === 'true' ? '#166534' : '#991b1b' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: settings.ADMISSIONS_OPEN === 'true' ? '#166534' : '#991b1b', backgroundColor: settings.ADMISSIONS_OPEN === 'true' ? '#dcfce7' : '#ffe4e6', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
                       {settings.ADMISSIONS_OPEN === 'true' ? 'OPEN' : 'CLOSED'}
                     </span>
                     <input 
@@ -228,8 +240,9 @@ export default function SiteSettings() {
 
             {activeTab === 'navigation' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Navigation size={16} style={{ color: 'var(--accent)' }} /> Navbar Configuration
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                  <Navigation size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+                  <span>Navbar Configuration</span>
                 </h3>
                 <div className={styles.formGroup}>
                   <label>Main Navigation (JSON Array)</label>
@@ -237,22 +250,22 @@ export default function SiteSettings() {
                     value={settings.NAV_LINKS || '[]'} 
                     onChange={(e) => setSettings({ ...settings, NAV_LINKS: e.target.value })}
                     style={{ 
-                      minHeight: '250px', 
+                      minHeight: '280px', 
                       fontFamily: 'monospace',
-                      backgroundColor: '#f1f5f9',
+                      backgroundColor: '#f8fafc',
                       fontSize: '0.8rem'
                     }}
                   />
                   <div style={{ 
-                    marginTop: '0.75rem', 
+                    marginTop: '0.5rem', 
                     padding: '0.75rem', 
                     backgroundColor: '#eff6ff', 
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     fontSize: '0.75rem',
                     color: '#1e40af',
                     lineHeight: '1.4'
                   }}>
-                    <strong>Tip:</strong> Ensure you use a valid JSON array format. <br/>
+                    <strong>Format Checklist:</strong> Must be a valid JSON array of objects containing <code>label</code> and <code>path</code> keys. <br/>
                     Example: <code>[{'{"label": "Home", "path": "/"}'}]</code>
                   </div>
                 </div>
@@ -261,8 +274,9 @@ export default function SiteSettings() {
 
             {activeTab === 'social' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Share2 size={16} style={{ color: 'var(--accent)' }} /> Social Media Handles
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                  <Share2 size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+                  <span>Social Media Handles</span>
                 </h3>
                 
                 <div className={styles.formGroup}>
@@ -286,7 +300,7 @@ export default function SiteSettings() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>Twitter/X Profile</label>
+                  <label>Twitter/X Profile URL</label>
                   <input 
                     type="url" 
                     value={settings.SOCIAL_TW || ''} 

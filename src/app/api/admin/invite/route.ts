@@ -71,3 +71,32 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const admin = await verifyAdmin(req);
+    if (!admin || admin.role !== 'SUPER_ADMIN') {
+      return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Invitation ID is required' }, { status: 400 });
+    }
+
+    await dbConnect();
+    const deleted = await AdminInvitation.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json({ error: 'Invitation not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Invitation revoked successfully' });
+  } catch (error: any) {
+    console.error('Revoke Invite Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
