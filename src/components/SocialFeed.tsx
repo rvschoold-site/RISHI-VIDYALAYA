@@ -1,15 +1,28 @@
 'use client';
 
 import React from 'react';
-import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa6';
+import { FaFacebookF, FaInstagram } from 'react-icons/fa6';
 import styles from './SocialFeed.module.css';
 import Reveal from './Reveal';
 
+/**
+ * SocialFeed component that displays embedded Facebook and Instagram feeds.
+ * Facebook uses the native Page Plugin iframe.
+ * Instagram uses the Elfsight Instagram Feed widget.
+ */
 export default function SocialFeed() {
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
     setIsMounted(true);
+
+    // Load Elfsight platform script
+    if (!document.querySelector('script[src="https://static.elfsight.com/platform/platform.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://static.elfsight.com/platform/platform.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }, []);
 
   return (
@@ -54,7 +67,7 @@ export default function SocialFeed() {
               </div>
             </div>
 
-          {/* Instagram Section (Enhanced) */}
+          {/* Instagram Feed via Elfsight */}
           <Reveal delay={0.2}>
             <div className={styles.embedCard}>
               <div className={styles.embedHeader}>
@@ -64,25 +77,17 @@ export default function SocialFeed() {
                 <h3>Instagram Feed</h3>
               </div>
               <div className={styles.iframeWrapper}>
-                <div className={styles.placeholder}>
-                  <div style={{ fontSize: '4rem', marginBottom: '1.5rem', opacity: 0.1 }}>📸</div>
-                  <p>Follow our daily journey on Instagram. View the latest highlights, events, and student achievements.</p>
-                  <a 
-                    href="https://www.instagram.com/rishi_vidyalaya?igsh=MXhmdHpkcXZ0NzVpbQ==" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.visitBtn}
-                  >
-                    Connect on Instagram
-                  </a>
-                  <div style={{ marginTop: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', width: '100%' }}>
-                    {[1,2,3,4,5,6].map(i => (
-                      <div key={i} style={{ aspectRatio: '1/1', background: '#f1f5f9', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', color: '#cbd5e1' }}>
-                        📸
-                      </div>
-                    ))}
+                {isMounted ? (
+                  <div
+                    className="elfsight-app-28b885a3-2d05-4bcf-a9c3-7fa0013882c9"
+                    data-elfsight-app-lazy
+                    style={{ width: '100%', height: '100%' }}
+                  ></div>
+                ) : (
+                  <div className={styles.placeholder} style={{ height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ color: '#94a3b8' }}>Loading Instagram Feed...</p>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </Reveal>
@@ -91,3 +96,5 @@ export default function SocialFeed() {
     </section>
   );
 }
+
+
