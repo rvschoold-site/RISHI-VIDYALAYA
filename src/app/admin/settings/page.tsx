@@ -11,7 +11,8 @@ import {
   Save, 
   CheckCircle2, 
   AlertCircle,
-  Loader2
+  Loader2,
+  Globe
 } from 'lucide-react';
 import styles from '../admin.module.css';
 
@@ -78,6 +79,7 @@ export default function SiteSettings() {
 
   const tabs = [
     { id: 'general', name: 'General Info', icon: <SettingsIcon size={16} /> },
+    { id: 'seo', name: 'SEO & Analytics', icon: <Globe size={16} /> },
     { id: 'admissions', name: 'Admissions', icon: <Calendar size={16} /> },
     { id: 'navigation', name: 'Navigation', icon: <Navigation size={16} /> },
     { id: 'social', name: 'Social Media', icon: <Share2 size={16} /> },
@@ -88,7 +90,7 @@ export default function SiteSettings() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <div className={styles.header} style={{ margin: 0 }}>
           <h1>Site Settings</h1>
-          <p>Configure global website parameters, admissions, and contact details</p>
+          <p>Configure global website parameters, SEO metadata, admissions, and contact details</p>
         </div>
         <button 
           onClick={handleSave} 
@@ -187,6 +189,163 @@ export default function SiteSettings() {
                     onChange={(e) => setSettings({ ...settings, CONTACT_ADDRESS: e.target.value })}
                     placeholder="Enter school location..."
                     rows={4}
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'seo' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                  <Globe size={18} style={{ color: 'var(--accent, #DC2626)' }} />
+                  <span>Search Engine Optimization (SEO) & Webmaster</span>
+                </h3>
+
+                {/* Google Search Result Preview */}
+                <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b', marginBottom: '0.5rem' }}>
+                    Google SERP Snippet Preview
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#202124' }}>
+                    {settings.SITE_CANONICAL_URL || 'https://www.rishividyalaya.in'}
+                  </div>
+                  <div style={{ fontSize: '1.1rem', color: '#1a0dab', textDecoration: 'none', cursor: 'pointer', margin: '2px 0 4px 0', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {settings.SEO_META_TITLE || 'Rishi Vidyalaya – Best School in Dharmavaram | IIT-NEET Foundation'}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#4d5156', lineHeight: '1.4' }}>
+                    {settings.SEO_META_DESCRIPTION || 'Recognized as the best school in Dharmavaram for IIT-NEET foundation, CBSE academics, and holistic development.'}
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Site Default Meta Title</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{(settings.SEO_META_TITLE || '').length} / 60 chars</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    value={settings.SEO_META_TITLE || ''} 
+                    onChange={(e) => setSettings({ ...settings, SEO_META_TITLE: e.target.value })}
+                    placeholder="Rishi Vidyalaya – Best School in Dharmavaram | IIT-NEET Foundation"
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Site Default Meta Description</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{(settings.SEO_META_DESCRIPTION || '').length} / 160 chars</span>
+                  </label>
+                  <textarea 
+                    value={settings.SEO_META_DESCRIPTION || ''} 
+                    onChange={(e) => setSettings({ ...settings, SEO_META_DESCRIPTION: e.target.value })}
+                    placeholder="Recognized as the best school in Dharmavaram..."
+                    rows={3}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Meta Keywords (Comma-separated)</label>
+                  <input 
+                    type="text" 
+                    value={settings.SEO_META_KEYWORDS || ''} 
+                    onChange={(e) => setSettings({ ...settings, SEO_META_KEYWORDS: e.target.value })}
+                    placeholder="Best school in Dharmavaram, IIT NEET foundation, CBSE school Dharmavaram"
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>OpenGraph / Social Card Default Image URL</label>
+                  <input 
+                    type="text" 
+                    value={settings.SEO_OG_IMAGE || ''} 
+                    onChange={(e) => setSettings({ ...settings, SEO_OG_IMAGE: e.target.value })}
+                    placeholder="https://www.rishividyalaya.in/logo.png or uploaded image URL"
+                  />
+                </div>
+
+                <hr style={{ border: 'none', borderTop: '1px dashed #e2e8f0', margin: '0.5rem 0' }} />
+
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: '0', color: 'var(--primary)' }}>
+                  Analytics & Webmaster Integrations
+                </h4>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                  <div className={styles.formGroup}>
+                    <label>Google Tag Manager (GTM) Container ID</label>
+                    <input 
+                      type="text" 
+                      value={settings.GTM_ID || ''} 
+                      onChange={(e) => setSettings({ ...settings, GTM_ID: e.target.value })}
+                      placeholder="GTM-WTG8P9K7"
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label>Google Analytics Measurement ID (GA4)</label>
+                    <input 
+                      type="text" 
+                      value={settings.GA_MEASUREMENT_ID || ''} 
+                      onChange={(e) => setSettings({ ...settings, GA_MEASUREMENT_ID: e.target.value })}
+                      placeholder="G-XXXXXXXXXX"
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Google Search Console Verification Tag Token</label>
+                  <input 
+                    type="text" 
+                    value={settings.GOOGLE_SITE_VERIFICATION || ''} 
+                    onChange={(e) => setSettings({ ...settings, GOOGLE_SITE_VERIFICATION: e.target.value })}
+                    placeholder="google-site-verification token content"
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Canonical Site Base URL</label>
+                  <input 
+                    type="text" 
+                    value={settings.SITE_CANONICAL_URL || 'https://www.rishividyalaya.in'} 
+                    onChange={(e) => setSettings({ ...settings, SITE_CANONICAL_URL: e.target.value })}
+                    placeholder="https://www.rishividyalaya.in"
+                  />
+                </div>
+
+                <hr style={{ border: 'none', borderTop: '1px dashed #e2e8f0', margin: '0.5rem 0' }} />
+
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: '0', color: 'var(--primary)' }}>
+                  Robots.txt & Indexing Rules
+                </h4>
+
+                <div style={{ 
+                  backgroundColor: '#f8fafc', 
+                  padding: '1rem', 
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem'
+                }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--primary)' }}>Allow Search Engine Crawlers</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>If disabled, search engines will be instructed not to index the site.</div>
+                  </div>
+                  <input 
+                    type="checkbox" 
+                    checked={settings.ALLOW_INDEXING !== 'false'} 
+                    onChange={(e) => setSettings({ ...settings, ALLOW_INDEXING: String(e.target.checked) })}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Additional Disallowed Paths for robots.txt (Comma-separated)</label>
+                  <input 
+                    type="text" 
+                    value={settings.ROBOTS_DISALLOW_PATHS || '/admin/, /api/'} 
+                    onChange={(e) => setSettings({ ...settings, ROBOTS_DISALLOW_PATHS: e.target.value })}
+                    placeholder="/admin/, /api/"
                   />
                 </div>
               </div>
@@ -316,3 +475,4 @@ export default function SiteSettings() {
     </div>
   );
 }
+

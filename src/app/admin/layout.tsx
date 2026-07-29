@@ -18,9 +18,11 @@ import {
   GraduationCap,
   ExternalLink,
   ChevronDown,
+  ChevronRight,
   History,
   Menu,
-  X
+  X,
+  Newspaper
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -79,6 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navLinks = [
     { name: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={18} /> },
+    { name: 'Blog Posts', href: '/admin/blogs', icon: <Newspaper size={18} /> },
     { name: 'Admissions Inbox', href: '/admin/admissions', icon: <Inbox size={18} /> },
     { name: 'Job Applications', href: '/admin/careers', icon: <Briefcase size={18} /> },
     { name: 'Gallery', href: '/admin/gallery', icon: <ImageIcon size={18} /> },
@@ -172,32 +175,70 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <main className={styles.main}>
         <header className={styles.topbar}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.topbarLeft}>
             <button className={styles.menuButton} onClick={() => setIsSidebarOpen(true)} aria-label="Open menu">
               <Menu size={20} />
             </button>
-            <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>
-              {navLinks.find(l => l.href === pathname)?.name || 'Admin Panel'}
-            </div>
+            
+            {/* Breadcrumb Navigation */}
+            <nav className={styles.breadcrumbNav} aria-label="Breadcrumb">
+              <ol className={styles.breadcrumbList}>
+                <li className={styles.breadcrumbItem}>
+                  <Link href="/admin" className={styles.breadcrumbLink}>
+                    <Home size={14} />
+                    <span>Admin</span>
+                  </Link>
+                </li>
+                {pathname !== '/admin' && (
+                  <>
+                    {pathname.split('/').filter(Boolean).slice(1).map((segment, index, array) => {
+                      const href = `/admin/${array.slice(0, index + 1).join('/')}`;
+                      const isLast = index === array.length - 1;
+                      
+                      // Formatting title
+                      let segmentTitle = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+                      if (segment === 'blogs') segmentTitle = 'Blog Posts';
+                      if (segment === 'admissions') segmentTitle = 'Admissions Inbox';
+                      if (segment === 'careers') segmentTitle = 'Job Applications';
+                      if (segment === 'settings') segmentTitle = 'Site Settings';
+                      if (segment === 'users') segmentTitle = 'Admin Users';
+                      if (segment === 'logs') segmentTitle = 'Activity Logs';
+                      if (segment === 'new') segmentTitle = 'Create New';
+                      if (segment === 'edit') segmentTitle = 'Edit';
+
+                      return (
+                        <li key={href} className={styles.breadcrumbItem}>
+                          <ChevronRight size={14} className={styles.breadcrumbSeparator} />
+                          {isLast ? (
+                            <span className={styles.breadcrumbCurrent}>{segmentTitle}</span>
+                          ) : (
+                            <Link href={href} className={styles.breadcrumbLink}>
+                              {segmentTitle}
+                            </Link>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </>
+                )}
+              </ol>
+            </nav>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>{admin?.name || 'Admin'}</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{admin?.role?.replace('_', ' ') || 'User'}</div>
-            </div>
-            <div style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '12px', 
-              backgroundColor: 'var(--primary)', 
-              color: 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 700,
-              fontSize: '1.1rem'
-            }}>
-              {admin?.name?.charAt(0) || 'A'}
+
+          <div className={styles.topbarRight}>
+            <Link href="/" target="_blank" className={styles.topbarActionBtn} title="View Live Website">
+              <ExternalLink size={16} />
+              <span className={styles.actionBtnLabel}>View Site</span>
+            </Link>
+
+            <div className={styles.userProfile}>
+              <div className={styles.userInfo}>
+                <div className={styles.userName}>{admin?.name || 'Admin'}</div>
+                <div className={styles.userRole}>{admin?.role?.replace('_', ' ') || 'Super Admin'}</div>
+              </div>
+              <div className={styles.avatar}>
+                {admin?.name?.charAt(0) || 'A'}
+              </div>
             </div>
           </div>
         </header>
