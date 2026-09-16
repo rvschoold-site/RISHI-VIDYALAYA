@@ -84,6 +84,9 @@ export default function Footer() {
       </div>
       <div className={styles.footerBottom}>
         <p>&copy; {new Date().getFullYear()} Rishi Vidyalaya. All rights reserved.</p>
+        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+          This site Designed and Developed by <Link href="https://anandverse.tech" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 'bold' }}>AnandVerse Web Services</Link>
+        </p>
       </div>
     </footer>
   );
